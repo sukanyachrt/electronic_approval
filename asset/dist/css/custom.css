@@ -1,0 +1,10 @@
+#userDropdown {
+    width: auto;
+    min-width: 180px;
+    /* ปรับความกว้างตามที่คุณต้องการ */
+}
+#canvasDiv{
+    position: relative;
+    border: 2px dashed black;
+    height:300px;
+}
