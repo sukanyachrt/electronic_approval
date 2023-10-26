@@ -105,12 +105,7 @@
                         <p> ประวัติการยื่นเอกสาร</p>
                     </a>
                 </li>
-                <li class="nav-item menu">
-                    <a href="./../student/" class="nav-link">
-                        <i class="fa fa-check"></i>
-                        <p> เช็คสถานะการดำเนินการ</p>
-                    </a>
-                </li>
+               
 
 
 

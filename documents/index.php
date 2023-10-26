@@ -35,11 +35,13 @@ include('./../admin/header.php');
                                             <img src="./../asset/dist/img/rmutto-01.png" width="140px">
                                         </div>
                                         <div class="col-8"><br><br>
+
                                             <h4 style="text-align:center;"><b>บัณฑิตศึกษา </b> </h4>
                                             <h4 style="text-align:center;"> <b> มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออก </b></h4>
                                             <h4 style="text-align:center;"> <b> คำร้องทั่วไป</b> </h4>
                                         </div>
                                         <div class="col-2">
+
                                         </div>
                                     </div>
                                     <div style="border:1px solid black;padding:10px;margin:5px;">
@@ -88,27 +90,27 @@ include('./../admin/header.php');
                                             </div>
 
                                             <div class="col-2 ">
-                                                <input type="checkbox" class="radio" id="Phd" name="Phd" value="Phd">
-                                                <span for="PhD">เอก</span>
+                                                <input type="checkbox" class="radio" id="edulevel" onclick="Checkedulevel(this)" name="edulevel" value="ปริญญาเอก">
+                                                <span for="PhD">ปริญญาเอก</span>
                                             </div>
 
                                             <div class="col-2 ">
-                                                <input type="checkbox" class="radio" id="Phd_form" name="Phd_form" value="level">
+                                                <input type="checkbox" class="radio sector_doc" onclick="Checksector_doc(this)" id="sector_doc" name="sector_doc" value="แบบ 1.1">
                                                 <span for="Phd_form">แบบ 1.1 </span>
                                             </div>
 
                                             <div class="col-2 ">
-                                                <input type="checkbox" class="radio" id="Phd_form" name="Phd_form" value="level">
+                                                <input type="checkbox" class="radio sector_doc" onclick="Checksector_doc(this)" id="sector_doc" name="sector_doc" value="แบบ 1.2">
                                                 <span for="Phd_form">แบบ 1.2</span>
                                             </div>
 
                                             <div class="col-2 ">
-                                                <input type="checkbox" class="radio" id="Phd_form" name="Phd_form" value="level">
+                                                <input type="checkbox" class="radio sector_doc" onclick="Checksector_doc(this)" id="sector_doc" name="sector_doc" value="แบบ 2.1">
                                                 <span for="Phd_form">แบบ 2.1</span>
                                             </div>
 
                                             <div class="col-2 ">
-                                                <input type="checkbox" class="radio" id="Phd_form" name="Phd_form" value="level">
+                                                <input type="checkbox" class="radio sector_doc" onclick="Checksector_doc(this)" id="sector_doc" name="sector_doc" value="แบบ 2.2">
                                                 <span for="Phd_form">แบบ 2.2</span>
                                             </div>
                                         </div>
@@ -117,22 +119,22 @@ include('./../admin/header.php');
                                             <div class="col-2 "></div>
 
                                             <div class="col-2">
-                                                <input type="checkbox" class="radio" id="ms" name="ms" value="ms">
-                                                <span for="ms">โท</span>
+                                                <input type="checkbox" class="radio" id="edulevel" onclick="Checkedulevel(this)" name="edulevel" value="ปริญญาโท">
+                                                <span for="ms">ปริญญาโท</span>
                                             </div>
 
                                             <div class="col-2 ">
-                                                <input type="checkbox" class="radio" id="form_ms" name="form_ms" value="level">
+                                                <input type="checkbox" class="radio sector_master" onclick="Checksector_master(this)" id="sector_master" name="sector_master" value="แผน ก แบบ ก 1">
                                                 <span for="form_ms">แผน ก แบบ ก 1</span>
                                             </div>
 
                                             <div class="col-2">
-                                                <input type="checkbox" class="radio" id="form_ms" name="form_ms" value="level">
+                                                <input type="checkbox" class="radio sector_master" id="sector_master " onclick="Checksector_master(this)" name="sector_master" value="แบบ ก แบบ ก 2">
                                                 <span for="form_ms">แบบ ก แบบ ก 2</span>
                                             </div>
 
                                             <div class="col-2 ">
-                                                <input type="checkbox" class="radio" id="form_ms" name="form_ms" value="">
+                                                <input type="checkbox" class="radio sector_master" id="sector_master" onclick="Checksector_master(this)" name="sector_master" value="แผน ข">
                                                 <span for="form_ms">แผน ข</span>
                                             </div>
 
@@ -144,12 +146,12 @@ include('./../admin/header.php');
                                             <div class="col-2"> </div>
                                             <div class="col-2 "> </div>
                                             <div class="col-2 ">
-                                                <input type="radio" id="normal" name="semeter" value="normal">
+                                                <input type="checkbox" id="semester" name="semester" onclick="Checksemester(this)" value="ภาคปกติ">
                                                 <span for="normal">ภาคปกติ</span>
                                             </div>
 
                                             <div class="col-4">
-                                                <input type="radio" id="os" name="semeter" value="os">
+                                                <input type="checkbox" id="semester" name="semester" onclick="Checksemester(this)" value="ภาคนอกเวลาราชการ">
                                                 <span for="os">ภาคนอกเวลาราชการ</span>
                                             </div>
 
@@ -193,7 +195,7 @@ include('./../admin/header.php');
                                         <div class="form-group row">
                                             <span for="email" class="col-sm-2 col-form-label">Email</span>
                                             <div class="col-sm-10" id="divEmail">
-                                                --- แสดง Email ---
+                                                <input type="text" name="email" id="email" class="form-control">
                                             </div>
                                         </div>
 
@@ -239,11 +241,11 @@ include('./../admin/header.php');
 
                                         <div class="col-7">
                                             <span style="text-align:left;">ความเห็นอาจารย์ที่ปรึกษา</span>
-                                            <select id="selectTeacher">
+                                            <select id="selectTeacher" name="selectTeacher">
 
                                             </select>
 
-                                           
+
                                         </div>
                                         <div class="col-5">
                                             <span style="text-align:right;">&emsp;&emsp;ความเห็น ประธานคณะกรรมการบริหารหลักสูตร</span>
@@ -359,7 +361,7 @@ include('./../admin/header.php');
             success: function(Res) {
                 if (Res.status == 'ok') {
                     $('#divDatecurrent').text(dateCurrent());
-                    $('#divEmail').text(Res.data.student_email);
+                    $('#email').text(Res.data.student_email);
                     $('#divMajor').text(Res.data.major_name);
                     $("#imageSign").attr("src", "data:image/jpeg;base64," + Res.image_sign);
                     dataTeacher()
@@ -379,25 +381,37 @@ include('./../admin/header.php');
         $("#btnSaveform").click(function() {
             //check dataที่ กรอก
 
-            alert("save")
-            var form = $('#form_doc')[0];
-            var formdataA = new FormData(form);
 
-            $.ajax({
-                async: true,
-                url: "./../api/documents/data.php?v=saveForm_1",
-                type: "POST",
-                cache: false,
-                data: formdataA,
-                processData: false, // tell jQuery not to process the data
-                contentType: false,
-                success: function(Res) {
-                    console.log(Res);
-                },
-                error: function(xhr, status, error) {
-                    console.log("Error:", error);
-                }
-            });
+            var errors = ValidateInputData();
+            if (errors.length > 0) {
+                alert(errors.join("\n"));
+            } else {
+                var form = $('#form_doc')[0];
+                var formdataA = new FormData(form);
+                console.log(formdataA)
+                $.ajax({
+                    async: true,
+                    url: "./../api/documents/data.php?v=saveForm_1",
+                    type: "POST",
+                    cache: false,
+                    data: formdataA,
+                    processData: false, // tell jQuery not to process the data
+                    contentType: false,
+                    success: function(Res) {
+                        console.log(Res);
+                        if (Res.status == 'ok') {
+                            alert(Res.msg);
+                            window.location.replace('./../student/');
+                        } else {
+                            alert(Res.msg)
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Error:", error);
+                    }
+                });
+            }
+
         });
     });
 
@@ -407,26 +421,157 @@ include('./../admin/header.php');
             type: "GET",
             dataType: "json",
             success: function(Res) {
-                $("#selectTeacher").html('');
-                
+                $("#selectTeacher").html($("<option>").text("--เลือกอาจารย์ที่ปรึกษา--").val(0));
+
                 $.each(Res, function(index, item) {
-                    $("#selectTeacher").append($("<option>").text(item.user_name).val(item.id));
+                    $("#selectTeacher").append($("<option>").text(item.user_name).val(item.user_id));
                 });
             }
         });
     }
-    // function dateCurrent() {
-    //     var currentDate = new Date();
-    //     var monthNames = [
-    //         "มกราคม", "กุมภาพันธ์", "มีนาคม",
-    //         "เมษายน", "พฤษภาคม", "มิถุนายน",
-    //         "กรกฎาคม", "สิงหาคม", "กันยายน",
-    //         "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
-    //     ];
-    //     var day = currentDate.getDate();
-    //     var month = currentDate.getMonth();
-    //     var year = currentDate.getFullYear();
-    //     var formattedDate = day + " " + monthNames[month] + " " + (year + 543);
-    //     $('#divDatecurrent').text(formattedDate)
-    // }
+
+
+    function Checkedulevel(checkbox) {
+        var checkboxes = document.getElementsByName('edulevel')
+        checkboxes.forEach((item) => {
+
+            if (item !== checkbox) item.checked = false
+        })
+        if (checkbox.checked) {
+            selectedValue = checkbox.value;
+            if (selectedValue == 'ปริญญาเอก') {
+                $(".sector_master").not(this).prop("checked", false);
+                $(".sector_master").css("background-color", "#f0f0f0");
+                $(".sector_master").prop("disabled", true);
+
+                $(".sector_doc").css("background-color", "#000");
+                $(".sector_doc").prop("disabled", false);
+            } else {
+                $(".sector_doc").not(this).prop("checked", false);
+                $(".sector_doc").css("background-color", "#f0f0f0");
+                $(".sector_doc").prop("disabled", true);
+
+                $(".sector_master").css("background-color", "#000");
+                $(".sector_master").prop("disabled", false);
+            }
+        }
+    }
+
+    function Checksector_doc(checkbox) {
+        var checkboxes = document.getElementsByName('sector_doc')
+        checkboxes.forEach((item) => {
+            if (item !== checkbox) item.checked = false
+        })
+    }
+
+    function Checksector_master(checkbox) {
+        var checkboxes = document.getElementsByName('sector_master')
+        checkboxes.forEach((item) => {
+            if (item !== checkbox) item.checked = false
+        })
+    }
+
+    function Checksemester(checkbox) {
+        var checkboxes = document.getElementsByName('semester')
+        checkboxes.forEach((item) => {
+            if (item !== checkbox) item.checked = false
+        })
+    }
+
+
+
+
+
+    function ValidateInputData() {
+        var errors = [];
+
+        var general_form_title = $("#general_form_title").val();
+        var student_code = $("#student_code").val();
+        var major_id = $("#major_id").val();
+        var general_form_semester = $("#general_form_semester").val();
+        var general_form_year = $("#general_form_year").val();
+        var tel = $("#tel").val();
+        var general_form_opinion = $("#general_form_opinion").val();
+        var email = $("#email").val();
+        var selectTeacher = $("#selectTeacher").val();
+
+        var edulevel = $('input[name="edulevel"]:checked').map(function() {
+            return $(this).val();
+        }).get();
+
+
+        console.log(edulevel)
+
+        var sector_doc = $('input[name="sector_doc"]:checked').map(function() {
+            return $(this).val();
+        }).get();
+
+        var sector_master = $('input[name="sector_master"]:checked').map(function() {
+            return $(this).val();
+        }).get();
+
+        var semester = $('input[name="semester"]:checked').map(function() {
+            return $(this).val();
+        }).get();
+
+
+
+
+        if (general_form_title === "") {
+            errors.push("* โปรดกรอกเรื่อง");
+            $("#general_form_title").focus();
+        }
+
+        if (edulevel.length === 0) {
+            errors.push("* โปรดเลือกประเภทปริญญา");
+            $("#edulevel").focus();
+        }
+
+        if (sector_doc.length === 0 && sector_master.length === 0) {
+            errors.push("* โปรดเลือกแบบเอกสาร เช่น แบบ 1.1 , แผน ก แบบ ก 1");
+            $("#sector_doc").focus();
+        }
+
+        if (semester.length === 0) {
+            errors.push("* โปรดเลือกภาคที่เรียน");
+            $("#semester").focus();
+        }
+
+
+
+        if (student_code === "") {
+            errors.push("* โปรดกรอกรหัสประจำตัว");
+            $("#student_code").focus();
+        }
+        if (major_id === "") {
+            errors.push("* โปรดกรอก(รหัสสาขา)");
+            $("#major_id").focus();
+        }
+
+        if (general_form_semester === "") {
+            errors.push("* โปรดกรอกปีที่เข้าศึกษาตั้งแต่ภาคการศึกษา");
+            $("#general_form_semester").focus();
+        }
+        if (general_form_year === "") {
+            errors.push("* โปรดกรอกปีการศึกษา");
+            $("#general_form_semester").focus();
+        }
+        if (tel === "") {
+            errors.push("* โปรดกรอกเบอร์โทรศัพท์ที่สามารถติดต่อได้");
+            $("#tel").focus();
+        }
+        if (email === "") {
+            errors.push("* โปรดกรอก email");
+            $("#email").focus();
+        }
+        if (general_form_opinion === "") {
+            errors.push("* โปรดกรอกความประสงค์");
+            $("#selectTeacher").focus();
+        }
+        if (selectTeacher <= '0') {
+            errors.push("* โปรดเลือกอาจารย์ที่ปรึกษา");
+            $("#selectTeacher").focus();
+        }
+        return errors;
+    }
 </script>

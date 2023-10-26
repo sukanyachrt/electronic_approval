@@ -3,6 +3,9 @@
 include('./../admin/header.php');
 
 ?>
+<link rel="stylesheet" href="./../asset/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="./../asset/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="./../asset/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -16,27 +19,41 @@ include('./../admin/header.php');
         <?php include('./../admin/sidebar.php') ?>
 
         <div class="content-wrapper">
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0">ประวัติการยื่นเอกสาร</h1>
-                        </div><!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">ประวัติการยื่นเอกสาร</li>
-                            </ol>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </div>
-            <section class="content">
+
+            <section class="content ">
                 <div class="container-fluid">
                     <!-- Small boxes (Stat box) -->
                     <div class="row">
 
-                    ประวัติการยื่นเอกสาร
+                        <div class="col-12 mt-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title text-bold">ประวัติการยื่นเอกสาร</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="tb_history" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>เรื่อง</th>
+                                                <th>ไฟล์คำขอ</th>
+                                                <th>วันที่ยื่นคำขอ</th>
+                                                <th>สถานะการอนุมัติ</th>
+                                                <th>Progress</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                        
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+
+                        </div>
 
                     </div>
 
@@ -51,6 +68,43 @@ include('./../admin/header.php');
     <?php include("./../admin/scripts.php") ?>
 
 </body>
+<script src="./../asset/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="./../admin/changepage.js"></script>
+<script src="./../asset/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="./../asset/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="./../asset/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="./../asset/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="./../asset/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="./../asset/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="./../asset/plugins/jszip/jszip.min.js"></script>
+<script src="./../asset/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="./../asset/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="./../asset/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="./../asset/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="./../asset/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script>
+    $(function() {
+
+        $.ajax({
+            url: "./../api/documents/data.php?v=history_doc", // Replace with the URL of your data source
+            type: "GET",
+            dataType: "json",
+            success: function(Res) {
+                console.log(Res);
+
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+        $("#tb_history").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": []
+        }).buttons().container().appendTo('#tb_history_wrapper .col-md-6:eq(0)');
+
+    });
+</script>
 
 </html>

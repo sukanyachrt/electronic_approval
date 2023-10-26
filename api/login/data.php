@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 include('./../Connect_Data.php');
-$connect = new Connect_Data('sei_db');
+$connect = new Connect_Data();
 $connect->connectData();
 $data = isset($_GET['v']) ? $_GET['v'] : '';
 $result = array();

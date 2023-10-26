@@ -1,16 +1,13 @@
 <?php
 
 class Connect_Data{
-    public $database = '';
+    public $database = 'sei_db';
     public $conn = '';
     public $sql = '';
     public $query = '';
     public $row = '';
     
-    public function __construct($db)
-    {
-        $this->database = $db;
-    }
+    
 
     public function connectData()
     {
@@ -41,6 +38,11 @@ class Connect_Data{
     {
       return mysqli_affected_rows($this->conn);
     }
+    public function id_insertrows()
+    {
+      return  mysqli_insert_id($this->conn);
+    }
+
     
     public function closeConnect()
     {

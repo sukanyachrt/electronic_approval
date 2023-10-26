@@ -2,7 +2,7 @@
 error_reporting(0);
 header('Content-Type: application/json');
 include('./../Connect_Data.php');
-$connect = new Connect_Data('sei_db');
+$connect = new Connect_Data();
 $connect->connectData();
 session_start();
 
