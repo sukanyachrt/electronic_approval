@@ -136,7 +136,7 @@
                     <img src="./../asset/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                 </li>
                 <li class="user-body bg-white text-center">
-                    <?php echo $_SESSION["student_name"].' '.$_SESSION["student_lastname"]; ?>
+                    <?php echo $_SESSION["_name"].' '.$_SESSION["_lastname"]; ?>
                 </li>
                 <li class="user-footer text-center">
                     <a href="./../logout.php" class="btn btn-primary btn-flat">ออกจากระบบ</a>

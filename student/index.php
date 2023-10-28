@@ -44,9 +44,7 @@ include('./../admin/header.php');
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
                                         </tbody>
-                                        
                                     </table>
                                 </div>
                                 <!-- /.card-body -->
@@ -90,8 +88,26 @@ include('./../admin/header.php');
             type: "GET",
             dataType: "json",
             success: function(Res) {
-                console.log(Res);
+                $('#tb_history tbody').html('');
+                $.each(Res, function(index, item) {
+                    console.log(item.data_approve.length)
+                    var data_approve = '';
+                    $.each(item.data_approve, function(i, data_) {
+                        if (i != 0) {
+                            // data_approve += '</tr>';
+                        }
+                        data_approve += '<td>' + data_.role_approve + '=>' + data_.status_approve + '<br/> วันที่อนุมัติ : ' + data_.date_approve + '</td>' +
+                            '<td></td>' +
+                            '</tr>';
+                    })
 
+
+                    $("#tb_history").append('<tr>' +
+                        '<td style="vertical-align: middle;" rowspan=' + item.data_approve.length + '>' + item.form_title + '</td>' +
+                        '<td style="vertical-align: middle;" rowspan=' + item.data_approve.length + '>Preview</td>' +
+                        '<td style="vertical-align: middle;" rowspan=' + item.data_approve.length + '>' + item.date_insert + '</td>' +
+                        data_approve);
+                });
             },
             error: function(xhr, status, error) {
                 console.log("Error: " + error);

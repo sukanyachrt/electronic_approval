@@ -4,15 +4,15 @@ session_start(); // เริ่ม Session
 
 if (isset($_POST['status']) && $_POST['status'] === 'ok') {
     $data = $_POST['data'];
-    $_SESSION['student_id'] = $data['student_id'];
-    $_SESSION['student_name'] =$data['student_name'];
-    $_SESSION['student_lastname'] =$data['student_lastname'];
-    $_SESSION['student_code'] =$data['student_code'];
+    $_SESSION['_id'] = $data['_id'];
+    $_SESSION['_name'] =$data['_name'];
+    $_SESSION['_lastname'] = isset($_data['_lastname']) ? $_data['_lastname'] : '';
+    $_SESSION['_code'] =$data['_code'];
+    $_SESSION['_role'] =$_POST['role'];
     // สร้างค่าอื่น ๆ จากข้อมูลที่ถูกส่งมา
    
-    echo json_encode(["data"=>"ok"]);
+    echo json_encode(["data"=>"ok",$_POST['role']]);
     
 } else {
     echo json_encode(["data"=>"no"]);
 }
-?>

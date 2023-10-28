@@ -15,7 +15,7 @@
             </div>
             <div class="info">
                 <a href="#" class="d-block">
-                <?php echo $_SESSION["student_name"].' '.$_SESSION["student_lastname"]; ?>
+                <?php echo $_SESSION["_name"].' '.$_SESSION["_lastname"]; ?>
                 </a>
             </div>
         </div>

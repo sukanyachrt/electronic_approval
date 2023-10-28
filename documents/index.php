@@ -70,7 +70,7 @@ include('./../admin/header.php');
                                                 <span for="name" class="col-sm-1 col-form-label">ชื่อ </span>
                                             </div>
                                             <div class="col-sm-5" id="divFirstname">
-                                                <?php echo $_SESSION['student_name'] ?>
+                                                <?php echo $_SESSION['_name'] ?>
                                             </div>
                                             <div class="col-1">
                                                 <span for="lname" id="divLastname" class="col-sm-1 col-form-label">
@@ -78,7 +78,7 @@ include('./../admin/header.php');
                                                     </sapn>
                                             </div>
                                             <div class="col-sm-5">
-                                                <?php echo $_SESSION['student_lastname'] ?>
+                                                <?php echo $_SESSION['_lastname'] ?>
                                             </div>
                                         </div>
                                         <!-- /.col -->
@@ -225,7 +225,7 @@ include('./../admin/header.php');
                                             &emsp;&emsp;&emsp;&emsp;&emsp;<span style="text-align:right;">(<span style="border-bottom: 1px dashed black;">&emsp;&emsp;&emsp;&emsp;
 
                                                     <?php
-                                                    echo $_SESSION['student_name'] . ' ' . $_SESSION['student_lastname'];
+                                                    echo $_SESSION['_name'] . ' ' . $_SESSION['_lastname'];
                                                     ?>
 
 

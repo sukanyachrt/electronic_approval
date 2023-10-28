@@ -8,7 +8,7 @@ $data = isset($_GET['v']) ? $_GET['v'] : '';
 $result = array();
 if ($data == "uploadSignature") {
     $base64DataURI = $_POST['signature'];
-    $destinationFilePath = "./../images/".$_SESSION['student_code'].'.png';
+    $destinationFilePath = "./../images/".$_SESSION['_code'].'.png';
     $base64String = substr($base64DataURI, strpos($base64DataURI, ',') + 1);
     $decodedData = base64_decode($base64String);
     

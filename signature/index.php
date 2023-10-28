@@ -9,11 +9,20 @@ include('./../admin/header.php');
 
 
         <?php
-        include("./../admin/navbar.php")
+        include("./../admin/navbar.php");
+
+
 
         ?>
 
-        <?php include('./../admin/sidebar.php') ?>
+        <?php
+
+        if ($_SESSION['_role'] == 'student') {
+            include('./../admin/sidebar.php');
+        } else {
+            include('./../admin/sidebar_teacher.php');
+        }
+        ?>
 
         <div class="content-wrapper">
             <div class="content-header">

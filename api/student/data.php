@@ -10,13 +10,13 @@ $data = isset($_GET['v']) ? $_GET['v'] : '';
 $result = array();
 if ($data == "users") {
 
-    $student_code = $_SESSION["student_code"];
+    $student_code = $_SESSION["_code"];
     $connect->sql = "SELECT major_name,student_email FROM 	student as t1 	INNER JOIN	major as t2 ON 	t1.MAJOR = t2.major_id WHERE student_code='" . $student_code . "'";
     $connect->queryData();
     $rsconnect = $connect->fetch_AssocData();
 
 
-    $imagePath = "./../images/" . $_SESSION['student_code'] . '.png';
+    $imagePath = "./../images/" . $_SESSION['_code'] . '.png';
 
     $imageData = file_get_contents($imagePath);
 

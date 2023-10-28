@@ -83,6 +83,7 @@ session_start();
           processData: false, // tell jQuery not to process the data
           contentType: false,
           success: function(Res) {
+           // console.log(Res)
             if (Res.status == "ok") {
               postSession(Res);
             } else {
@@ -99,12 +100,13 @@ session_start();
 
 
     function postSession(data) {
-
+      //console.log(data)
       $.ajax({
         url: "./createsession.php",
         type: "POST",
         data: data, // ใช้ข้อมูลจากการร้องขอแรก
         success: function(Res) {
+         // console.log(Res)
           window.location.replace(data.role);
         },
 

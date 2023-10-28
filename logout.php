@@ -6,7 +6,7 @@ header("Location: ./");
 
 <script>
     // ตรวจสอบว่า Session ถูกล็อกเอาท์หรือไม่
-    if (<?php echo isset($_SESSION['student_id']) ? 'true' : 'false'; ?>) {
+    if (<?php echo isset($_SESSION['_id']) ? 'true' : 'false'; ?>) {
         window.location.replace('./'); // หาก Session ยังคงมีให้กลับไปหน้าหลัก
     }
 </script>
