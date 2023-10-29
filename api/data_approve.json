@@ -1,0 +1,14 @@
+[
+    {
+        "role_": "teacher",
+        "role_approve": "อาจารย์"
+    },
+    {
+        "role_": "direct",
+        "role_approve": "ประธานหลักสูตร"
+    },
+    {
+        "role_": "master",
+        "role_approve": "คณบดี"
+    }
+]

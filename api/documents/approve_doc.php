@@ -1,5 +1,6 @@
 <?php
 error_reporting(0);
+date_default_timezone_set('Asia/Bangkok');
 header('Content-Type: application/json');
 include('./../Connect_Data.php');
 $connect = new Connect_Data();
@@ -76,7 +77,7 @@ if ($data == "checkapprove") {
 	apr_.status_approve,
 	apr_.date_approve,
 	`user`.user_name 
-FROM
+	FROM
 	document_form_approve AS apr_
 	INNER JOIN `user` ON apr_.id_approve = `user`.user_id
 	WHERE document_form='" . $idDoc . "'";
@@ -93,5 +94,88 @@ FROM
 	echo json_encode([$result, $resultApr]);
 } else if ($data == "approvebyid") {
 
-	echo json_encode($_GET);
+	$dataApr = $_POST;
+	$jsonFile = "./../data_approve.json";
+	$jsonData = file_get_contents($jsonFile);
+	$data_ = json_decode($jsonData, true);
+	if ($data_ !== null) {
+
+		$RoleApprove = $dataApr['role_approve'];
+
+		$key = array_search($RoleApprove, array_column($data_, 'role_approve'));
+		if ($key !== false) {
+			$resultIndex = $key + 1;
+			$resultFind = $resultIndex < count($data_) ? $data_[$resultIndex] : null;
+			if ($resultFind) {
+				#update
+				$connect->sql = "UPDATE document_form_approve SET comment_approve='" . $dataApr['comment'] . "' , status_approve='" . $dataApr['status'] . "', date_approve='" . date('Y-m-d H:i:s') . "' WHERE id='" . $dataApr['id'] . "'";
+				$connect->queryData();
+
+				$affect = $connect->affected_rows();
+				if ($affect > 0 && $dataApr['status']=="อนุมัติ") {
+
+					#find code ผู้อนุมัติลำดับถัดไป 
+					$connect->sql = "SELECT
+					user_id 
+					FROM
+					`user`
+					INNER JOIN position ON `user`.POSITION = position.position_id
+					where position_role='" . $resultFind['role_'] . "'";
+					$connect->queryData();
+					$rsconnect = $connect->fetch_AssocData();
+					$user_code = $rsconnect['user_id'];
+
+					#บันทึกข้อมูล
+					$connect->sql = "INSERT INTO document_form_approve 
+					(document_form, 
+					id_approve, 
+					role_approve, 
+					comment_approve, 
+					status_approve
+					) VALUES (
+						'" . $dataApr['idDoc'] . "',
+						'" . $user_code . "',
+						'" . $resultFind['role_approve'] . "',
+						'',
+						'รอการอนุมัติ'
+						
+					 )";
+					$connect->queryData();
+					$result = [
+						'status' => 'ok',
+						'msg' => 'อนุมัติเอกสารเรียบร้อยแล้ว'
+					];
+				}
+				$result = [
+					'status' => 'ok',
+					'msg' => 'ทำการไม่อนุมัติเอกสารเรียบร้อยแล้ว'
+				];
+
+				
+			} else {
+				#update
+				$connect->sql = "UPDATE document_form_approve SET comment_approve='" . $dataApr['comment'] . "' , status_approve='" . $dataApr['status'] . "', date_approve='" . date('Y-m-d H:i:s') . "' WHERE id='" . $dataApr['id'] . "'";
+				$connect->queryData();
+				$result = [
+					'status' => 'ok',
+					'msg' => 'อนุมัติเอกสารเรียบร้อยแล้ว'
+				];
+			}
+		} else {
+			#update
+			$connect->sql = "UPDATE document_form_approve SET comment_approve='" . $dataApr['comment'] . "' , status_approve='" . $dataApr['status'] . "', date_approve='" . date('Y-m-d H:i:s') . "' WHERE id='" . $dataApr['id'] . "'";
+			$connect->queryData();
+			$result = [
+				'status' => 'ok',
+				'msg' => 'อนุมัติเอกสารเรียบร้อยแล้ว'
+			];
+		}
+	} else {
+
+		$result = [
+			'status' => 'no',
+			'msg' => 'ไม่สามารถอ่านหรือแปลงข้อมูล JSON ได้'
+		];
+	}
+	echo json_encode($result);
 }

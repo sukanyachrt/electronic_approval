@@ -38,10 +38,13 @@ if ($data == "checklogin") {
         if ($row > 0) {
             $rsconnect = $connect->fetch_AssocData();
             if ($rsconnect['user_password'] == $password) {
-                //อย่าลืมเช็คสิทธิ์
+                $position_role="";
+                if($rsconnect['position_role']=="teacher" || $rsconnect['position_role']=="direct" || $rsconnect['position_role']=="master"){
+                    $position_role="teacher";
+                }
                 $result = [
                     'status' => "ok",
-                    'role' => $rsconnect['position_role'],
+                    'role' => $position_role,
                     'data' => $rsconnect
                 ];
             } else {
@@ -50,6 +53,12 @@ if ($data == "checklogin") {
                     'msg' => "รหัสผู้ใช้งาน หรือ  รหัสผ่านไม่ถูกต้อง"
                 ];
             }
+        }
+        else{
+            $result = [
+                'status' => "no",
+                'msg' => "ไม่พบรหัสผู้ใช้งาน"
+            ];
         }
 
         
