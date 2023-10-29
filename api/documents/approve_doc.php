@@ -49,10 +49,12 @@ if ($data == "checkapprove") {
 	doc_.type_sector,
 	doc_.edulevel,
 	doc_.semester,
-	doc_.date_insert 
+	doc_.date_insert,
+	major.major_name
 	FROM
 	document_form AS doc_
-	INNER JOIN student ON doc_.id_student = student.student_id WHERE doc_.id='" . $idDoc . "'";
+	INNER JOIN student ON doc_.id_student = student.student_id
+	INNER JOIN major ON student.MAJOR = major.major_id WHERE doc_.id='" . $idDoc . "'";
 	$connect->queryData();
 	$rsconnect = $connect->fetch_AssocData();
 	$imagePath = "./../images/" . $rsconnect['student_code'] . '.png';
@@ -60,7 +62,7 @@ if ($data == "checkapprove") {
 	$base64ImageData = base64_encode($imageData);
 
 	$rsconnect["image_sign"] = $base64ImageData;
-	$result=$rsconnect;
+	$result = $rsconnect;
 	//array_push($result, $rsconnect);
 
 	$resultApr = array();

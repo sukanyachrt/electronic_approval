@@ -214,7 +214,7 @@ include('./../admin/header.php');
 
                             <div class="form-group row">
                                 <span for="id" class="col-sm-2 col-form-label">รหัสประจำตัว</span>
-                                <div class="col-sm-3 col-form-label">
+                                <div class="col-sm-3 col-form-label" id="divStudentcode">
                                     --- แสดงรหัสประจำตัว ---
                                 </div>
                                 <span for="major" class="col-sm-1 col-form-label">สาขาวิชา</span>
@@ -222,7 +222,7 @@ include('./../admin/header.php');
                                     --- แสดงสาขาวิชา ---
                                 </div>
                                 <span for="major_id" class="col-sm-1 col-form-label">(รหัสสาขา)</span>
-                                <div class="col-sm-2 col-form-label">
+                                <div class="col-sm-2 col-form-label" id="divNoMajor">
                                     --- แสดงรหัสสาขา ---
                                 </div>
                             </div>
@@ -231,15 +231,15 @@ include('./../admin/header.php');
 
                             <div class="form-group row">
                                 <span for="semeter" class="col-sm-3 col-form-label">เข้าศึกษาตั้งแต่ภาคการศึกษา</span>
-                                <div class="col-sm-1 col-form-label">
+                                <div class="col-sm-1 col-form-label" id="divYear_semester">
                                     --- 2554 ---
                                 </div>
                                 <span for="year" class="col-sm-2 col-form-label">ปีการศึกษา</span>
-                                <div class="col-sm-1 col-form-label">
+                                <div class="col-sm-1 col-form-label" id="divYear_study">
                                     --- 2555 ---
                                 </div>
                                 <span for="tell" class="col-sm-3 col-form-label">เบอร์โทรศัพท์ที่สามารถติดต่อได้</span>
-                                <div class="col-sm-2 col-form-label">
+                                <div class="col-sm-2 col-form-label" id="divPhone">
                                     --- 0987 ---
                                 </div>
                             </div>
@@ -255,7 +255,7 @@ include('./../admin/header.php');
 
                             <div class="form-group row">
                                 <span for="Message" class="col-sm-2 col-form-label">มีความประสงค์</span>
-                                <div class="col-sm-10">
+                                <div class="col-sm-10" id="divPurpose">
                                     --- แสดง มีความประสงค์ ---
 
                                 </div>
@@ -267,25 +267,31 @@ include('./../admin/header.php');
 
                         <div class="form-group row ">
                             <div class="col-5"></div>
-                            <div class="col-7">
+                            <div class="col-7 text-center">
                                 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;ลายมือชื่อนักศึกษา<span style="border-bottom: 1px dashed black;">
                                     &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 
-                                    <img id="imageSign" src="" width="150px" height="50px" />
+                                    <img id="imageSign_student" src="" width="150px" height="50px" />
                                     &emsp;&emsp;&emsp;</span>
                             </div>
                             <div class="col-7"></div>
                             <div class="col-5">
-                                &emsp;&emsp;&emsp;&emsp;&emsp;<span style="text-align:right;">(<span style="border-bottom: 1px dashed black;">&emsp;&emsp;&emsp;&emsp;
+                                &emsp;&emsp;&emsp;&emsp;&emsp;<span style="text-align:right;">
+                                    (<span style="border-bottom: 1px dashed black;">
+                                        &emsp;&emsp;&emsp;&emsp;
+                                        <span id="spanName_student">
+                                            -- แสดงชื่อนักศึกษา --
+                                        </span>
 
-                                        -- แสดงชื่อนักศึกษา --
 
 
-                                        &emsp;&emsp;&emsp;&emsp;</span>)</span>
+                                        &emsp;&emsp;&emsp;&emsp;
+                                    </span>)
+                                </span>
                             </div>
                             <div class="col-7"></div>
                             <div class="col-5 text-center">
-                                <span id="divDatecurrent" style="display: inline-block; width: 50%; border-bottom: 1px dashed black;">
+                                <span id="divDate_student" style="display: inline-block; width: 50%; border-bottom: 1px dashed black;">
                                     --- แสดงวันทีปัจจุบัน ----
                                 </span>
                             </div>
@@ -293,15 +299,15 @@ include('./../admin/header.php');
                         </div>
                         <div class="row">
                             <div class="col-6 ">
-                            <b><span style="text-align: left;">ความเห็นอาจารย์ที่ปรึกษา</span></b>
+                                <b><span style="text-align: left;">ความเห็นอาจารย์ที่ปรึกษา</span></b>
                                 <textarea input style="width: 80%;" type="Message" name="advisor_comment" id="advisor_comment" class="form-control" required></textarea>
                             </div>
                             <div class="col-6 text-center">
-                                <b><span style="text-align: right;">ความเห็น ประธานคณะกรรมการบริหาสูตร</span></b>
+                                <b><span style="text-align: right;">ความเห็น ประธานคณะกรรมการบริหารสูตร</span></b>
                                 <div>&emsp;&emsp;-------------------------------------------------------</div>
                                 <div>&emsp;&emsp;-------------------------------------------------------</div>
                                 <div>&emsp;&emsp;-------------------------------------------------------</div>
-                               
+
                             </div>
                         </div>
                         <div class="row">
@@ -314,23 +320,33 @@ include('./../admin/header.php');
                                     &emsp;&emsp;&emsp;&emsp;</span>
                             </div>
                             <div class="col-6 text-center">
-                                <span style="text-align: right;">&emsp;&emsp;ลงนาม-----------------------------------------------</span>
+                                ลงนาม<span style="text-align: left; border-bottom: 1px dashed black;">
+                                    &emsp;&emsp;&emsp;&emsp;
+
+                                    <img id="imageDirect" src="" width="150px" height="50px" />
+                                    &emsp;&emsp;&emsp;&emsp;</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-7 text-left">
+                                <span>
+                                    (--------------------<span id="spanName_teacher"></span>-------------------)
+                                  
+                                </span>
+                            </div>
+                            <div class="col-5">
+                                <span>
+                                (--------------------<span id="spanName_direct"></span>-------------------)
+                                   
+                                </span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-7">
-                                <span style="text-align: left;">(----------------------------------------------------------)</span>
+                                <span style="text-align: left;">&emsp;&emsp;--------<span id="spanDate_teacher"></span>----------</span>
                             </div>
                             <div class="col-5">
-                                <span style="text-align: right;">&emsp;&emsp;(------------------------------------------------------)</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-7">
-                                <span style="text-align: left;">&emsp;&emsp;---------------/---------------/---------------</span>
-                            </div>
-                            <div class="col-5">
-                                <span style="text-align: right;">&emsp;&emsp;&emsp;&nbsp;&nbsp;---------------/---------------/---------------</span>
+                                <span>&emsp;&emsp;--------<span id="spanDate_direct"></span>----------</span>
                             </div>
 
 
@@ -349,13 +365,23 @@ include('./../admin/header.php');
                                 <span style="text-align:left;">-----------------------------------------------------------</span>
                             </div>
                             <div class="col-8">
-                                <span style="text-align:left;">ลงนาม---------------------------------------------------</span>
+                                ลงนาม<span style="text-align: left; border-bottom: 1px dashed black;">
+                                    &emsp;&emsp;&emsp;&emsp;
+
+                                    <img id="imageMaster" src="" width="150px" height="50px" />
+                                    &emsp;&emsp;&emsp;&emsp;</span>
                             </div>
                             <div class="col-8">
-                                <span style="text-align:left;">(----------------------------------------------------------)</span>
+                               <span>
+                                    &emsp;(--------------------
+                                    <span id="spanName_master">
+
+                                    </span>-------------------)
+                                    &emsp;
+                                </span>
                             </div>
                             <div class="col-8">
-                                <span style="text-align:left;">&emsp;&emsp;---------------/---------------/---------------</span>
+                                <span style="text-align: left;">&emsp;&emsp;--------<span id="spanDate_master"></span>----------</span>
                             </div>
                         </div>
                         <div class="col-12">
@@ -384,7 +410,7 @@ include('./../admin/header.php');
                         <button type="button" value="" onclick="fnApprove('yes')" class="btn btn-success float-right" style="margin-right: 5px;">
                             <i class="fas fa-check"></i>อนุมัติเอกสาร
                         </button>
-                        
+
                     </form>
                 </div>
             </div>
@@ -420,7 +446,7 @@ include('./../admin/header.php');
 
                     $("#tb_approve_teacher").append('<tr>' +
                         //'<td classs="text-center"> <button type="button" onclick="fnApprove(\'yes\', ' + item.id + ')" class="btn btn-success btn-xs"><i class="fas fa-check"></i> อนุมัติ</button> <button type="button" class="btn btn-danger btn-xs"><i class="fas fa-window-close"></i> ไม่อนุมัติ</button></td>' +
-                        '<td style="vertical-align: middle;"><button  onclick="modalDocShow(' + item.id + ','+item.document_form+')" type="button" class="badge badge badge-primary" data-toggle="modal" data-target=".bd-example-modal-xl">Preview</button></td>' +
+                        '<td style="vertical-align: middle;"><button  onclick="modalDocShow(' + item.id + ',' + item.document_form + ')" type="button" class="badge badge badge-primary" data-toggle="modal" data-target=".bd-example-modal-xl">Preview</button></td>' +
                         '<td style="vertical-align: middle;">' + item.form_title + '</td>' +
                         '<td style="vertical-align: middle;">' + item.fullname + '</td>' +
                         '<td style="vertical-align: middle;">' + item.date_insert + '</td>' +
@@ -454,13 +480,61 @@ include('./../admin/header.php');
         alert(`${status} ${id}`)
     }
 
-    function modalDocShow(idApr,idDoc){
+    function modalDocShow(idApr, idDoc) {
         $.ajax({
             url: `./../api/documents/approve_doc.php?v=dataDoc&idDoc=${idDoc}`, // Replace with the URL of your data source
             type: "GET",
             dataType: "json",
             success: function(Res) {
                 console.log(Res)
+                //#region  Res[0] ข้อมูล doc
+                var datadoc = Res[0];
+                $('#divTitle').text(datadoc.form_title)
+                $('#divFirstname').text(`${datadoc.student_name}`);
+                $('#divLastname').text(`${datadoc.student_lastname}`);
+                $('#divStudentcode').text(datadoc.doc_studentcode);
+                $('#divMajor').text(datadoc.major_name);
+                $('#divNoMajor').text(datadoc.major_name);
+                $('#divYear_semester').text(datadoc.year_semester);
+                $('#divYear_study').text(datadoc.year_study);
+                $('#divPhone').text(datadoc.telephone);
+                $('#divEmail').text(datadoc.email);
+                $('#divPurpose').text(datadoc.purpose);
+                $("#imageSign_student").attr("src", "data:image/jpeg;base64," + datadoc.image_sign);
+
+                $('#spanName_student').text(`${datadoc.student_name} ${datadoc.student_lastname}`);
+                $('#divDate_student').text(datadoc.date_insert);
+
+                //#region  Res[1] ข้อมูล ผู้อนุมัติต่างๆ
+
+                var dataApr = Res[1];
+                $.each(dataApr, function(index, item) {
+                    if (item.role_approve == "อาจารย์") {
+
+                        $("#imageTeacher").attr("src", "data:image/jpeg;base64," + item.image_sign);
+                        $('#spanName_teacher').text(`${item.user_name}`);
+                        $('#spanDate_teacher').text(`${item.date_approve}`);
+
+                    }
+                    // else{
+                    //     $('#spanName_teacher').text(`----------------------`);
+                    //     $('#spanDate_teacher').text(`----------------------`);
+                    // }
+                    if (item.role_approve == "ประธานหลักสูตร") {
+                        $("#imageDirect").attr("src", "data:image/jpeg;base64," + item.image_sign);
+                        $('#spanName_direct').text(`${item.user_name}`);
+                        $('#spanDate_direct').text(`${item.date_approve}`);
+                    }
+                    // else{
+                    //     $('#spanName_direct').text(`----------------------`);
+                    //     $('#spanDate_direct').text(`----------------------`);
+                    // }
+                    if (item.role_approve == "คณบดี") {
+                        $("#imageMaster").attr("src", "data:image/jpeg;base64," + item.image_sign);
+                        $('#spanName_master').text(`${item.user_name}`);
+                        $('#spanDate_master').text(`${item.date_approve}`);
+                    }
+                });
             }
         });
 
