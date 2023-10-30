@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2023 at 12:22 PM
+-- Generation Time: Oct 30, 2023 at 03:06 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -195,7 +195,7 @@ CREATE TABLE `document_form_approve` (
   `role_approve` varchar(20) NOT NULL,
   `comment_approve` text NOT NULL,
   `status_approve` varchar(20) NOT NULL,
-  `date_approve` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `date_approve` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -203,9 +203,10 @@ CREATE TABLE `document_form_approve` (
 --
 
 INSERT INTO `document_form_approve` (`id`, `document_form`, `id_approve`, `role_approve`, `comment_approve`, `status_approve`, `date_approve`) VALUES
-(1, 1, 1, 'อาจารย์', '', 'รอการอนุมัติ', '2023-10-28 08:25:24'),
-(4, 3, 2, 'อาจารย์', '', 'รอการอนุมัติ', '2023-10-28 08:25:40'),
-(5, 3, 1, 'ประธานหลักสูตร', '', 'รอการอนุมัติ', '0000-00-00 00:00:00');
+(1, 1, 2, 'อาจารย์', 'เก่งมากค่ะ', 'อนุมัติ', '2023-10-29 15:45:39'),
+(4, 3, 2, 'อาจารย์', 'ทดสอบไม่อนุมัติ', 'ไม่อนุมัติ', '2023-10-29 15:47:33'),
+(18, 1, 77, 'ประธานหลักสูตร', '', 'อนุมัติ', '2023-10-30 14:05:51'),
+(43, 1, 78, 'คณบดี', '', 'รอการอนุมัติ', NULL);
 
 -- --------------------------------------------------------
 
@@ -5958,10 +5959,10 @@ CREATE TABLE `position` (
 --
 
 INSERT INTO `position` (`position_id`, `position_name`, `position_role`) VALUES
-(10, 'คณบดี', ''),
+(10, 'คณบดี', 'master'),
 (20, 'รองคณบดีฝ่ายวิชาการและวิจัย', ''),
 (22, 'รองคณบดีฝ่ายกิจการนักศึกษา', ''),
-(25, 'ประธานหลักสูตร', ''),
+(25, 'ประธานหลักสูตร', 'direct'),
 (30, 'อาจารย์', 'teacher'),
 (40, 'หัวหน้าสำนักงาน', ''),
 (41, 'เจ้าหน้าที่ฝ่ายวิชาการ', ''),
@@ -6872,7 +6873,10 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `user_code`, `user_password`, `user_name`, `MAJOR`, `user_email`, `user_img`, `user_isUse`, `USERLEVEL`, `POSITION`) VALUES
 (1, 'sommart_pr@rmutto.ac.th', '123456789', 'สมมาตร พรหมพุฒ', 20, 'sommart_pr@rmutto.ac.th', NULL, 'Y', 10, 30),
-(2, 'test1@gmail.com', '123456789', 'ระวิน  สืบค้า', 30, 'test1@gmail.com', NULL, 'Y', 20, 30);
+(2, 'test1@gmail.com', '123456789', 'ระวิน  สืบค้า', 30, 'test1@gmail.com', NULL, 'Y', 20, 30),
+(77, 'direct@gmail.com', '123456789', 'ประธาน ประธาน', 30, 'test1@gmail.com', NULL, 'Y', 20, 25),
+(78, 'master@gmail.com', '123456789', 'คณบดี', 30, 'test1@gmail.com', NULL, 'Y', 20, 10),
+(79, 'office@gmail.com', '123456789', 'เจ้าหน้าที่', 30, 'test1@gmail.com', NULL, 'Y', 20, 41);
 
 -- --------------------------------------------------------
 
@@ -7337,7 +7341,7 @@ ALTER TABLE `document_form`
 -- AUTO_INCREMENT for table `document_form_approve`
 --
 ALTER TABLE `document_form_approve`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `event`
@@ -7409,7 +7413,7 @@ ALTER TABLE `trainingcourse`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `usertype`
