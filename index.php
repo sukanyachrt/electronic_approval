@@ -25,7 +25,7 @@ session_start();
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <b>ระบบยื่นเอกสารออนไลน์ <?php print_r($_SESSION); ?></b></a>
+      <b>ระบบยื่นเอกสารออนไลน์ </b></a>
     </div>
     <!-- /.login-logo -->
     <div class="card">

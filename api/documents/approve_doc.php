@@ -112,7 +112,7 @@ if ($data == "checkapprove") {
 				$connect->queryData();
 
 				$affect = $connect->affected_rows();
-				if ($affect > 0 && $dataApr['status']=="อนุมัติ") {
+				if ($affect > 0 && $dataApr['status'] == "อนุมัติ") {
 
 					#find code ผู้อนุมัติลำดับถัดไป 
 					$connect->sql = "SELECT
@@ -124,34 +124,39 @@ if ($data == "checkapprove") {
 					$connect->queryData();
 					$rsconnect = $connect->fetch_AssocData();
 					$user_code = $rsconnect['user_id'];
-
-					#บันทึกข้อมูล
-					$connect->sql = "INSERT INTO document_form_approve 
-					(document_form, 
-					id_approve, 
-					role_approve, 
-					comment_approve, 
-					status_approve
-					) VALUES (
-						'" . $dataApr['idDoc'] . "',
-						'" . $user_code . "',
-						'" . $resultFind['role_approve'] . "',
-						'',
-						'รอการอนุมัติ'
-						
-					 )";
-					$connect->queryData();
-					$result = [
-						'status' => 'ok',
-						'msg' => 'อนุมัติเอกสารเรียบร้อยแล้ว'
-					];
+					if ($user_code > 0) {
+						#บันทึกข้อมูล
+						$connect->sql = "INSERT INTO document_form_approve 
+						(document_form, 
+						id_approve, 
+						role_approve, 
+						comment_approve, 
+						status_approve
+						) VALUES (
+							'" . $dataApr['idDoc'] . "',
+							'" . $user_code . "',
+							'" . $resultFind['role_approve'] . "',
+							'',
+							'รอการอนุมัติ'
+							
+						)";
+						$connect->queryData();
+						$result = [
+							'status' => 'ok',
+							'msg' => 'อนุมัติเอกสารเรียบร้อยแล้ว'
+						];
+					}
+					else{
+						$result = [
+							'status' => 'no',
+							'msg' => 'ไม่พบรายชื่อผู้อนุมัติคนถัดไป'
+						];
+					}
 				}
 				$result = [
 					'status' => 'ok',
 					'msg' => 'ทำการไม่อนุมัติเอกสารเรียบร้อยแล้ว'
 				];
-
-				
 			} else {
 				#update
 				$connect->sql = "UPDATE document_form_approve SET comment_approve='" . $dataApr['comment'] . "' , status_approve='" . $dataApr['status'] . "', date_approve='" . date('Y-m-d H:i:s') . "' WHERE id='" . $dataApr['id'] . "'";
