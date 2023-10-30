@@ -299,24 +299,44 @@ include('./../admin/header.php');
                                 </span>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-6 comment_teacher_no">
-                                <b><span style="text-align: left;">ความเห็นอาจารย์ที่ปรึกษา</span></b>
-                                <div>-------------------------------------------------------</div>
-                                <div>-------------------------------------------------------</div>
-                                <div>-------------------------------------------------------</div>
+                                <p style="text-align: left;"><b>ความเห็นอาจารย์ที่ปรึกษา</b></p>
                             </div>
+                            <div class="col-6 text-left comment_direct">
+                                <b><span style="text-align: left;">ความเห็น ประธานคณะกรรมการบริหารสูตร</span></b>
+                            </div>
+                        </div>
+                        <style>
+                            .text_::after {
+                                content: "-----------------------------------------------------------------\A-----------------------------------------------------------------\A-----------------------------------------------------------------";
+                                white-space: pre;
+                                position: absolute;
+                                top: 10px;
+                                /* ปรับตำแหน่งเส้นประเพื่อให้อยู่ใต้ข้อความ */
+                                left: 0;
+                                width: 100%;
+                                padding: 0;
+                                margin: 0;
+                            }
+                        </style>
+                        <div class="row">
+                            <div class="col-6 comment_teacher_no">
+                                 <div class="text_">
+                                    <span id="divComment_teacher"> คำที่ยาวที่สุดอีกคำ คือ:antidisestablishmentarianism 28 ตัวอักษร ถูกพิจารณาว่าเป็นคำที่ยาวที่สุดเพราะมีความหมายที่แท้จริงและไม่ได้สร้างเพื่อให้เป็นคำยาวที่สุด
+                                        [แต่ดันยาวที่สุด] หมายถึง ผู้ต่อต้านการรื้อถอนโบสถ์ Church of England</span>
+                                </div>
+                            </div>
+
                             <div class="col-6 comment_teacher">
                                 <b><span style="text-align: left;">ความเห็นอาจารย์ที่ปรึกษา</span></b>
                                 <textarea rows="2" style="width: 80%;" name="approve_comment_teacher" id="approve_comment_teacher" class="textarea form-control" required></textarea>
                             </div>
-                            <div class="col-6 text-center comment_direct">
-                                <b><span style="text-align: right;">ความเห็น ประธานคณะกรรมการบริหารสูตร</span></b>
+                            <div class="col-6 text-left comment_direct">
                                 <textarea rows="2" style="width: 80%;" name="approve_comment_direct" id="approve_comment_direct" class="textarea form-control" required></textarea>
                             </div>
-                            <div class="col-6 text-center comment_direct_no">
-                                <b><span style="text-align: right;">ความเห็น ประธานคณะกรรมการบริหารสูตร</span></b>
+                            <div class="col-6 text-left comment_direct_no">
+                                <b><span style="text-align: left;">ความเห็น ประธานคณะกรรมการบริหารสูตร</span></b>
                                 <div>&emsp;&emsp;-------------------------------------------------------</div>
                                 <div>&emsp;&emsp;-------------------------------------------------------</div>
                                 <div>&emsp;&emsp;-------------------------------------------------------</div>
@@ -330,18 +350,18 @@ include('./../admin/header.php');
                                     <img id="imageTeacher" src="" width="150px" height="50px" />
                                     &emsp;&emsp;&emsp;&emsp;</span>
                             </div>
-                            <div class="col-6 text-center imageDirect_no" style="padding-top: 20px;">
+                            <div class="col-6 text-left imageDirect_no" style="padding-top: 20px;">
                                 ลงนาม-------------------------------------------------------
                             </div>
-                            <div class="col-6 text-center imageDirect">
-                                ลงนาม<span style="text-align: left; border-bottom: 1px dashed black;">
+                            <div class="col-6 text-left imageDirect">
+                                &emsp;&emsp;&emsp; ลงนาม<span style="text-align: left; border-bottom: 1px dashed black;">
                                     &emsp;&emsp;&emsp;&emsp;
                                     <img id="imageDirect" src="" width="150px" height="50px" />
                                     &emsp;&emsp;&emsp;&emsp;</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-7">
+                            <div class="col-7 col-6 text-left">
                                 <span>
                                     (--------------------<span id="spanName_teacher"></span>-------------------)
 
@@ -351,7 +371,7 @@ include('./../admin/header.php');
                                 &emsp;&emsp;&emsp;&emsp;(------------------------------------------------)
                             </div>
                             <div class="col-5 text-left imageDirect">
-                                &emsp;(--------------------<span id="spanName_direct"></span>-------------------)
+                                (-------------<span id="spanName_direct"></span>-------------)
                             </div>
 
                         </div>
@@ -366,7 +386,7 @@ include('./../admin/header.php');
                                 &emsp;&emsp;&emsp;&emsp;------------/-------------------/-----------------
                             </div>
                             <div class="col-5 text-left imageDirect">
-                                <span>&emsp;&emsp;&emsp;&emsp;--------<span id="spanDate_direct"></span>----------</span>
+                                <span>&emsp;&emsp;--------<span id="spanDate_direct"></span>----------</span>
                             </div>
 
 
@@ -517,66 +537,36 @@ include('./../admin/header.php');
 <script src="./../asset/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="./../asset/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="./../asset/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
 <script>
-   
-        loadData();
-        function loadData() {
-            $.ajax({
-                url: "./../api/documents/approve_doc.php?v=checkapprove",
-                type: "GET",
-                dataType: "json",
-                success: function(Res) {
-                    console.log(Res);
-                    $('#tb_approve_teacher tbody').html('');
-                    $.each(Res, function(index, item) {
-                        $("#tb_approve_teacher").append('<tr>' +
-                            '<td style="vertical-align: middle;"><button  onclick="modalDocShow(' + item.id + ',' + item.document_form + ')" type="button" class="badge badge badge-primary" data-toggle="modal" data-target=".bd-example-modal-xl">Preview</button></td>' +
-                            '<td style="vertical-align: middle;">' + item.form_title + '</td>' +
-                            '<td style="vertical-align: middle;">' + item.fullname + '</td>' +
-                            '<td style="vertical-align: middle;">' + item.date_insert + '</td>' +
-                            '<td style="vertical-align: middle;"><span class="badge badge-warning">' + item.status_approve + '</span></td>' +
-                            '</tr>');
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.log("Error: " + error);
-                }
-            });
-        }
-        
+    loadData();
 
+    function loadData() {
+        $.ajax({
+            url: "./../api/documents/approve_doc.php?v=checkapprove",
+            type: "GET",
+            dataType: "json",
+            success: function(Res) {
+                console.log(Res);
+                $('#tb_approve_teacher tbody').html('');
+                $.each(Res, function(index, item) {
+                    $("#tb_approve_teacher").append('<tr>' +
+                        '<td style="vertical-align: middle;"><button  onclick="modalDocShow(' + item.id + ',' + item.document_form + ')" type="button" class="badge badge badge-primary" data-toggle="modal" data-target=".bd-example-modal-xl">Preview</button></td>' +
+                        '<td style="vertical-align: middle;">' + item.form_title + '</td>' +
+                        '<td style="vertical-align: middle;">' + item.fullname + '</td>' +
+                        '<td style="vertical-align: middle;">' + item.date_insert + '</td>' +
+                        '<td style="vertical-align: middle;"><span class="badge badge-warning">' + item.status_approve + '</span></td>' +
+                        '</tr>');
+                });
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    }
 
+    
 
-
-        // $.ajax({
-        //     url: "./../api/documents/approve_doc.php?v=checkapprove", // Replace with the URL of your data source
-        //     type: "GET",
-        //     dataType: "json",
-        //     success: function(Res) {
-        //         console.log(Res);
-        //         $('#tb_approve_teacher tbody').html('');
-        //         $.each(Res, function(index, item) {
-
-
-
-        //             $("#tb_approve_teacher").append('<tr>' +
-        //                 //'<td classs="text-center"> <button type="button" onclick="fnApprove(\'yes\', ' + item.id + ')" class="btn btn-success btn-xs"><i class="fas fa-check"></i> อนุมัติ</button> <button type="button" class="btn btn-danger btn-xs"><i class="fas fa-window-close"></i> ไม่อนุมัติ</button></td>' +
-        //                 '<td style="vertical-align: middle;"><button  onclick="modalDocShow(' + item.id + ',' + item.document_form + ')" type="button" class="badge badge badge-primary" data-toggle="modal" data-target=".bd-example-modal-xl">Preview</button></td>' +
-        //                 '<td style="vertical-align: middle;">' + item.form_title + '</td>' +
-        //                 '<td style="vertical-align: middle;">' + item.fullname + '</td>' +
-        //                 '<td style="vertical-align: middle;">' + item.date_insert + '</td>' +
-        //                 '<td style="vertical-align: middle;"><span class="badge badge-warning">' + item.status_approve + '</span></td>' +
-        //                 '</tr>');
-        //         });
-        //     },
-        //     error: function(xhr, status, error) {
-        //         console.log("Error: " + error);
-        //     }
-        // });
-
-
-
- 
 
     function fnApprove(status) {
         var textareaValues = $(".textarea.form-control").map(function() {
@@ -595,7 +585,7 @@ include('./../admin/header.php');
             var role_approve = $('#btnRole_approve').val();
             var id = $('#btnApprove_yes').val();
             var idDoc = $('#btnId_doc').val()
-           
+
             let data = {
                 "status": status,
                 "id": id,
@@ -629,20 +619,20 @@ include('./../admin/header.php');
             type: "GET",
             dataType: "json",
             success: function(Res) {
-                console.log(Res)
+               // console.log(Res)
                 //#region  Res[0] ข้อมูล doc
                 var datadoc = Res[0];
                 $('#divTitle').text(datadoc.form_title)
                 $('#divFirstname').text(`${datadoc.student_name}`);
                 $('#divLastname').text(`${datadoc.student_lastname}`);
 
-                $('#edulevel[value="'+datadoc.edulevel+'"]').prop('checked', true);
-                $('#sector_doc[value="'+datadoc.type_sector+'"]').prop('checked', true);
-                $('#sector_master[value="'+datadoc.type_sector+'"]').prop('checked', true);
-                $('#semester[value="'+datadoc.semester+'"]').prop('checked', true);
-                
+                $('#edulevel[value="' + datadoc.edulevel + '"]').prop('checked', true);
+                $('#sector_doc[value="' + datadoc.type_sector + '"]').prop('checked', true);
+                $('#sector_master[value="' + datadoc.type_sector + '"]').prop('checked', true);
+                $('#semester[value="' + datadoc.semester + '"]').prop('checked', true);
+
                 $('#divStudentcode').text(datadoc.doc_studentcode);
-                $('#divMajor').text(datadoc.major_name);
+                $('#divMajor').text(datadoc.name_major);
                 $('#divNoMajor').text(datadoc.major_name);
                 $('#divYear_semester').text(datadoc.year_semester);
                 $('#divYear_study').text(datadoc.year_study);
@@ -681,17 +671,17 @@ include('./../admin/header.php');
                 $.each(dataApr, function(index, item) {
                     if (item.role_approve == "อาจารย์") {
                         $('.comment_teacher_no').show();
-                        $('#approve_comment_teacher').text(item.comment_approve)
+                      //  $('#approve_comment_teacher').text(item.comment_approve)
                         $("#imageTeacher").attr("src", "data:image/jpeg;base64," + item.image_sign);
                         $('#spanName_teacher').text(`${item.user_name}`);
                         $('#spanDate_teacher').text(`${item.date_approve}`);
-
+                        $('#divComment_teacher').text(`${item.comment_approve}`)
                     }
 
                     if (item.role_approve == "ประธานหลักสูตร") {
 
                         $('.comment_direct_no').show();
-                        $('#approve_comment_direct').text(item.comment_approve)
+                     //   $('#approve_comment_direct').text(item.comment_approve)
 
                         $('.imageDirect_no').hide();
                         $('.imageDirect').show();
@@ -704,7 +694,7 @@ include('./../admin/header.php');
                     if (item.role_approve == "คณบดี") {
 
                         $('.comment_master_no').show();
-                        $('#approve_comment_master').text(item.comment_approve)
+                       // $('#approve_comment_master').text(item.comment_approve)
 
 
                         $('.imageMaster').show();
@@ -722,6 +712,14 @@ include('./../admin/header.php');
                         if (item.role_approve === "อาจารย์") {
                             $('.comment_teacher_no').hide();
                             $('.comment_teacher').show();
+                        } else if (item.role_approve === "ประธานหลักสูตร") {
+                            $('.comment_direct_no').hide();
+                            $('.comment_direct').show();
+                        }
+
+                        else if (item.role_approve === "คณบดี") {
+                            $('.comment_master_no').hide();
+                            $('.comment_master').show();
                         }
 
                     }

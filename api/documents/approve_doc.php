@@ -51,7 +51,7 @@ if ($data == "checkapprove") {
 	doc_.edulevel,
 	doc_.semester,
 	doc_.date_insert,
-	major.major_name
+	major.major_name as name_major
 	FROM
 	document_form AS doc_
 	INNER JOIN student ON doc_.id_student = student.student_id
