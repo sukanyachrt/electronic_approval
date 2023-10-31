@@ -78,7 +78,7 @@ include('./../admin/header.php');
                                                     </sapn>
                                             </div>
                                             <div class="col-sm-5">
-                                                <?php echo $_SESSION['_lastname'] ?>
+                                                <?php print_r( $_SESSION) ?>
                                             </div>
                                         </div>
                                         <!-- /.col -->

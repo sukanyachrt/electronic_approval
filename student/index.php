@@ -34,14 +34,7 @@ include('./../admin/header.php');
                                 <div class="card-body">
                                     <table id="tb_history" class="table table-bordered table-hover">
                                         <thead>
-                                            <tr>
-                                                <th>เรื่อง</th>
-                                                <th>ไฟล์คำขอ</th>
-                                                <th>วันที่ยื่นคำขอ</th>
-                                                <th>สถานะการอนุมัติ</th>
-                                                <th>Progress</th>
 
-                                            </tr>
                                         </thead>
                                         <tbody>
                                         </tbody>
@@ -82,43 +75,84 @@ include('./../admin/header.php');
 <script src="./../asset/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script>
     $(function() {
+        $.ajax({
+            url: "./../api/documents/data.php?v=header_data", // Replace with the URL of your data source
+            type: "GET",
+            dataType: "json",
+            success: function(Res) {
+                $('#tb_history thead').html();
+                var tb_history='';
+                $.each(Res[0], function(index, item) {
+                   
+                     tb_history+='<th class="text-center" rowspan="' + item.rows + '" colspan="' + item.cols + '">' + item.title + '</th>';
 
+
+
+
+                    //     $.each(item.status, function(i, data_) {
+                    //         if(i==0){
+                    //             $("#tb_history thead").append('</tr><tr>');
+                    //         }
+
+                    //     $("#tb_history thead").append('<th>' + data_.title  + '</th>');
+
+                    // });
+
+                    // $("#tb_history thead").append(
+                    //     '<th rowspan="2">' + item.title + '</th>');
+                });
+                //$('#tb_history thead').html('<tr>'+tb_history+'</tr>');
+
+                var t_status='';
+                $.each(Res[1], function(index, item) {
+                  console.log(item.title)
+                  t_status+='<th class="text-center">' + item.title + '</th>';
+                   
+                });
+                $('#tb_history thead').html('<tr>'+tb_history+'</tr>'+t_status+'</tr>');
+            }
+        });
         $.ajax({
             url: "./../api/documents/data.php?v=history_doc", // Replace with the URL of your data source
             type: "GET",
             dataType: "json",
             success: function(Res) {
+                // console.log(Res)
                 $('#tb_history tbody').html('');
                 $.each(Res, function(index, item) {
-                    console.log(item.data_approve.length)
+                    //   console.log(item.data_approve.length)
                     var data_approve = '';
                     $.each(item.data_approve, function(i, data_) {
-                        if (i != 0) {
-                            // data_approve += '</tr>';
+                        if (data_.status_approve == undefined) {
+                            data_approve += '<td class="text-center">-</td>';
+                        } else {
+                            data_approve += '<td>' + 'สถานะ : ' + data_.status_approve + '<br/> วันที่อนุมัติ : ' + data_.date_approve + '</td>';
+
                         }
-                        data_approve += '<td>' + data_.role_approve + '=>' + data_.status_approve + '<br/> วันที่อนุมัติ : ' + data_.date_approve + '</td>' +
-                            '<td></td>' +
-                            '</tr>';
+
                     })
 
 
-                    $("#tb_history").append('<tr>' +
-                        '<td style="vertical-align: middle;" rowspan=' + item.data_approve.length + '>' + item.form_title + '</td>' +
-                        '<td style="vertical-align: middle;" rowspan=' + item.data_approve.length + '>Preview</td>' +
-                        '<td style="vertical-align: middle;" rowspan=' + item.data_approve.length + '>' + item.date_insert + '</td>' +
-                        data_approve);
+                    $("#tb_history tbody").append('<tr>' +
+                        '<td style="vertical-align: middle;">' + item.form_title + '</td>' +
+                        '<td style="vertical-align: middle;" >Preview</td>' +
+                        '<td style="vertical-align: middle;">' + item.date_insert + '</td>' +
+                        data_approve +
+                        '</tr>');
                 });
             },
             error: function(xhr, status, error) {
                 console.log("Error: " + error);
             }
         });
-        $("#tb_history").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "buttons": []
-        }).buttons().container().appendTo('#tb_history_wrapper .col-md-6:eq(0)');
+
+
+        // $("#tb_history").DataTable({
+        //     "responsive": true,
+        //     "lengthChange": false,
+        //     "autoWidth": false,
+        //     "buttons": []
+        // }).buttons().container().appendTo('#tb_history_wrapper .col-md-6:eq(0)');
 
     });
 </script>

@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 include('./../Connect_Data.php');
-//error_reporting(0);
+error_reporting(0);
 session_start();
 date_default_timezone_set('Asia/Bangkok');
 $connect = new Connect_Data();
@@ -10,6 +10,8 @@ $connect->connectData();
 $connect2 = new Connect_Data();
 $connect2->connectData();
 $data = isset($_GET['v']) ? $_GET['v'] : '';
+$jsonFile = "./../data_approve.json";
+$jsonData = file_get_contents($jsonFile);
 $result = array();
 if ($data == "saveForm_1") {
 
@@ -66,27 +68,48 @@ if ($data == "saveForm_1") {
     echo json_encode($result);
 } else if ($data == 'history_doc') {
     #ประวัติการขอเอกสาร
-   // $connect->sql = "SELECT * FROM 	document_form as t1 	INNER JOIN 	document_form_approve as t2 	ON 		t1.id = t2.document_form WHERE id_student='".$_SESSION['student_id']."'";
-   $connect->sql = "SELECT * FROM 	document_form  WHERE id_student='".$_SESSION['_id']."'";
-   $connect->queryData();
-   $data_=array();
-   $test = array();
+    $connect->sql = "SELECT * FROM 	document_form  WHERE id_student='" . $_SESSION['_id'] . "'";
+    $connect->queryData();
+    $data_doc = array();
+    $data_apr = array();
+    $data_ = json_decode($jsonData, true);
     while ($rsconnect = $connect->fetch_AssocData()) {
-        array_push($data_,$rsconnect);
-       // $result=$rsconnect;
-        $connect2->sql = "SELECT * FROM 	document_form_approve  WHERE document_form='".$rsconnect['id']."'";
-        $connect2->queryData();
-      
-        while ($rsconnect2 = $connect2->fetch_AssocData()) {
-             array_push($test,$rsconnect2);
-            
+        array_push($data_doc, $rsconnect);
+        foreach ($data_ as $item) {
+            $connect2->sql = "SELECT * FROM 	document_form_approve  WHERE document_form='" . $rsconnect['id'] . "' AND role_approve='" . $item['role_approve'] . "'";
+            $connect2->queryData();
+            if ($row = $connect2->num_rows() > 0) {
+                $rsconnect2 = $connect2->fetch_AssocData();
+                array_push($data_apr, $rsconnect2);
+            }
+            else{
+               // echo "no";
+                array_push($data_apr, ["document_form"=>$rsconnect['id'],"data_approve"=>[]]);
+            }
         }
-
     }
-    $dataFind =findDoc_approve($data_,$test);
-   echo json_encode($dataFind);
+    $dataFind = findDoc_approve($data_doc, $data_apr);
+    echo json_encode($dataFind);
+} else if ($data == "header_data") {
+
+    $data_ = json_decode($jsonData, true);
+    $header_data = [
+        ["title" => 'เรื่อง',"rows"=>2,"cols"=>1],
+        ["title" => 'ไฟล์คำขอ',"rows"=>2,"cols"=>1],
+        ["title" => 'วันที่ยื่นคำขอ',"rows"=>2,"cols"=>1],
+        ["title" => 'สถานะ',"rows"=>1, "cols"=>3],
+      
+    ];
+    if ($data_ !== null) {
+        foreach ($data_ as $item) {
+            array_push($result, ['title' =>$item['role_approve']]);
+        }
+      //  array_push($header_data,['status'=>$result]);
+    }
+    echo json_encode([$header_data,$result]);
 }
-function findDoc_approve($doc_, $doc_approve) {
+function findDoc_approve($doc_, $doc_approve)
+{
 
     foreach ($doc_ as &$item1) {
         $idToFind = $item1['id'];
@@ -98,6 +121,3 @@ function findDoc_approve($doc_, $doc_approve) {
     }
     return $doc_;
 }
-
-
-?>
