@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2023 at 03:06 PM
+-- Generation Time: Oct 31, 2023 at 06:02 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -180,7 +180,8 @@ CREATE TABLE `document_form` (
 
 INSERT INTO `document_form` (`id`, `id_student`, `form_title`, `student_code`, `major_name`, `year_semester`, `year_study`, `telephone`, `email`, `purpose`, `type_sector`, `edulevel`, `semester`, `date_insert`) VALUES
 (1, 6, 'ทดสอบการสร้างเรื่อง', 'M6113391', '01', '2554', '2554', 'karn.yonddg@meliveco', '098', 'ดฟดหดห', 'แบบ 1.1', 'ปริญญาเอก', 'ภาคปกติ', '2023-10-28 13:35:54'),
-(3, 6, 'test 2', 'M6113391', '01', '2554', '2554', 'karn.yonddg@meliveco', '098', 'ddddddddd', 'แบบ 1.1', 'ปริญญาเอก', 'ภาคปกติ', '2023-10-28 14:25:10');
+(3, 6, 'test 2', 'M6113391', '01', '2554', '2554', 'karn.yonddg@meliveco', '098', 'ddddddddd', 'แบบ 1.1', 'ปริญญาเอก', 'ภาคปกติ', '2023-10-28 14:25:10'),
+(4, 6, 'คำร้องขอ', '123456789', '02', '2555', '2554', 'sukanya.chrt@gmail.c', '0123456789', 'ทดสอบการขอ', '', 'ปริญญาโท', 'ภาคนอกเวลาราชการ', '2023-10-30 22:55:08');
 
 -- --------------------------------------------------------
 
@@ -205,8 +206,9 @@ CREATE TABLE `document_form_approve` (
 INSERT INTO `document_form_approve` (`id`, `document_form`, `id_approve`, `role_approve`, `comment_approve`, `status_approve`, `date_approve`) VALUES
 (1, 1, 2, 'อาจารย์', 'เก่งมากค่ะ', 'อนุมัติ', '2023-10-29 15:45:39'),
 (4, 3, 2, 'อาจารย์', 'ทดสอบไม่อนุมัติ', 'ไม่อนุมัติ', '2023-10-29 15:47:33'),
-(18, 1, 77, 'ประธานหลักสูตร', '', 'อนุมัติ', '2023-10-30 14:05:51'),
-(43, 1, 78, 'คณบดี', '', 'รอการอนุมัติ', NULL);
+(18, 1, 77, 'ประธานหลักสูตร', 'dddddd', 'อนุมัติ', '2023-10-30 14:35:44'),
+(43, 1, 78, 'คณบดี', 'ทดสอบไม่อนุมัติ', 'อนุมัติ', '2023-10-30 15:24:14'),
+(44, 4, 1, 'อาจารย์', '', 'รอการอนุมัติ', NULL);
 
 -- --------------------------------------------------------
 
@@ -7335,13 +7337,13 @@ ALTER TABLE `doc`
 -- AUTO_INCREMENT for table `document_form`
 --
 ALTER TABLE `document_form`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `document_form_approve`
 --
 ALTER TABLE `document_form_approve`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `event`
