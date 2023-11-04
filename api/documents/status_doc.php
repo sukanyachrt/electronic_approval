@@ -14,12 +14,12 @@ $data = isset($_GET['v']) ? $_GET['v'] : '';
 $result = array();
 if ($data == "checkstatus") {
 
-     $status_doc = $_POST['dataFind'];
-   // $status_doc = ["อนุมัติ", "รอการอนุมัติ"];
+    $status_doc = $_POST['dataFind'];
+    // $status_doc = ["อนุมัติ", "รอการอนุมัติ"];
     $data_ = json_decode($jsonData, true);
     $data_doc = array();
     $data_apr = array();
-    
+
     foreach ($status_doc as $item) {
         $connect->sql = "SELECT
         CONCAT( student_name, ' ', student_lastname ) as fullname,t1.id,
@@ -29,7 +29,7 @@ if ($data == "checkstatus") {
         document_form AS t1
         INNER JOIN student AS t2 ON t1.id_student = t2.student_id  WHERE status_doc='" . $item . "'";
         $connect->queryData();
-       
+
         while ($rsconnect = $connect->fetch_AssocData()) {
             array_push($data_doc, $rsconnect);
             foreach ($data_ as $itemApr) {
@@ -45,16 +45,24 @@ if ($data == "checkstatus") {
                 }
             }
         }
-       
-       // array_push($result, $dataFind);
     }
     $result = findDoc_approve($data_doc, $data_apr);
 
-    //print_r($result);
-    // echo json_encode([$data_doc]);
+    echo json_encode([$result]);
+} else if ($data == "countStatus") {
+    $status_doc = ["อนุมัติ", "รอการอนุมัติ", "ไม่อนุมัติ"];
+    foreach ($status_doc as $item) {
 
+        $connect->sql = "SELECT COUNT(*) as numrow,status_doc
+        FROM  document_form 
+        WHERE status_doc='" . $item . "'";
+        $connect->queryData();
+        while ($rsconnect = $connect->fetch_AssocData()) {
+            array_push($result,$rsconnect);
+        }
+    }
 
-     echo json_encode([$result]);
+    echo json_encode($result);
 }
 function findDoc_approve($doc_, $doc_approve)
 {
