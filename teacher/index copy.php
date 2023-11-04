@@ -291,6 +291,8 @@ include('./../admin/header.php');
                                 </span>
                             </div>
                         </div>
+
+
                         <div class="row">
                             <div class="col-7"></div>
                             <div class="col-5 text-center">
@@ -300,60 +302,70 @@ include('./../admin/header.php');
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6 comment_teacher_no">
-                                <p style="text-align: left;"><b>ความเห็นอาจารย์ที่ปรึกษา</b></p>
+                            <div class="col-5">
+                                <b>ความเห็นอาจารย์ที่ปรึกษา</b>
                             </div>
-                            <div class="col-6 text-left comment_direct">
-                                <b><span style="text-align: left;">ความเห็น ประธานคณะกรรมการบริหารสูตร</span></b>
+                            <div class="col-2">
+                            </div>
+                            <div class="col-5">
+                                <b>ความเห็น ประธานคณะกรรมการบริหารสูตร</b>
                             </div>
                         </div>
-                        <style>
-                            .text_::after {
-                                content: "-----------------------------------------------------------------\A-----------------------------------------------------------------\A-----------------------------------------------------------------";
-                                white-space: pre;
-                                position: absolute;
-                                top: 10px;
-                                /* ปรับตำแหน่งเส้นประเพื่อให้อยู่ใต้ข้อความ */
-                                left: 0;
-                                width: 100%;
-                                padding: 0;
-                                margin: 0;
-                            }
-                        </style>
                         <div class="row">
-                            <div class="col-6 comment_teacher_no">
-                                 <div class="text_">
+                            <div class="col-5 comment_teacher_no">
+                                <div class="text_">
                                     <span id="divComment_teacher"> </span>
                                 </div>
                             </div>
 
-                            <div class="col-6 comment_teacher">
-                                <b><span style="text-align: left;">ความเห็นอาจารย์ที่ปรึกษา</span></b>
+                            <div class="col-2">
+                            </div>
+                            <div class="col-5 comment_direct_no">
+                                <div class="text_">
+                                    <span id="divComment_direct"> </span>
+                                </div>
+                            </div>
+
+                            <div class="col-5 comment_teacher">
                                 <textarea rows="2" style="width: 80%;" name="approve_comment_teacher" id="approve_comment_teacher" class="textarea form-control" required></textarea>
                             </div>
-                            <div class="col-6 text-left comment_direct">
-                                
-                                <textarea rows="2" style="width: 80%;" name="approve_comment_direct" id="approve_comment_direct" class="textarea form-control" required></textarea>
-                            </div>
-                             <div class="col-6 text-left comment_direct_no">
-                                <b><span style="text-align: left;">ความเห็น ประธานคณะกรรมการบริหารสูตร</span></b>
-                                <div>&emsp;&emsp;-------------------------------------------------------</div>
-                                <div>&emsp;&emsp;-------------------------------------------------------</div>
-                                <div>&emsp;&emsp;-------------------------------------------------------</div>
 
-                            </div> 
+                            <div class="col-2">
+                            </div>
+                            <div class="col-5 comment_direct">
+                                <div class="text_">
+                                    <textarea rows="2" style="width: 80%;" name="approve_comment_direct" id="approve_comment_direct" class="textarea form-control" required></textarea>
+
+                                </div>
+                            </div>
+
                         </div>
+
+                        <style>
+                            .text_::after {
+                                content: "\A-----------------------------------------------------------------\A-----------------------------------------------------------------\A-----------------------------------------------------------------";
+
+                                white-space: pre;
+                                position: relative;
+                                top: -10px;
+                                /* ปรับตำแหน่งเส้นประเพื่อให้อยู่เหนือข้อความ */
+                                left: 0;
+                                width: 100%;
+                            }
+                        </style>
                         <div class="row">
-                            <div class="col-6 text-left">
+                            <div class="col-5 text-left">
                                 ลงนาม<span style="text-align: left; border-bottom: 1px dashed black;">
                                     &emsp;&emsp;&emsp;&emsp;
                                     <img id="imageTeacher" src="" width="150px" height="50px" />
                                     &emsp;&emsp;&emsp;&emsp;</span>
                             </div>
-                            <div class="col-6 text-left imageDirect_no" style="padding-top: 20px;">
+                            <div class="col-2">
+                            </div>
+                            <div class="col-5 text-center imageDirect_no" style="padding-top: 20px;">
                                 ลงนาม-------------------------------------------------------
                             </div>
-                            <div class="col-6 text-left imageDirect">
+                            <div class="col-5 text-center imageDirect">
                                 &emsp;&emsp;&emsp; ลงนาม<span style="text-align: left; border-bottom: 1px dashed black;">
                                     &emsp;&emsp;&emsp;&emsp;
                                     <img id="imageDirect" src="" width="150px" height="50px" />
@@ -361,53 +373,57 @@ include('./../admin/header.php');
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-7 col-6 text-left">
+                            <div class="col-5 text-left">
                                 <span>
                                     (--------------------<span id="spanName_teacher"></span>-------------------)
 
                                 </span>
                             </div>
+                            <div class="col-2">
+                            </div>
                             <div class="col-5 text-left imageDirect_no">
                                 &emsp;&emsp;&emsp;&emsp;(------------------------------------------------)
                             </div>
-                            <div class="col-5 text-left imageDirect">
+                            <div class="col-5 text-center imageDirect">
                                 (-------------<span id="spanName_direct"></span>-------------)
                             </div>
 
                         </div>
                         <div class="row">
-                            <div class="col-7">
+                            <div class="col-5">
                                 <span style="text-align: left;">&emsp;&emsp;--------<span id="spanDate_teacher"></span>----------</span>
                             </div>
-                            <!-- <div class="col-5">
-                                <span>&emsp;&emsp;--------<span id="spanDate_direct"></span>----------</span>
-                            </div> -->
-                            <div class="col-5 text-left imageDirect_no">
+                            <div class="col-2">
+                            </div>
+                            <div class="col-5 text-center imageDirect_no">
                                 &emsp;&emsp;&emsp;&emsp;------------/-------------------/-----------------
                             </div>
-                            <div class="col-5 text-left imageDirect">
+                            <div class="col-5 text-center imageDirect">
                                 <span>&emsp;&emsp;--------<span id="spanDate_direct"></span>----------</span>
                             </div>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-5">
+                                <b>ความเห็นคณบดี</b>
+                            </div>
+                            <div class="col-2">
+                            </div>
+                            <div class="col-5">
 
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-7">
-                                <span style="text-align: left;">ความเห็นคณบดี</span>
+                            <div class="col-5 comment_master_no">
+                                <div class="text_">
+                                    <span id="divComment_master"> </span>
+                                </div>
                             </div>
-                            <div class="col-5">
-                            </div>
-                        </div>
-                       
-
-                        <div class="row comment_master">
-                            <div class="col-7">
+                            <div class="col-5 comment_master">
                                 <textarea rows="2" style="width: 80%;" name="approve_comment_master" id="approve_comment_master" class="textarea form-control" required></textarea>
                             </div>
-
-                            <div class="col-5">
-                            </div>
                         </div>
+                        
                         <div class="row comment_master_no">
 
                             <div class="col-7">
@@ -497,15 +513,21 @@ include('./../admin/header.php');
                             </div>
 
                         </div>
-                        <input type="hidden" id="btnId_doc" name="btnId_doc" value="">
+                        <div class="row justify-content-end " style="padding: 10px;">
+                            <div class="col-12">
+                                <input type="hidden" id="btnId_doc" name="btnId_doc" value="">
 
-                        <input type="hidden" id="btnRole_approve" name="role_approve" value="">
-                        <button type="button" id="btnApprove_yes" value="" onclick="fnApprove('ไม่อนุมัติ')" class="btn btn-danger float-right" style="margin-right: 5px;">
-                            <i class="fas fa-window-close"></i> ไม่อนุมัติเอกสาร
-                        </button>
-                        <button type="button" value="" onclick="fnApprove('อนุมัติ')" class="btn btn-success float-right" style="margin-right: 5px;">
-                            <i class="fas fa-check"></i>อนุมัติเอกสาร
-                        </button>
+                                <input type="hidden" id="btnRole_approve" name="role_approve" value="">
+                                <button type="button" id="btnApprove_yes" value="" onclick="fnApprove('ไม่อนุมัติ')" class="btn btn-danger float-right" style="margin-right: 5px;">
+                                    <i class="fas fa-window-close"></i> ไม่อนุมัติเอกสาร
+                                </button>
+                                <button type="button" value="" onclick="fnApprove('อนุมัติ')" class="btn btn-success float-right" style="margin-right: 5px;">
+                                    <i class="fas fa-check"></i>อนุมัติเอกสาร
+                                </button>
+                            </div>
+
+                        </div>
+
 
                     </form>
                 </div>
@@ -555,7 +577,7 @@ include('./../admin/header.php');
         });
     }
 
-    
+
 
 
     function fnApprove(status) {
@@ -609,7 +631,7 @@ include('./../admin/header.php');
             type: "GET",
             dataType: "json",
             success: function(Res) {
-               // console.log(Res)
+                // console.log(Res)
                 //#region  Res[0] ข้อมูล doc
                 var datadoc = Res[0];
                 $('#divTitle').text(datadoc.form_title)
@@ -661,7 +683,7 @@ include('./../admin/header.php');
                 $.each(dataApr, function(index, item) {
                     if (item.role_approve == "อาจารย์") {
                         $('.comment_teacher_no').show();
-                      //  $('#approve_comment_teacher').text(item.comment_approve)
+                        //  $('#approve_comment_teacher').text(item.comment_approve)
                         $("#imageTeacher").attr("src", "data:image/jpeg;base64," + item.image_sign);
                         $('#spanName_teacher').text(`${item.user_name}`);
                         $('#spanDate_teacher').text(`${item.date_approve}`);
@@ -671,7 +693,7 @@ include('./../admin/header.php');
                     if (item.role_approve == "ประธานหลักสูตร") {
 
                         $('.comment_direct_no').show();
-                     //   $('#approve_comment_direct').text(item.comment_approve)
+                        //   $('#approve_comment_direct').text(item.comment_approve)
 
                         $('.imageDirect_no').hide();
                         $('.imageDirect').show();
@@ -685,7 +707,7 @@ include('./../admin/header.php');
                     if (item.role_approve == "คณบดี") {
 
                         $('.comment_master_no').show();
-                       // $('#approve_comment_master').text(item.comment_approve)
+                        // $('#approve_comment_master').text(item.comment_approve)
 
 
                         $('.imageMaster').show();
@@ -694,6 +716,7 @@ include('./../admin/header.php');
 
                         $('#spanName_master').text(`(----------------------${item.user_name}----------------------)`);
                         $('#spanDate_master').text(`----------${item.date_approve}-----------`);
+                        $('#divComment_master').text(`${item.comment_approve}`)
 
                     }
 
@@ -706,9 +729,7 @@ include('./../admin/header.php');
                         } else if (item.role_approve === "ประธานหลักสูตร") {
                             $('.comment_direct_no').hide();
                             $('.comment_direct').show();
-                        }
-
-                        else if (item.role_approve === "คณบดี") {
+                        } else if (item.role_approve === "คณบดี") {
                             $('.comment_master_no').hide();
                             $('.comment_master').show();
                         }

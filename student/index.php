@@ -81,35 +81,20 @@ include('./../admin/header.php');
             dataType: "json",
             success: function(Res) {
                 $('#tb_history thead').html();
-                var tb_history='';
+                var tb_history = '';
                 $.each(Res[0], function(index, item) {
-                   
-                     tb_history+='<th class="text-center" rowspan="' + item.rows + '" colspan="' + item.cols + '">' + item.title + '</th>';
 
+                    tb_history += '<th class="text-center" rowspan="' + item.rows + '" colspan="' + item.cols + '">' + item.title + '</th>';
 
-
-
-                    //     $.each(item.status, function(i, data_) {
-                    //         if(i==0){
-                    //             $("#tb_history thead").append('</tr><tr>');
-                    //         }
-
-                    //     $("#tb_history thead").append('<th>' + data_.title  + '</th>');
-
-                    // });
-
-                    // $("#tb_history thead").append(
-                    //     '<th rowspan="2">' + item.title + '</th>');
                 });
-                //$('#tb_history thead').html('<tr>'+tb_history+'</tr>');
-
-                var t_status='';
+                
+                var t_status = '';
                 $.each(Res[1], function(index, item) {
-                  console.log(item.title)
-                  t_status+='<th class="text-center">' + item.title + '</th>';
-                   
+                    console.log(item.title)
+                    t_status += '<th class="text-center">' + item.title + '</th>';
+
                 });
-                $('#tb_history thead').html('<tr>'+tb_history+'</tr>'+t_status+'</tr>');
+                $('#tb_history thead').html('<tr>' + tb_history + '</tr>' + t_status + '</tr>');
             }
         });
         $.ajax({
@@ -117,16 +102,31 @@ include('./../admin/header.php');
             type: "GET",
             dataType: "json",
             success: function(Res) {
-                // console.log(Res)
+                console.log(Res)
                 $('#tb_history tbody').html('');
                 $.each(Res, function(index, item) {
-                    //   console.log(item.data_approve.length)
                     var data_approve = '';
                     $.each(item.data_approve, function(i, data_) {
                         if (data_.status_approve == undefined) {
                             data_approve += '<td class="text-center">-</td>';
                         } else {
-                            data_approve += '<td>' + 'สถานะ : ' + data_.status_approve + '<br/> วันที่อนุมัติ : ' + data_.date_approve + '</td>';
+                            var spanStatus = '';
+                            if (data_.status_approve == "อนุมัติ") {
+                                spanStatus = '<small class="badge badge-success">' + data_.status_approve + '</small>'
+                            } else if (data_.status_approve == "รอการอนุมัติ") {
+                                spanStatus = '<small class="badge badge-info">' + data_.status_approve + '</small>'
+                            } else {
+                                spanStatus = '<small class="badge badge-danger">' + data_.status_approve + '</small>'
+                            }
+                            var datetimeString = '-';
+                            if (data_.date_approve != null) {
+                                datetimeString = convertDate(data_.date_approve);
+
+                            }
+
+
+
+                            data_approve += '<td >' + 'สถานะ : ' + spanStatus + '<br/> วันที่อนุมัติ : ' + (datetimeString[0]) + '<br/> เวลาที่อนุมัติ : ' + (datetimeString[1]) + '</td>';
 
                         }
 
@@ -134,8 +134,9 @@ include('./../admin/header.php');
 
 
                     $("#tb_history tbody").append('<tr>' +
+                        '<td style="vertical-align: middle;" ><button  onclick="modalDocShow(' + item.id + ')" type="button" class="badge badge badge-primary" >Preview</button></td>' +
+
                         '<td style="vertical-align: middle;">' + item.form_title + '</td>' +
-                        '<td style="vertical-align: middle;" >Preview</td>' +
                         '<td style="vertical-align: middle;">' + item.date_insert + '</td>' +
                         data_approve +
                         '</tr>');
@@ -147,14 +148,29 @@ include('./../admin/header.php');
         });
 
 
-        // $("#tb_history").DataTable({
-        //     "responsive": true,
-        //     "lengthChange": false,
-        //     "autoWidth": false,
-        //     "buttons": []
-        // }).buttons().container().appendTo('#tb_history_wrapper .col-md-6:eq(0)');
 
     });
+
+    function modalDocShow(idDoc) {
+        console.log(idDoc)
+        var url = 'previewform.php?id=' + idDoc;
+        window.location = url;
+       
+    }
+
+
+    function convertDate(dateApr) {
+        var parts = dateApr.split(" ");
+
+        var datePart = parts[0];
+        console.log(parts[1])
+        var parts2 = datePart.split("-");
+
+        var formattedDate = parts2[2] + "/" + parts2[1] + "/" + parts2[0];
+
+        return [formattedDate, parts[1]];
+
+    }
 </script>
 
 </html>

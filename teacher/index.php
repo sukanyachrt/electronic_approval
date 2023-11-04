@@ -72,7 +72,7 @@ include('./../admin/header.php');
     <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="invoice p-3 mb-3">
+                <div class="invoice p-5 mb-3">
                     <form action="#" method="post" id="form_doc">
                         <div class="row content-right">
                             <div class="col-12">
@@ -93,177 +93,169 @@ include('./../admin/header.php');
 
                             </div>
                         </div>
-                        <div style="border:1px solid black;padding:10px;margin:5px;">
-                            <div class="form-group row">
-                                <div class="col-1">
-                                    <span for="general_form_title" class="col-sm-1 col-form-label"><b>เรื่อง</b></span>
-                                </div>
-                                <div class="col-sm-11">
-
-                                    <span for="learn" class="col-form-label" id="divTitle">
-                                        -- แสดงหัวเรื่อง --
-                                    </span>
-
-                                </div>
+                        <div class="form-group row">
+                            <div class="col-1">
+                                <b><span for="inputSubject" class="col-sm-1 ">เรื่อง </span></b>
                             </div>
+                            <div class="col-sm-11" style="border-bottom: 1px dashed; ">
+                                <span name="general_form_title" id="divTitle">
 
-                            <div class="form-group row">
-                                <div class="col-1">
-                                    <b><span for="learn" class="col-sm-1 col-form-label">เรียน</span></b>
-                                </div>
-                                <div class="col-sm-11">
-                                    <span for="learn" class="col-form-label">คณบดีสำนักวิชาวิศวกรรมศาสตร์และนวัตกรรม</span>
-                                </div>
+                                </span>
+                            </div>
+                            <div class="col-1">
+                                <b><span for="learn" class="col-sm-1">เรียน</span></b>
+                            </div>
+                            <div class="col-sm-11" style="border-bottom:  1px dashed black;">
+                                <span for="learn" class="col-form-label">คณบดีสำนักวิชาวิศวกรรมศาสตร์และนวัตกรรม</span>
                             </div>
                         </div>
-
-                        <div style="border:1px solid black;padding:10px;margin:5px;">
-                            <div class="form-group row">
-                                <div class="col-1">
-                                    <span for="name" class="col-sm-1 col-form-label">ชื่อ </span>
-                                </div>
-                                <div class="col-sm-5" id="divFirstname">
-                                    -- แสดงชื่อ --
-                                </div>
-                                <div class="col-1">
-                                    <span for="lname" class="col-sm-1 col-form-label">
-                                        นามสกุล
-                                        </sapn>
-                                </div>
-                                <div class="col-sm-5" id="divLastname">
-                                    -- แสดงนามสกุล --
-                                </div>
+                        <div class="form-group row">
+                            <div class="col-1">
+                                <span for="student_name" class="col-sm-1 ">ชื่อ</span>
                             </div>
-                            <!-- /.col -->
+                            <div class="col-sm-5" style="border-bottom: 1px dashed black;">
+                                <span name="student_name" id="divFirstname">
 
-                            <!-- info row -->
-                            <div class="row">
-                                <div class="col-2 ">
-                                    <span>นักศึกษาปริญญา</span>
-                                </div>
+                                </span>
+                            </div>
+                            <div class="col-1">
+                                <span for="student_lastname" class="col-sm-1 col-form-label">นามสกุล</span>
+                            </div>
+                            <div class="col-sm-5" style="border-bottom: 1px dashed black;">
+                                <span name="student_lastname" id="divLastname">
 
-                                <div class="col-2 ">
-                                    <input type="checkbox" class="radio" id="edulevel" onclick="Checkedulevel(this)" name="edulevel" value="ปริญญาเอก">
-                                    <span for="PhD">ปริญญาเอก</span>
-                                </div>
-
-                                <div class="col-2 ">
-                                    <input type="checkbox" class="radio sector_doc" onclick="Checksector_doc(this)" id="sector_doc" name="sector_doc" value="แบบ 1.1">
-                                    <span for="Phd_form">แบบ 1.1 </span>
-                                </div>
-
-                                <div class="col-2 ">
-                                    <input type="checkbox" class="radio sector_doc" onclick="Checksector_doc(this)" id="sector_doc" name="sector_doc" value="แบบ 1.2">
-                                    <span for="Phd_form">แบบ 1.2</span>
-                                </div>
-
-                                <div class="col-2 ">
-                                    <input type="checkbox" class="radio sector_doc" onclick="Checksector_doc(this)" id="sector_doc" name="sector_doc" value="แบบ 2.1">
-                                    <span for="Phd_form">แบบ 2.1</span>
-                                </div>
-
-                                <div class="col-2 ">
-                                    <input type="checkbox" class="radio sector_doc" onclick="Checksector_doc(this)" id="sector_doc" name="sector_doc" value="แบบ 2.2">
-                                    <span for="Phd_form">แบบ 2.2</span>
-                                </div>
+                                </span>
                             </div>
 
-                            <div class="row">
-                                <div class="col-2 "></div>
-
-                                <div class="col-2">
-                                    <input type="checkbox" class="radio" id="edulevel" onclick="Checkedulevel(this)" name="edulevel" value="ปริญญาโท">
-                                    <span for="ms">ปริญญาโท</span>
-                                </div>
-
-                                <div class="col-2 ">
-                                    <input type="checkbox" class="radio sector_master" onclick="Checksector_master(this)" id="sector_master" name="sector_master" value="แผน ก แบบ ก 1">
-                                    <span for="form_ms">แผน ก แบบ ก 1</span>
-                                </div>
-
-                                <div class="col-2">
-                                    <input type="checkbox" class="radio sector_master" id="sector_master " onclick="Checksector_master(this)" name="sector_master" value="แบบ ก แบบ ก 2">
-                                    <span for="form_ms">แบบ ก แบบ ก 2</span>
-                                </div>
-
-                                <div class="col-2 ">
-                                    <input type="checkbox" class="radio sector_master" id="sector_master" onclick="Checksector_master(this)" name="sector_master" value="แผน ข">
-                                    <span for="form_ms">แผน ข</span>
-                                </div>
-
-                                <div class="col-2 "></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2 ">
+                                &nbsp;<span>นักศึกษาปริญญา</span>
                             </div>
 
-
-                            <div class="row">
-                                <div class="col-2"> </div>
-                                <div class="col-2 "> </div>
-                                <div class="col-2 ">
-                                    <input type="checkbox" id="semester" name="semester" onclick="Checksemester(this)" value="ภาคปกติ">
-                                    <span for="normal">ภาคปกติ</span>
-                                </div>
-
-                                <div class="col-4">
-                                    <input type="checkbox" id="semester" name="semester" onclick="Checksemester(this)" value="ภาคนอกเวลาราชการ">
-                                    <span for="os">ภาคนอกเวลาราชการ</span>
-                                </div>
-
-                                <div class="col-1 "> </div>
-                                <div class="col-1 "></div>
+                            <div class="col-2 ">
+                                <input type="checkbox" class="radio" id="edulevel" onclick="Checkedulevel(this)" name="edulevel" value="ปริญญาเอก">
+                                <span for="input-level-phd">&nbsp;เอก</span>
                             </div>
 
-                            <div class="form-group row">
-                                <span for="id" class="col-sm-2 col-form-label">รหัสประจำตัว</span>
-                                <div class="col-sm-3 col-form-label" id="divStudentcode">
-                                    --- แสดงรหัสประจำตัว ---
-                                </div>
-                                <span for="major" class="col-sm-1 col-form-label">สาขาวิชา</span>
-                                <div class="col-sm-3 col-form-label" id="divMajor">
-                                    --- แสดงสาขาวิชา ---
-                                </div>
-                                <span for="major_id" class="col-sm-1 col-form-label">(รหัสสาขา)</span>
-                                <div class="col-sm-2 col-form-label" id="divNoMajor">
-                                    --- แสดงรหัสสาขา ---
-                                </div>
+                            <div class="col-2 ">
+                                <input type="checkbox" class="radio sector_doc" onclick="Checksector_doc(this)" id="sector_doc" name="sector_doc" value="แบบ 1.1">
+                                <span for="input-level-phd1">&nbsp;แบบ 1.1 </span>
                             </div>
 
+                            <div class="col-2 ">
+                                <input type="checkbox" class="radio sector_doc" onclick="Checksector_doc(this)" id="sector_doc" name="sector_doc" value="แบบ 1.2">
+                                <span for="input-level-phd2">&nbsp;แบบ 1.2</span>
+                            </div>
 
+                            <div class="col-2 ">
+                                <input type="checkbox" class="radio sector_doc" onclick="Checksector_doc(this)" id="sector_doc" name="sector_doc" value="แบบ 2.1">
+                                <span for="input-level-phd3">&nbsp;แบบ 2.1</span>
+                            </div>
 
-                            <div class="form-group row">
-                                <span for="semeter" class="col-sm-3 col-form-label">เข้าศึกษาตั้งแต่ภาคการศึกษา</span>
-                                <div class="col-sm-1 col-form-label" id="divYear_semester">
-                                    --- 2554 ---
-                                </div>
-                                <span for="year" class="col-sm-2 col-form-label">ปีการศึกษา</span>
-                                <div class="col-sm-1 col-form-label" id="divYear_study">
-                                    --- 2555 ---
-                                </div>
-                                <span for="tell" class="col-sm-3 col-form-label">เบอร์โทรศัพท์ที่สามารถติดต่อได้</span>
-                                <div class="col-sm-2 col-form-label" id="divPhone">
-                                    --- 0987 ---
-                                </div>
+                            <div class="col-2 ">
+                                <input type="checkbox" class="radio sector_doc" onclick="Checksector_doc(this)" id="sector_doc" name="sector_doc" value="แบบ 2.2">
+                                <span for="input-level-phd4">&nbsp;แบบ 2.2</span>
                             </div>
                         </div>
-                        <div style="border:1px solid black; padding:10px;margin:5px;">
-                            <div class="form-group row">
-                                <span for="email" class="col-sm-2 col-form-label">Email</span>
-                                <div class="col-sm-10" id="divEmail">
-                                    --- แสดง email ---
-                                </div>
+                        <div class="row">
+                            <div class="col-2 "></div>
+                            <div class="col-2">
+                                <input type="checkbox" class="radio" id="edulevel" onclick="Checkedulevel(this)" name="edulevel" value="ปริญญาโท">
+                                <span for="input-level-ms">&nbsp;โท</span>
+                            </div>
+                            <div class="col-2 ">
+                                <input type="checkbox" class="radio sector_master" onclick="Checksector_master(this)" id="sector_master" name="sector_master" value="แผน ก แบบ ก 1">
+                                <span for="input-level-ms1">&nbsp;แผน ก แบบ ก 1</span>
+                            </div>
+                            <div class="col-2">
+                                <input type="checkbox" class="radio sector_master" id="sector_master " onclick="Checksector_master(this)" name="sector_master" value="แบบ ก แบบ ก 2">
+                                <span for="input-level-ms2">&nbsp;แผน ก แบบ ก 2</span>
                             </div>
 
+                            <div class="col-2 ">
+                                <input type="checkbox" class="radio sector_master" id="sector_master" onclick="Checksector_master(this)" name="sector_master" value="แผน ข">
+                                <span for="input-level-ms3">&nbsp;แผน ข</span>
+                            </div>
 
-                            <div class="form-group row">
-                                <span for="Message" class="col-sm-2 col-form-label">มีความประสงค์</span>
-                                <div class="col-sm-10" id="divPurpose">
-                                    --- แสดง มีความประสงค์ ---
+                            <div class="col-2 "></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2"></div>
+                            <div class="col-2 "></div>
+                            <div class="col-2 ">
+                                <input type="checkbox" id="semester" name="semester" onclick="Checksemester(this)" value="ภาคปกติ">
+                                <span for="input-semeter-normal">&nbsp;ภาคปกติ</span>
+                            </div>
+                            <div class="col-3">
+                                <input type="checkbox" id="semester" name="semester" onclick="Checksemester(this)" value="ภาคนอกเวลาราชการ">
+                                <span for="input-semeter-os">&nbsp;ภาคนอกเวลาราชการ</span>
+                            </div>
+                            <div class="col-2 "> </div>
+                            <div class="col-1 "></div>
+                        </div>
+                        <div class="form-group row">
+                            <span for="id" class="col-sm-auto ">รหัสประจำตัว</span>
+                            <div class="col-sm-2" style="border-bottom: 1px dashed black ;">
+                                <span name="student_cod" id="divStudentcode">
 
-                                </div>
+                                </span>
+                            </div>
+                            <span for="major" class="col-sm-auto ">&nbsp;สาขาวิชา</span>
+                            <div class="col-sm-4" style="border-bottom: 1px dashed black;">
+                                <span name="major" id="divMajor">
+
+                                </span>
+                            </div>
+                            <span for="major_id" class="col-sm-auto " style="text-align:right;">&emsp;&nbsp;&nbsp;&nbsp;(รหัสสาขา)</span>
+                            <div class="col-sm-2" style="border-bottom: 1px dashed black;">
+                                <span name="major_id" id="divNoMajor">
+
+                                </span>
+                            </div>
+                            <span for="semeter" class="col-sm-auto">เข้าศึกษาตั้งแต่ภาคการศึกษา</span>
+                            <div class="col-sm-1" style="border-bottom: 1px dashed black;">
+                                <span name="general_form_semester" id="divYear_semester">
+
+                                </span>
+                            </div>
+                            <span for="year" class="col-sm-auto" style="text-align:right;">&emsp;&emsp;ปีการศึกษา</span>
+                            <div class="col-sm-1" style="border-bottom: 1px dashed black;">
+                                <span name="general_form_year" id="divYear_study">&nbsp;&nbsp;
+
+                                </span>
+                            </div>
+                            <span for="tell" class="col-sm-auto ">&emsp;&emsp;&emsp;&nbsp;เบอร์โทรศัพท์ที่สามารถติดต่อได้</span>
+                            <div class="col-sm-2" style="border-bottom: 1px dashed black;">
+                                <span name="tell" id="divPhone">
+
+                                </span>
+                            </div>
+                            <span for="email" class="col-sm-1 ">Email</span>
+                            <div class="col-sm-11" style="border-bottom: 1px dashed black;">
+                                <span name="email" id="divEmail">
+
+                                </span>
+                            </div>
+                            <span for="Message" class="col-sm-2 ">มีความประสงค์</span>
+                            <div class="col-sm-10" style="border-bottom: 1px dashed black;">
+                                <span name="general_form_opinion" id="divPurpose">
+
+                                </span>
+                            </div>
+                            <div class="col-sm-12" style="border-bottom: 1px dashed black;"><br>
+                                <span name="message" id="message"></span>
+                            </div>
+                            <div class="col-sm-12" style="border-bottom: 1px dashed black;"><br>
+                                <span name="message" id="message"></span>
+                            </div>
+                            <div class="col-sm-12" style="border-bottom: 1px dashed black;"><br>
+                                <span name="message" id="message"></span>
+                            </div>
+                            <span for="Message" class="col-sm-4 ">&emsp;&emsp;&emsp;จึงเรียนมาเพื่อโปรดพิจารณา</span>
+                            <div class="col-sm-8">
                             </div>
                         </div>
-
-
-                        <p>จึงเรียนมาเพื่อโปรดพิจารณา </p></span>
                         <div class="row">
                             <div class="col-5 col-md-6"></div>
                             <div class="col-7 col-md-6 text-center">
@@ -276,71 +268,38 @@ include('./../admin/header.php');
                         </div>
                         <div class="row">
                             <div class="col-7"></div>
-                            <div class="col-5">
-                                &emsp;&emsp;&emsp;&emsp;&emsp;<span style="text-align:right;">
-                                    (<span style="border-bottom: 1px dashed black;">
-                                        &emsp;&emsp;&emsp;&emsp;
-                                        <span id="spanName_student">
-                                            -- แสดงชื่อนักศึกษา --
-                                        </span>
+                            <div class="col-1 text-right">
+                                (
+                            </div>
+                            <div class="col-3 m-0 text-center" style="border-bottom: 1px dashed;width:100%;">
 
-
-
-                                        &emsp;&emsp;&emsp;&emsp;
-                                    </span>)
+                                <span name="general_form_title" id="spanName_student">
                                 </span>
                             </div>
-                        </div>
+                            <div class="col-1 p-0">
+                                )
+                            </div>
 
+                        </div>
 
                         <div class="row">
                             <div class="col-7"></div>
-                            <div class="col-5 text-center">
-                                <span id="divDate_student" style="display: inline-block; width: 50%; border-bottom: 1px dashed black;">
+                            <div class="col-1"></div>
+                            <div class="col-3 m-0 text-center" style="border-bottom: 1px dashed;width:100%;">
+                                <span id="divDate_student">
                                     --- แสดงวันทีปัจจุบัน ----
                                 </span>
                             </div>
+                            <div class="col-1"></div>
                         </div>
                         <div class="row">
-                            <div class="col-5">
-                                <b>ความเห็นอาจารย์ที่ปรึกษา</b>
-                            </div>
-                            <div class="col-2">
+                            <div class="col-7">
+                                ความเห็นอาจารย์ที่ปรึกษา
                             </div>
                             <div class="col-5">
-                                <b>ความเห็น ประธานคณะกรรมการบริหารสูตร</b>
+                                ความเห็น ประธานคณะกรรมการบริหารหลักสูตร
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-5 comment_teacher_no">
-                                <div class="text_">
-                                    <span id="divComment_teacher"> </span>
-                                </div>
-                            </div>
-
-                            <div class="col-2">
-                            </div>
-                            <div class="col-5 comment_direct_no">
-                                <div class="text_">
-                                    <span id="divComment_direct"> </span>
-                                </div>
-                            </div>
-
-                            <div class="col-5 comment_teacher">
-                                <textarea rows="2" style="width: 80%;" name="approve_comment_teacher" id="approve_comment_teacher" class="textarea form-control" required></textarea>
-                            </div>
-
-                            <div class="col-2">
-                            </div>
-                            <div class="col-5 comment_direct">
-                                <div class="text_">
-                                    <textarea rows="2" style="width: 80%;" name="approve_comment_direct" id="approve_comment_direct" class="textarea form-control" required></textarea>
-
-                                </div>
-                            </div>
-
-                        </div>
-
                         <style>
                             .text_::after {
                                 content: "\A-----------------------------------------------------------------\A-----------------------------------------------------------------\A-----------------------------------------------------------------";
@@ -354,22 +313,63 @@ include('./../admin/header.php');
                             }
                         </style>
                         <div class="row">
-                            <div class="col-5 text-left">
-                                ลงนาม<span style="text-align: left; border-bottom: 1px dashed black;">
-                                    &emsp;&emsp;&emsp;&emsp;
-                                    <img id="imageTeacher" src="" width="150px" height="50px" />
-                                    &emsp;&emsp;&emsp;&emsp;</span>
+                            <div class="col-7">
+                                <div class="col-5 comment_teacher_no">
+                                    <div class="text_">
+                                        <span id="divComment_teacher"> </span>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-7 comment_teacher">
+                                    <textarea style="width: 100%;" name="approve_comment_teacher" id="approve_comment_teacher" class="textarea form-control" required></textarea>
+                                </div>
+                                <div class="col-2">
+                                </div>
                             </div>
-                            <div class="col-2">
+
+                            <div class="col-5">
+                                <div class="col-12 comment_direct_no">
+                                    <div class="text_">
+                                        <span id="divComment_direct"> </span>
+                                    </div>
+                                </div>
+                                <div class="col-12 comment_direct">
+                                <textarea style="width: 100%;" name="approve_comment_direct" id="approve_comment_direct" class="textarea form-control" required></textarea>
+                                
+                                    
+                                </div>
+
+
                             </div>
-                            <div class="col-5 text-center imageDirect_no" style="padding-top: 20px;">
-                                ลงนาม-------------------------------------------------------
+                        </div>
+                        <div class="row">
+                            <div class="col-7">
+                                <div class="row">
+                                    <div class="col-7">
+                                        ลงนาม<span style="text-align: left; border-bottom: 1px dashed black; width:100%">
+                                            &emsp;&emsp;&emsp;&emsp;
+                                            <img id="imageTeacher" src="" width="150px" height="50px" />
+                                            &emsp;&emsp;&emsp;&emsp;
+                                        </span>
+                                    </div>
+                                    <div class="col-5 text-left">
+
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="col-5 text-center imageDirect">
-                                &emsp;&emsp;&emsp; ลงนาม<span style="text-align: left; border-bottom: 1px dashed black;">
-                                    &emsp;&emsp;&emsp;&emsp;
-                                    <img id="imageDirect" src="" width="150px" height="50px" />
-                                    &emsp;&emsp;&emsp;&emsp;</span>
+                            <div class="col-5">
+                                <div class="row">
+                                    <div class="col-12 text-left imageDirect_no" style="text-align: left; border-bottom: 1px dashed black; width:100%">
+                                        ลงนาม
+                                    </div>
+                                    <div class="col-12 text-left imageDirect">
+                                        ลงนาม<span style="text-align: left; border-bottom: 1px dashed black;">
+                                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                                            <img id="imageDirect" src="" width="150px" height="50px" />
+                                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -389,23 +389,40 @@ include('./../admin/header.php');
                             </div>
 
                         </div>
+
                         <div class="row">
                             <div class="col-5">
                                 <span style="text-align: left;">&emsp;&emsp;--------<span id="spanDate_teacher"></span>----------</span>
                             </div>
                             <div class="col-2">
                             </div>
+
                             <div class="col-5 text-center imageDirect_no">
-                                &emsp;&emsp;&emsp;&emsp;------------/-------------------/-----------------
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8 text-center" style="text-align: center;">
+                                        ------------/-------------------/-----------------
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>
+
+
                             </div>
                             <div class="col-5 text-center imageDirect">
-                                <span>&emsp;&emsp;--------<span id="spanDate_direct"></span>----------</span>
-                            </div>
-                        </div>
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-6 text-center" style="text-align: center; border-bottom: 1px dashed black;">
+                                        <span id="spanDate_direct"></span>
+                                    </div>
+                                    <div class="col-md-3"></div>
+                                </div>
 
+                            </div>
+
+                        </div>
                         <div class="row">
                             <div class="col-5">
-                                <b>ความเห็นคณบดี</b>
+                                ความเห็นคณบดี
                             </div>
                             <div class="col-2">
                             </div>
@@ -424,30 +441,6 @@ include('./../admin/header.php');
                             </div>
                         </div>
                         
-                        <div class="row comment_master_no">
-
-                            <div class="col-7">
-                                <span style="text-align:left;">-----------------------------------------------------------</span>
-                            </div>
-                            <div class="col-5">
-                            </div>
-                        </div>
-                        <div class="row comment_master_no">
-
-                            <div class="col-7">
-                                <span style="text-align:left;">-----------------------------------------------------------</span>
-                            </div>
-                            <div class="col-5">
-                            </div>
-                        </div>
-                        <div class="row comment_master_no">
-
-                            <div class="col-7">
-                                <span style="text-align:left;">-----------------------------------------------------------</span>
-                            </div>
-                            <div class="col-5">
-                            </div>
-                        </div>
                         <div class="row imageMaster_no">
                             <div class="col-7">
                                 <span style="text-align:left;">ลงนาม</span>
@@ -462,38 +455,50 @@ include('./../admin/header.php');
                             <div class="col-5">
                             </div>
                         </div>
-                        <div class="form-group row ">
-
-                            <div class="col-8 imageMaster">
+                        <div class="row imageMaster">
+                            <div class="col-7">
                                 ลงนาม<span style="text-align: left; border-bottom: 1px dashed black;">
                                     &emsp;&emsp;&emsp;&emsp;
                                     <img id="imageMaster" src="" width="150px" height="50px" />
                                     &emsp;&emsp;&emsp;&emsp;</span>
                             </div>
-                            <div class="col-8 imageMaster_no">
-                                <span>
-                                    &emsp;<span id="spanName_master_no">(------------------------------------------------------)</span>
-
-                                </span>
-                            </div>
-                            <div class="col-8 imageMaster">
-                                <span>
-                                    &emsp;
-                                    <span id="spanName_master"></span>
-
-                                </span>
-                            </div>
-                            <div class="col-8 imageMaster_no">
-                                <span style="text-align: left;">&emsp;&emsp;<span id="spanDate_master_no">----------------/---------------/-------------</span>
-                                    &emsp;&emsp;
-                            </div>
-                            <div class="col-8 imageMaster">
-                                <span style="text-align: left;">&emsp;&emsp;
-                                    <span id="spanDate_master"></span>
-                                    &emsp;&emsp;
+                            <div class="col-5">
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="row imageMaster">
+                            <div class="col-5">
+                                <span id="spanName_master"></span>
+                            </div>
+                            <div class="col-7">
+                            </div>
+                        </div>
+                        <div class="row imageMaster_no">
+                            <div class="col-5 text-left">
+                                &emsp;<span id="spanName_master_no">(------------------------------------------------------)</span>
+                            </div>
+                            <div class="col-7">
+                            </div>
+                        </div>
+                        <div class="row imageMaster">
+                            <div class="col-3 text-center" style="text-align: left; border-bottom: 1px dashed black;">
+                            &emsp;<span id="spanDate_master"></span>
+                            </div>
+                            <div class="col-9">
+                                
+                            </div>
+                        </div>
+                        <div class="row imageMaster_no">
+                            <div class="col-5 text-left">
+                            &emsp; ----------------/---------------/-------------
+                            </div>
+                            <div class="col-7">
+                                
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-12 mt-5">
                             <div class="col-12" style="border-bottom: 1px solid black;">
                             </div>
                             <b>สำหรับเจ้าหน้าที่</b>
@@ -527,7 +532,6 @@ include('./../admin/header.php');
                             </div>
 
                         </div>
-
 
                     </form>
                 </div>
@@ -583,6 +587,7 @@ include('./../admin/header.php');
     function fnApprove(status) {
         var textareaValues = $(".textarea.form-control").map(function() {
             if ($(this).val() != "") {
+                console.log($(this).val())
                 return $(this).val();
             }
 
@@ -605,6 +610,7 @@ include('./../admin/header.php');
                 "comment": textareaValues[0] || "",
                 "role_approve": role_approve
             }
+            console.log(data)
             $.ajax({
                 url: "./../api/documents/approve_doc.php?v=approvebyid",
                 type: "POST",
@@ -683,10 +689,14 @@ include('./../admin/header.php');
                 $.each(dataApr, function(index, item) {
                     if (item.role_approve == "อาจารย์") {
                         $('.comment_teacher_no').show();
-                        //  $('#approve_comment_teacher').text(item.comment_approve)
                         $("#imageTeacher").attr("src", "data:image/jpeg;base64," + item.image_sign);
                         $('#spanName_teacher').text(`${item.user_name}`);
-                        $('#spanDate_teacher').text(`${item.date_approve}`);
+                        if (item.date_approve == null) {
+                            $('#spanDate_teacher').text(`-`);
+                        } else {
+                            $('#spanDate_teacher').text(`${item.date_approve}`);
+                        }
+
                         $('#divComment_teacher').text(`${item.comment_approve}`)
                     }
 
@@ -700,7 +710,11 @@ include('./../admin/header.php');
 
                         $("#imageDirect").attr("src", "data:image/jpeg;base64," + item.image_sign);
                         $('#spanName_direct').text(`${item.user_name}`);
-                        $('#spanDate_direct').text(`${item.date_approve}`);
+                        if (item.date_approve == null) {
+                            $('#spanDate_direct').text(`-`);
+                        } else {
+                            $('#spanDate_direct').text(`${item.date_approve}`);
+                        }
                         $('#divComment_direct').text(`${item.comment_approve}`)
                     }
 
@@ -716,8 +730,12 @@ include('./../admin/header.php');
 
                         $('#spanName_master').text(`(----------------------${item.user_name}----------------------)`);
                         $('#spanDate_master').text(`----------${item.date_approve}-----------`);
-                        $('#divComment_master').text(`${item.comment_approve}`)
 
+                        if (item.date_approve == null) {
+                            $('#spanDate_master').text(`-`);
+                        } else {
+                            $('#spanDate_master').text(`${item.date_approve}`);
+                        }
                     }
 
 

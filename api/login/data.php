@@ -42,6 +42,12 @@ if ($data == "checklogin") {
                 if($rsconnect['position_role']=="teacher" || $rsconnect['position_role']=="direct" || $rsconnect['position_role']=="master"){
                     $position_role="teacher";
                 }
+                else if($rsconnect['position_role']=="admin"){
+                    $position_role="admin";
+                }
+                else{
+                    $position_role="error";
+                }
                 $result = [
                     'status' => "ok",
                     'role' => $position_role,

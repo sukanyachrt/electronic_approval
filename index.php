@@ -106,7 +106,7 @@ session_start();
         type: "POST",
         data: data, // ใช้ข้อมูลจากการร้องขอแรก
         success: function(Res) {
-         // console.log(Res)
+          //console.log(Res)
           window.location.replace(data.role);
         },
 

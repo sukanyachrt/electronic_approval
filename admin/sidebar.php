@@ -43,60 +43,7 @@
                                 <p>ใบคำร้องทั่วไป บ.01</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="../examples/" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>doc01</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../examples/" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>doc02</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../examples/" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>doc03</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../examples/" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>doc04</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../examples" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>doc05</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../examples/" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>doc06</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../examples" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>doc07</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../examples/" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>doc08</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../examples/" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>doc09</p>
-                            </a>
-                        </li>
+                        
                     </ul>
                 </li>
                 <li class="nav-item menu">

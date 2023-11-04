@@ -16,20 +16,21 @@ $result = array();
 if ($data == "saveForm_1") {
 
     $data = $_POST;
-    $connect->sql = "INSERT INTO document_form (id_student ,form_title, student_code, major_name, year_semester, year_study, telephone, email, purpose, type_sector, edulevel, semester,date_insert) VALUES (
+    $connect->sql = "INSERT INTO document_form (id_student ,form_title, student_code, major_name, year_semester, year_study, telephone, email, purpose, type_sector, edulevel, semester,date_insert,status_doc) VALUES (
         '" . $_SESSION['_id'] . "',
         '" . $data['general_form_title'] . "',
         '" . $data['student_code'] . "',
         '" . $data['major_id'] . "',
         '" . $data['general_form_semester'] . "',
         '" . $data['general_form_year'] . "',
-        '" . $data['email'] . "',
         '" . $data['tel'] . "',
+        '" . $data['email'] . "',
         '" . $data['general_form_opinion'] . "',
         '" . $data['sector_doc'] . "',
         '" . $data['edulevel'] . "',
         '" . $data['semester'] . "',
-        '" . date('Y-m-d H:i:s') . "'
+        '" . date('Y-m-d H:i:s') . "',
+        'รอการอนุมัติ'
         
     )";
 
@@ -94,8 +95,8 @@ if ($data == "saveForm_1") {
 
     $data_ = json_decode($jsonData, true);
     $header_data = [
-        ["title" => 'เรื่อง',"rows"=>2,"cols"=>1],
         ["title" => 'ไฟล์คำขอ',"rows"=>2,"cols"=>1],
+        ["title" => 'เรื่อง',"rows"=>2,"cols"=>1],
         ["title" => 'วันที่ยื่นคำขอ',"rows"=>2,"cols"=>1],
         ["title" => 'สถานะ',"rows"=>1, "cols"=>3],
       

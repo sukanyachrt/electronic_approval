@@ -112,6 +112,9 @@ if ($data == "checkapprove") {
 				$connect->queryData();
 
 				$affect = $connect->affected_rows();
+
+
+
 				if ($affect > 0 && $dataApr['status'] == "อนุมัติ") {
 
 					#find code ผู้อนุมัติลำดับถัดไป 
@@ -145,22 +148,31 @@ if ($data == "checkapprove") {
 							'status' => 'ok',
 							'msg' => 'อนุมัติเอกสารเรียบร้อยแล้ว'
 						];
-					}
-					else{
+					} else {
+						$connect->sql = "UPDATE document_form SET status_doc='" . $dataApr['status'] . "' WHERE id='" . $dataApr['idDoc'] . "'";
+						$connect->queryData();
 						$result = [
 							'status' => 'no',
 							'msg' => 'ไม่พบรายชื่อผู้อนุมัติคนถัดไป'
 						];
 					}
+				} else {
+					$connect->sql = "UPDATE document_form SET status_doc='" . $dataApr['status'] . "' WHERE id='" . $dataApr['idDoc'] . "'";
+					$connect->queryData();
+					$result = [
+						'status' => 'ok',
+						'msg' => 'ทำการไม่อนุมัติเอกสารเรียบร้อยแล้ว'
+					];
 				}
-				$result = [
-					'status' => 'ok',
-					'msg' => 'ทำการไม่อนุมัติเอกสารเรียบร้อยแล้ว'
-				];
 			} else {
 				#update
 				$connect->sql = "UPDATE document_form_approve SET comment_approve='" . $dataApr['comment'] . "' , status_approve='" . $dataApr['status'] . "', date_approve='" . date('Y-m-d H:i:s') . "' WHERE id='" . $dataApr['id'] . "'";
 				$connect->queryData();
+
+				$connect->sql = "UPDATE document_form SET status_doc='" . $dataApr['status'] . "' WHERE id='" . $dataApr['idDoc'] . "'";
+				$connect->queryData();
+
+
 				$result = [
 					'status' => 'ok',
 					'msg' => 'อนุมัติเอกสารเรียบร้อยแล้ว'
@@ -170,6 +182,10 @@ if ($data == "checkapprove") {
 			#update
 			$connect->sql = "UPDATE document_form_approve SET comment_approve='" . $dataApr['comment'] . "' , status_approve='" . $dataApr['status'] . "', date_approve='" . date('Y-m-d H:i:s') . "' WHERE id='" . $dataApr['id'] . "'";
 			$connect->queryData();
+
+			$connect->sql = "UPDATE document_form SET status_doc='" . $dataApr['status'] . "' WHERE id='" . $dataApr['idDoc'] . "'";
+			$connect->queryData();
+
 			$result = [
 				'status' => 'ok',
 				'msg' => 'อนุมัติเอกสารเรียบร้อยแล้ว'

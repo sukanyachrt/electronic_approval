@@ -15,11 +15,13 @@
     <style type="text/css">
         body {
             font-family: 'Sarabun', sans-serif;
+            color: black;
+            font-size: 16px;
         }
     </style>
 </head>
 <?php
- ob_start(); 
- session_start();
+ob_start();
+session_start();
 
 ?>
