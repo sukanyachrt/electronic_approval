@@ -1,7 +1,9 @@
 <?php
 
 include('./header.php');
-
+if($_SESSION['_role']!='admin'){
+    header("Location: ./../error/");
+}
 ?>
 
 <style>
@@ -156,16 +158,9 @@ include('./header.php');
 
                                         </div>
                                     </div>
-                                    <!-- <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div> -->
+                                    
                                 </div>
-                                <!-- /.card-header -->
+                                
                                 <div class="card-body p-0">
                                     <div class="table-responsive">
                                         <table class="table m-0" id="tbStatus_doc">
@@ -222,7 +217,7 @@ include('./header.php');
         var dataFind = ["อนุมัติ"];
         ShowDataDoc(dataFind);
         $.ajax({
-            url: "./../api/documents/status_doc.php?v=countStatus",
+            url: "./../api/documents/status_doc.php?v=countStatusAdmin",
             type: "GET",
             success: function(Res) {
                 console.log(Res);
@@ -246,7 +241,7 @@ include('./header.php');
 
 
         $.ajax({
-            url: "./../api/documents/status_doc.php?v=checkstatus",
+            url: "./../api/documents/status_doc.php?v=checkstatusAdmin",
             type: "POST",
             cache: false,
             data: {

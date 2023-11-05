@@ -69,7 +69,7 @@ if ($data == "saveForm_1") {
     echo json_encode($result);
 } else if ($data == 'history_doc') {
     #ประวัติการขอเอกสาร
-    $connect->sql = "SELECT * FROM 	document_form  WHERE id_student='" . $_SESSION['_id'] . "'";
+    $connect->sql = "SELECT * FROM 	document_form  WHERE id_student='" . $_SESSION['_id'] . "' ORDER BY id DESC";
     $connect->queryData();
     $data_doc = array();
     $data_apr = array();

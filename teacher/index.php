@@ -6,6 +6,12 @@ include('./../admin/header.php');
 <link rel="stylesheet" href="./../asset/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="./../asset/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="./../asset/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<style>
+    .selected-card {
+        background-color: #C3EEFA;
+
+    }
+</style>
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -19,18 +25,57 @@ include('./../admin/header.php');
         <?php include('./../admin/sidebar_teacher.php') ?>
 
         <div class="content-wrapper">
-
-            <section class="content ">
+            <div class="content-header">
                 <div class="container-fluid">
-                    <!-- Small boxes (Stat box) -->
-                    <div class="row">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h5 class="m-0">เอกสารการยื่นของนักศึกษา</h5>
+                        </div><!-- /.col -->
 
-                        <div class="col-12 mt-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title text-bold">รอการอนุมัติ</h3>
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+
+                        <a class="col-12 col-sm-6 col-md-3" style="cursor: pointer;" href="historydoc.php">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-solid fa-check"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">ประวัติการอนุมัติที่ผ่านมา</span>
+                                    <span class="info-box-number" id="apr_historyApr">0</span>
                                 </div>
-                                <!-- /.card-header -->
+
+
+                            </div>
+                        </a>
+                        <div class="col-12 col-sm-6 col-md-3" style="cursor: pointer;">
+                            <div class="info-box mb-3 selected-card">
+                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-solid fa-check"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">รอการอนุมัติ</span>
+                                    <span class="info-box-number" id="apr_waitApr">0</span>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12 mt-3">
+                            <div class="card card-warning">
+                                <div class="card-header">
+                                    <h3 class="card-title text-bold text-white">
+                                        รอการอนุมัติ
+                                    </h3>
+                                </div>
                                 <div class="card-body">
                                     <table id="tb_approve_teacher" class="table table-bordered table-hover">
                                         <thead>
@@ -40,26 +85,15 @@ include('./../admin/header.php');
                                                 <th>ผู้ส่งคำขอ</th>
                                                 <th>วันที่ยื่นคำขอ</th>
                                                 <th>สถานะการอนุมัติ</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
-
-
                                         </tbody>
-
-
-
                                     </table>
                                 </div>
-                                <!-- /.card-body -->
                             </div>
-                            <!-- /.card -->
-
                         </div>
-
                     </div>
-
                 </div>
             </section>
 
@@ -319,7 +353,7 @@ include('./../admin/header.php');
                                         <span id="divComment_teacher"> </span>
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-7 comment_teacher">
                                     <textarea style="width: 100%;" name="approve_comment_teacher" id="approve_comment_teacher" class="textarea form-control" required></textarea>
                                 </div>
@@ -334,9 +368,9 @@ include('./../admin/header.php');
                                     </div>
                                 </div>
                                 <div class="col-12 comment_direct">
-                                <textarea style="width: 100%;" name="approve_comment_direct" id="approve_comment_direct" class="textarea form-control" required></textarea>
-                                
-                                    
+                                    <textarea style="width: 100%;" name="approve_comment_direct" id="approve_comment_direct" class="textarea form-control" required></textarea>
+
+
                                 </div>
 
 
@@ -440,7 +474,7 @@ include('./../admin/header.php');
                                 <textarea rows="2" style="width: 80%;" name="approve_comment_master" id="approve_comment_master" class="textarea form-control" required></textarea>
                             </div>
                         </div>
-                        
+
                         <div class="row imageMaster_no">
                             <div class="col-7">
                                 <span style="text-align:left;">ลงนาม</span>
@@ -481,18 +515,18 @@ include('./../admin/header.php');
                         </div>
                         <div class="row imageMaster">
                             <div class="col-3 text-center" style="text-align: left; border-bottom: 1px dashed black;">
-                            &emsp;<span id="spanDate_master"></span>
+                                &emsp;<span id="spanDate_master"></span>
                             </div>
                             <div class="col-9">
-                                
+
                             </div>
                         </div>
                         <div class="row imageMaster_no">
                             <div class="col-5 text-left">
-                            &emsp; ----------------/---------------/-------------
+                                &emsp; ----------------/---------------/-------------
                             </div>
                             <div class="col-7">
-                                
+
                             </div>
                         </div>
 
@@ -555,7 +589,28 @@ include('./../admin/header.php');
 <script src="./../asset/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
 <script>
-    loadData();
+    $(function() {
+        loadData();
+        CountStatus()
+    });
+
+    function CountStatus() {
+        $.ajax({
+            url: "./../api/documents/status_doc.php?v=countStatusApr",
+            type: "GET",
+            success: function(Res) {
+                console.log(Res);
+                $.each(Res, function(index, item) {
+                    if (item.status_approve == "รอการอนุมัติ") {
+                        $('#apr_waitApr').text(item.numrow + " รายการ")
+
+                    } else {
+                        $('#apr_historyApr').text(item.numrow + " รายการ")
+                    }
+                });
+            }
+        });
+    }
 
     function loadData() {
         $.ajax({
@@ -616,7 +671,7 @@ include('./../admin/header.php');
                 type: "POST",
                 data: data,
                 success: function(Res) {
-                    console.log(Res)
+                    CountStatus();
                     if (Res.status == "ok") {
 
                         loadData();

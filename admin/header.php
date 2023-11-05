@@ -23,5 +23,7 @@
 <?php
 ob_start();
 session_start();
-
+if ($_SESSION['_id'] == "") {
+    header("Location: ./../");
+}
 ?>

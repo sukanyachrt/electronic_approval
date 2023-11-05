@@ -1,7 +1,9 @@
 <?php
 
 include('./../admin/header.php');
-
+if($_SESSION['_role']!='student'){
+    header("Location: ./../error/");
+}
 ?>
 <link rel="stylesheet" href="./../asset/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="./../asset/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
@@ -84,7 +86,7 @@ include('./../admin/header.php');
                 var tb_history = '';
                 $.each(Res[0], function(index, item) {
 
-                    tb_history += '<th class="text-center" rowspan="' + item.rows + '" colspan="' + item.cols + '">' + item.title + '</th>';
+                    tb_history += '<th class="text-center" style="vertical-align: middle;" rowspan="' + item.rows + '" colspan="' + item.cols + '">' + item.title + '</th>';
 
                 });
                 
@@ -126,7 +128,7 @@ include('./../admin/header.php');
 
 
 
-                            data_approve += '<td >' + 'สถานะ : ' + spanStatus + '<br/> วันที่อนุมัติ : ' + (datetimeString[0]) + '<br/> เวลาที่อนุมัติ : ' + (datetimeString[1]) + '</td>';
+                            data_approve += '<td >' + 'สถานะ : ' + spanStatus + '<br/> วันที่อนุมัติ : ' + (datetimeString[0]) + '<br/> เวลาที่อนุมัติ : ' + (datetimeString[1] !== undefined ? datetimeString[1] : '-') + '</td>';
 
                         }
 
@@ -168,7 +170,7 @@ include('./../admin/header.php');
 
         var formattedDate = parts2[2] + "/" + parts2[1] + "/" + parts2[0];
 
-        return [formattedDate, parts[1]];
+        return [formattedDate, parts[1] ];
 
     }
 </script>

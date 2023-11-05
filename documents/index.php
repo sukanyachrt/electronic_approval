@@ -1,7 +1,9 @@
 <?php
 
 include('./../admin/header.php');
-
+if($_SESSION['_role']!='student'){
+    header("Location: ./../error/");
+}
 ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
