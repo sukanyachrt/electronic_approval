@@ -587,6 +587,8 @@ include('./../admin/header.php');
 <script src="./../asset/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="./../asset/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="./../asset/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="./../asset/dist/js/moment.js"></script>
+<script src="./../asset/dist/js/function.js"></script>
 
 <script>
     $(function() {
@@ -715,7 +717,7 @@ include('./../admin/header.php');
                 $("#imageSign_student").attr("src", "data:image/jpeg;base64," + datadoc.image_sign);
 
                 $('#spanName_student').text(`${datadoc.student_name} ${datadoc.student_lastname}`);
-                $('#divDate_student').text(datadoc.date_insert);
+                $('#divDate_student').text(convertToThaiBuddhistDate(datadoc.date_insert));
 
                 //#region  Res[1] ข้อมูล ผู้อนุมัติต่างๆ
 

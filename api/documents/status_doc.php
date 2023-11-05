@@ -152,3 +152,4 @@ function filterAndSumStatus($statusApr)
 
     return $result;
 }
+?>

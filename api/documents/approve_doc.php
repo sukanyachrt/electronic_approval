@@ -200,3 +200,4 @@ if ($data == "checkapprove") {
 	}
 	echo json_encode($result);
 }
+?>

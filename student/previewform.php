@@ -19,7 +19,7 @@ include('./../admin/header.php');
 
         ?>
 
-        <?php include('./../admin/sidebar.php') ?>
+        <?php include('./../admin/sidebar_admin.php') ?>
 
         <div class="content-wrapper newFont">
 
@@ -483,7 +483,7 @@ include('./../admin/header.php');
                                 <button type="button" id="goBackButton" value="" class="btn btn-default float-right" style="margin-right: 5px;">
                                 <i class="fas fa-solid fa-arrow-left"></i> ย้อนกลับ
                                 </button>
-                                <a onclick="window.print()" class="btn btn-primary float-right" style="margin-right: 5px;">
+                                <a onclick="window.print()" id="print" class="btn btn-primary float-right" style="margin-right: 5px;">
                                     <i class="fas fa-print"></i> Print
                                 </a>
                                 <input type="hidden" id="btnId_doc" name="btnId_doc" value="<?php echo $_GET['id'] ?>">
@@ -502,6 +502,8 @@ include('./../admin/header.php');
     <?php include("./../admin/scripts.php") ?>
 
 </body>
+<script src="./../asset/dist/js/moment.js"></script>
+<script src="./../asset/dist/js/function.js"></script>
 <script>
     $(function() {
         var idDoc = $('#btnId_doc').val();
@@ -532,13 +534,17 @@ include('./../admin/header.php');
                 $("#imageSign_student").attr("src", "data:image/jpeg;base64," + datadoc.image_sign);
 
                 $('#spanName_student').text(`${datadoc.student_name} ${datadoc.student_lastname}`);
-                $('#divDate_student').text(datadoc.date_insert);
+                 $('#divDate_student').text(convertToThaiBuddhistDate(datadoc.date_insert));
 
 
                 var dataApr = Res[1];
                 $('#imageTeacher').hide()
                 $('#imageDirect').hide()
-                $('#imageMaster').hide()
+                $('#imageMaster').hide();
+                console.log(dataApr.length)
+                if(dataApr.length<3){
+                    $('#print').hide()
+                }
                 $.each(dataApr, function(index, item) {
 
                     if (item.role_approve == "อาจารย์") {
@@ -548,7 +554,8 @@ include('./../admin/header.php');
                         if (item.date_approve == null) {
                             $('#spanDate_teacher').text(`-`);
                         } else {
-                            $('#spanDate_teacher').text(`${item.date_approve}`);
+                            
+                            $('#spanDate_teacher').text(convertToThaiBuddhistDate(item.date_approve));
                         }
 
                         $('#divComment_teacher').text(`${item.comment_approve}`)
@@ -561,7 +568,7 @@ include('./../admin/header.php');
                         if (item.date_approve == null) {
                             $('#spanDate_direct').text(`-`);
                         } else {
-                            $('#spanDate_direct').text(`${item.date_approve}`);
+                            $('#spanDate_direct').text(convertToThaiBuddhistDate(item.date_approve));
                         }
                         $('#divComment_direct').text(`${item.comment_approve}`)
 
@@ -573,7 +580,7 @@ include('./../admin/header.php');
                         if (item.date_approve == null) {
                             $('#spanDate_master').text(`-`);
                         } else {
-                            $('#spanDate_master').text(`${item.date_approve}`);
+                            $('#spanDate_master').text(convertToThaiBuddhistDate(item.date_approve));
                         }
                         $('#divComment_master').text(`${item.comment_approve}`)
                     }
