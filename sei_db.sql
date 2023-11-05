@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2023 at 06:02 PM
+-- Generation Time: Nov 05, 2023 at 03:10 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -171,17 +171,19 @@ CREATE TABLE `document_form` (
   `type_sector` varchar(20) NOT NULL,
   `edulevel` varchar(20) NOT NULL,
   `semester` varchar(20) NOT NULL,
-  `date_insert` datetime NOT NULL
+  `date_insert` datetime NOT NULL,
+  `status_doc` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `document_form`
 --
 
-INSERT INTO `document_form` (`id`, `id_student`, `form_title`, `student_code`, `major_name`, `year_semester`, `year_study`, `telephone`, `email`, `purpose`, `type_sector`, `edulevel`, `semester`, `date_insert`) VALUES
-(1, 6, 'ทดสอบการสร้างเรื่อง', 'M6113391', '01', '2554', '2554', 'karn.yonddg@meliveco', '098', 'ดฟดหดห', 'แบบ 1.1', 'ปริญญาเอก', 'ภาคปกติ', '2023-10-28 13:35:54'),
-(3, 6, 'test 2', 'M6113391', '01', '2554', '2554', 'karn.yonddg@meliveco', '098', 'ddddddddd', 'แบบ 1.1', 'ปริญญาเอก', 'ภาคปกติ', '2023-10-28 14:25:10'),
-(4, 6, 'คำร้องขอ', '123456789', '02', '2555', '2554', 'sukanya.chrt@gmail.c', '0123456789', 'ทดสอบการขอ', '', 'ปริญญาโท', 'ภาคนอกเวลาราชการ', '2023-10-30 22:55:08');
+INSERT INTO `document_form` (`id`, `id_student`, `form_title`, `student_code`, `major_name`, `year_semester`, `year_study`, `telephone`, `email`, `purpose`, `type_sector`, `edulevel`, `semester`, `date_insert`, `status_doc`) VALUES
+(8, 1, 'แจ้งจบการศึกษา', '10163406640280', '1234', '1/2553', '2553', '0947643570', 'neiylove_infinite@hotmil.com', 'แจ้งการจบการศึกศึษา', 'แบบ 1.2', 'ปริญญาเอก', 'ภาคปกติ', '2023-11-04 23:12:26', 'อนุมัติ'),
+(9, 7, 'ทดสอบการสร้างเรื่อง', 'M6110949', '12345', '2553', '1/2553', '1234567890', 'karn.yondddg@melivecode.com', 'ทดสอบการสร้างเรื่อง', 'แบบ 1.1', 'ปริญญาเอก', 'ภาคปกติ', '2023-11-05 00:07:59', 'อนุมัติ'),
+(10, 11, 'ทดสอบการสร้างเรื่อง', 'M6110949', '12345', '2553', '1/2553', '1234567890', 'karn.yondddg@melivecode.com', 'ทดสอบการสร้างเรื่อง', '', 'ปริญญาโท', 'ภาคนอกเวลาราชการ', '2023-11-05 00:10:27', 'อนุมัติ'),
+(11, 11, 'ทดสอบการขอแบบไม่อนุมัติ', '016330663033-2', '123456', '1/2553', '2553', '1234567890', 'karn.yondddg@melivecode.com', 'ทดสอบการขอแบบไม่อนุมัติ', '', 'ปริญญาโท', 'ภาคปกติ', '2023-11-05 01:49:41', 'ไม่อนุมัติ');
 
 -- --------------------------------------------------------
 
@@ -204,11 +206,16 @@ CREATE TABLE `document_form_approve` (
 --
 
 INSERT INTO `document_form_approve` (`id`, `document_form`, `id_approve`, `role_approve`, `comment_approve`, `status_approve`, `date_approve`) VALUES
-(1, 1, 2, 'อาจารย์', 'เก่งมากค่ะ', 'อนุมัติ', '2023-10-29 15:45:39'),
-(4, 3, 2, 'อาจารย์', 'ทดสอบไม่อนุมัติ', 'ไม่อนุมัติ', '2023-10-29 15:47:33'),
-(18, 1, 77, 'ประธานหลักสูตร', 'dddddd', 'อนุมัติ', '2023-10-30 14:35:44'),
-(43, 1, 78, 'คณบดี', 'ทดสอบไม่อนุมัติ', 'อนุมัติ', '2023-10-30 15:24:14'),
-(44, 4, 1, 'อาจารย์', '', 'รอการอนุมัติ', NULL);
+(53, 8, 2, 'อาจารย์', 'ทดสอบการอนุมัติ', 'อนุมัติ', '2023-11-04 16:21:50'),
+(55, 8, 77, 'ประธานหลักสูตร', 'ฟดหหหหหหหหหหหหห', 'อนุมัติ', '2023-11-04 16:31:46'),
+(60, 8, 78, 'คณบดี', 'ทดสอบการอนุมัติครบดี', 'อนุมัติ', '2023-11-04 16:32:20'),
+(62, 9, 1, 'อาจารย์', 's', 'อนุมัติ', '2023-11-04 17:08:36'),
+(63, 9, 77, 'ประธานหลักสูตร', '', 'อนุมัติ', '2023-11-04 17:08:50'),
+(64, 9, 78, 'คณบดี', 'sl', 'อนุมัติ', '2023-11-04 17:09:08'),
+(65, 10, 2, 'อาจารย์', '', 'อนุมัติ', '2023-11-05 14:02:23'),
+(66, 11, 1, 'อาจารย์', 'ทดสอบการไม่อนุมัติ', 'ไม่อนุมัติ', '2023-11-04 18:50:56'),
+(68, 10, 77, 'ประธานหลักสูตร', 'ssss', 'อนุมัติ', '2023-11-05 14:03:56'),
+(69, 10, 78, 'คณบดี', '-', 'อนุมัติ', '2023-11-05 14:04:48');
 
 -- --------------------------------------------------------
 
@@ -5967,7 +5974,7 @@ INSERT INTO `position` (`position_id`, `position_name`, `position_role`) VALUES
 (25, 'ประธานหลักสูตร', 'direct'),
 (30, 'อาจารย์', 'teacher'),
 (40, 'หัวหน้าสำนักงาน', ''),
-(41, 'เจ้าหน้าที่ฝ่ายวิชาการ', ''),
+(41, 'เจ้าหน้าที่ฝ่ายวิชาการ', 'admin'),
 (42, 'เจ้าหน้าที่ฝ่ายกิจการนักศึกษา', '');
 
 -- --------------------------------------------------------
@@ -7337,13 +7344,13 @@ ALTER TABLE `doc`
 -- AUTO_INCREMENT for table `document_form`
 --
 ALTER TABLE `document_form`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `document_form_approve`
 --
 ALTER TABLE `document_form_approve`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `event`
