@@ -1,9 +1,10 @@
 <?php
 
-include('./../admin/header.php');
-if($_SESSION['_role']!='student'){
+include('./../manage/header.php');
+if ($_SESSION['_role'] != 'student') {
     header("Location: ./../error/");
 }
+
 ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -11,11 +12,11 @@ if($_SESSION['_role']!='student'){
 
 
         <?php
-        include("./../admin/navbar.php")
+        include("./../manage/navbar.php")
 
         ?>
 
-        <?php include('./../admin/sidebar.php') ?>
+        <?php include('./../manage/sidebar.php') ?>
 
         <div class="content-wrapper">
             <div class="content-header">
@@ -52,7 +53,7 @@ if($_SESSION['_role']!='student'){
                                                 <span for="general_form_title" class="col-sm-1 col-form-label"><b>เรื่อง</b></span>
                                             </div>
                                             <div class="col-sm-11">
-                                                <input type="text" class="form-control" name="general_form_title" id="general_form_title" required>
+                                                <input type="text" autocomplete="yes" class="form-control" name="general_form_title" id="general_form_title" required>
                                             </div>
                                         </div>
 
@@ -72,15 +73,15 @@ if($_SESSION['_role']!='student'){
                                                 <span for="name" class="col-sm-1 col-form-label">ชื่อ </span>
                                             </div>
                                             <div class="col-sm-5" id="divFirstname">
-                                                <?php echo $_SESSION['_name'] ?>
+
                                             </div>
                                             <div class="col-1">
-                                                <span for="lname" id="divLastname" class="col-sm-1 col-form-label">
+                                                <span for="lname" class="col-sm-1 col-form-label">
                                                     นามสกุล
                                                     </sapn>
                                             </div>
-                                            <div class="col-sm-5">
-                                                <?php echo  $_SESSION['_lastname'] ?>
+                                            <div class="col-sm-5" id="divLastname">
+
                                             </div>
                                         </div>
                                         <!-- /.col -->
@@ -163,7 +164,7 @@ if($_SESSION['_role']!='student'){
 
                                         <div class="form-group row">
                                             <span for="id" class="col-sm-2 col-form-label">รหัสประจำตัว</span>
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-3" id="divStudent_code">
                                                 <input type="text" name="student_code" id="student_code" class="form-control" required>
                                             </div>
                                             <span for="major" class="col-sm-1 col-form-label">สาขาวิชา</span>
@@ -172,7 +173,7 @@ if($_SESSION['_role']!='student'){
                                             </div>
                                             <span for="major_id" class="col-sm-1 col-form-label">(รหัสสาขา)</span>
                                             <div class="col-sm-2">
-                                                <input type="text" name="major_id" id="major_id" class="form-control" required>
+                                                <input type="text" name="major_id" id="major_id" autocomplete="yes" class="form-control" required>
                                             </div>
                                         </div>
 
@@ -180,16 +181,32 @@ if($_SESSION['_role']!='student'){
 
                                         <div class="form-group row">
                                             <span for="semeter" class="col-sm-3 col-form-label">เข้าศึกษาตั้งแต่ภาคการศึกษา</span>
-                                            <div class="col-sm-1">
-                                                <input type="text" name="general_form_semester" id="general_form_semester" class="form-control" required>
+                                            <div class="col-sm-1" >
+                                                <select class="form-control" id="general_form_semester" name="general_form_semester">
+                                                    <option selected disabled>เลือกภาคการศึกษา</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                </select>
                                             </div>
-                                            <span for="year" class="col-sm-2 col-form-label">ปีการศึกษา</span>
-                                            <div class="col-sm-1">
-                                                <input type="text" name="general_form_year" id="general_form_year" class="form-control" required>
+                                            <span for="year" class="col-sm-1 col-form-label">ปีการศึกษา</span>
+                                            <div class="col-sm-2" >
+                                                <select class="form-control" id="general_form_year" name="general_form_year">
+                                                    <option selected disabled>เลือกปีการศึกษา</option>
+                                                    <option value="<?php echo (date('Y') + 544) ?>"><?php echo (date('Y') + 544) ?></option>
+                                                    <?php
+                                                    $currentYear = date('Y') + 543;
+                                                    $startYear = $currentYear;
+                                                    $endYear = $currentYear - 3;
+                                                    ?>
+                                                    <?php for ($i = $startYear; $i >= $endYear; $i--) { ?>
+                                                        <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                    <?php } ?>
+                                                </select>
                                             </div>
                                             <span for="tell" class="col-sm-3 col-form-label">เบอร์โทรศัพท์ที่สามารถติดต่อได้</span>
                                             <div class="col-sm-2">
-                                                <input type="text" name="tel" id="tel" class="form-control">
+                                                <input type="text" autocomplete="yes" name="tel" id="tel" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -197,7 +214,7 @@ if($_SESSION['_role']!='student'){
                                         <div class="form-group row">
                                             <span for="email" class="col-sm-2 col-form-label">Email</span>
                                             <div class="col-sm-10" id="divEmail">
-                                                <input type="text" name="email" id="email" class="form-control">
+                                                
                                             </div>
                                         </div>
 
@@ -342,12 +359,12 @@ if($_SESSION['_role']!='student'){
                 </div>
             </div>
         </div>
-        <?php include("./../admin/footer.php") ?>
+        <?php include("./../manage/footer.php") ?>
     </div>
-    <?php include("./../admin/scripts.php") ?>
+    <?php include("./../manage/scripts.php") ?>
 
 </body>
-<script src="./../admin/changepage.js"></script>
+<script src="./../manage/changepage.js"></script>
 <script src="./../asset/dist/js/custom.js"></script>
 <script>
     $(document).ready(function() {
@@ -357,13 +374,18 @@ if($_SESSION['_role']!='student'){
 
 
         $.ajax({
-            url: "./../api/student/data.php?v=users", // Replace with the URL of your data source
+            url: "./../api/sign/data.php?v=users", // Replace with the URL of your data source
             type: "GET",
             dataType: "json",
             success: function(Res) {
+                console.log(Res)
                 if (Res.status == 'ok') {
+
+                    $('#divStudent_code').text(Res.data.student_code);
+                    $('#divFirstname').text(Res.data.fname);
+                    $('#divLastname').text(Res.data.lname)
                     $('#divDatecurrent').text(dateCurrent());
-                    $('#email').text(Res.data.student_email);
+                    $('#divEmail').text(Res.data.student_email);
                     $('#divMajor').text(Res.data.major_name);
                     $("#imageSign").attr("src", "data:image/jpeg;base64," + Res.image_sign);
                     dataTeacher()
@@ -393,7 +415,7 @@ if($_SESSION['_role']!='student'){
                 console.log(formdataA)
                 $.ajax({
                     async: true,
-                    url: "./../api/documents/data.php?v=saveForm_1",
+                    url: "./../api/doc/data.php?v=saveForm_1",
                     type: "POST",
                     cache: false,
                     data: formdataA,
@@ -401,12 +423,12 @@ if($_SESSION['_role']!='student'){
                     contentType: false,
                     success: function(Res) {
                         console.log(Res);
-                        if (Res.status == 'ok') {
-                            alert(Res.msg);
-                            window.location.replace('./../student/');
-                        } else {
-                            alert(Res.msg)
-                        }
+                        // if (Res.status == 'ok') {
+                        //     alert(Res.msg);
+                        //     window.location.replace('./../student/');
+                        // } else {
+                        //     alert(Res.msg)
+                        // }
                     },
                     error: function(xhr, status, error) {
                         console.log("Error:", error);
@@ -419,10 +441,11 @@ if($_SESSION['_role']!='student'){
 
     function dataTeacher() {
         $.ajax({
-            url: "./../api/student/data.php?v=teacherAll", // Replace with the URL of your data source
+            url: "./../api/doc/data.php?v=teacherAll", // Replace with the URL of your data source
             type: "GET",
             dataType: "json",
             success: function(Res) {
+                // console.log(Res)
                 $("#selectTeacher").html($("<option>").text("--เลือกอาจารย์ที่ปรึกษา--").val(0));
 
                 $.each(Res, function(index, item) {
@@ -488,13 +511,11 @@ if($_SESSION['_role']!='student'){
         var errors = [];
 
         var general_form_title = $("#general_form_title").val();
-        var student_code = $("#student_code").val();
-        var major_id = $("#major_id").val();
         var general_form_semester = $("#general_form_semester").val();
         var general_form_year = $("#general_form_year").val();
         var tel = $("#tel").val();
         var general_form_opinion = $("#general_form_opinion").val();
-        var email = $("#email").val();
+       
         var selectTeacher = $("#selectTeacher").val();
 
         var edulevel = $('input[name="edulevel"]:checked').map(function() {
@@ -502,7 +523,7 @@ if($_SESSION['_role']!='student'){
         }).get();
 
 
-        console.log(edulevel)
+       
 
         var sector_doc = $('input[name="sector_doc"]:checked').map(function() {
             return $(this).val();
@@ -540,32 +561,21 @@ if($_SESSION['_role']!='student'){
         }
 
 
-
-        if (student_code === "") {
-            errors.push("* โปรดกรอกรหัสประจำตัว");
-            $("#student_code").focus();
-        }
-        if (major_id === "") {
-            errors.push("* โปรดกรอก(รหัสสาขา)");
-            $("#major_id").focus();
-        }
-
-        if (general_form_semester === "") {
+        console.log("general_form_semester : "+$("#general_form_semester").val())
+       
+        if (general_form_semester === "" || general_form_semester === null) {
             errors.push("* โปรดกรอกปีที่เข้าศึกษาตั้งแต่ภาคการศึกษา");
             $("#general_form_semester").focus();
         }
-        if (general_form_year === "") {
+        if (general_form_year === "" || general_form_year === null) {
             errors.push("* โปรดกรอกปีการศึกษา");
-            $("#general_form_semester").focus();
+            $("#general_form_year").focus();
         }
         if (tel === "") {
             errors.push("* โปรดกรอกเบอร์โทรศัพท์ที่สามารถติดต่อได้");
             $("#tel").focus();
         }
-        if (email === "") {
-            errors.push("* โปรดกรอก email");
-            $("#email").focus();
-        }
+        
         if (general_form_opinion === "") {
             errors.push("* โปรดกรอกความประสงค์");
             $("#selectTeacher").focus();

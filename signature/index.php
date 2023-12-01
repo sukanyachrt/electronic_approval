@@ -1,6 +1,6 @@
 <?php
 
-include('./../admin/header.php');
+include('./../manage/header.php');
 
 ?>
 
@@ -9,18 +9,15 @@ include('./../admin/header.php');
 
 
         <?php
-        include("./../admin/navbar.php");
-
-
-
+            include("./../manage/navbar.php");
         ?>
 
         <?php
 
         if ($_SESSION['_role'] == 'student') {
-            include('./../admin/sidebar.php');
+            include('./../manage/sidebar.php');
         } else {
-            include('./../admin/sidebar_teacher.php');
+            include('./../manage/sidebar_teacher.php');
         }
         ?>
 
@@ -47,13 +44,13 @@ include('./../admin/header.php');
                 </div>
             </div>
         </div>
-        <?php include("./../admin/footer.php") ?>
+        <?php include("./../manage/footer.php") ?>
     </div>
-    <?php include("./../admin/scripts.php") ?>
+    <?php include("./../manage/scripts.php") ?>
 
 </body>
 
-<script src="./../admin/changepage.js"></script>
+<script src="./../manage/changepage.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
 <script>
     $(document).ready(() => {
@@ -122,7 +119,7 @@ include('./../admin/header.php');
 
 
             $.ajax({
-                url: "./../api/signature/data.php?v=uploadSignature",
+                url: "./../api/sign/data.php?v=uploadSignature",
                 type: "POST",
                 data: anchor,
                 success: function(Res) {

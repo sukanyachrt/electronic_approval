@@ -76,7 +76,7 @@ session_start();
 
         $.ajax({
           async: true,
-          url: "./api/login/data.php?v=checklogin",
+          url: "./api/auth/data.php?v=checklogin",
           type: "POST",
           cache: false,
           data: formdataA,

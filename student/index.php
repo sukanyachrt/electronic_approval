@@ -1,6 +1,6 @@
 <?php
 
-include('./../admin/header.php');
+include('./../manage/header.php');
 if($_SESSION['_role']!='student'){
     header("Location: ./../error/");
 }
@@ -14,11 +14,11 @@ if($_SESSION['_role']!='student'){
 
 
         <?php
-        include("./../admin/navbar.php")
+        include("./../manage/navbar.php")
 
         ?>
 
-        <?php include('./../admin/sidebar.php') ?>
+        <?php include('./../manage/sidebar.php') ?>
 
         <div class="content-wrapper">
 
@@ -54,15 +54,15 @@ if($_SESSION['_role']!='student'){
             </section>
             <!-- /.content -->
         </div>
-        <?php include("./../admin/footer.php") ?>
+        <?php include("./../manage/footer.php") ?>
 
     </div>
 
-    <?php include("./../admin/scripts.php") ?>
+    <?php include("./../manage/scripts.php") ?>
 
 </body>
 <script src="./../asset/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="./../admin/changepage.js"></script>
+<script src="./../manage/changepage.js"></script>
 <script src="./../asset/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="./../asset/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="./../asset/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
