@@ -21,13 +21,18 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-item menu">
-                    <a href="./../signature/" class="nav-link">
-                        <i class='fas fa-file-signature'></i>
-                        <p> ตั้งค่าลายเซ็น </p>
-                    </a>
-                </li>
                 <?php
+                if ($_SESSION['_role'] != "admin") {
+                ?>
+                    <li class="nav-item menu">
+                        <a href="./../signature/" class="nav-link">
+                            <i class='fas fa-file-signature'></i>
+                            <p> ตั้งค่าลายเซ็น </p>
+                        </a>
+                    </li>
+                <?php
+                }
+               
                 if ($_SESSION['_role'] == "student") {
                 ?>
                     <li class="nav-item menu-dropdown">
@@ -54,6 +59,15 @@
                         </a>
                     </li>
                 <?php
+                } else  if ($_SESSION['_role'] === "admin") {
+                ?>
+                    <li class="nav-item menu">
+                        <a href="./../admin/" class="nav-link">
+                            <i class="fas fa-regular fa-file"></i>
+                            <p> เอกสารการยื่นของนักศึกษา</p>
+                        </a>
+                    </li>
+                <?php
                 } else {
                 ?>
                     <li class="nav-item menu">
@@ -64,6 +78,7 @@
                     </li>
                 <?php
                 }
+
                 ?>
 
 
