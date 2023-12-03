@@ -181,7 +181,7 @@ if ($_SESSION['_role'] != 'student') {
 
                                         <div class="form-group row">
                                             <span for="semeter" class="col-sm-3 col-form-label">เข้าศึกษาตั้งแต่ภาคการศึกษา</span>
-                                            <div class="col-sm-1" >
+                                            <div class="col-sm-1">
                                                 <select class="form-control" id="general_form_semester" name="general_form_semester">
                                                     <option selected disabled>เลือกภาคการศึกษา</option>
                                                     <option value="1">1</option>
@@ -190,7 +190,7 @@ if ($_SESSION['_role'] != 'student') {
                                                 </select>
                                             </div>
                                             <span for="year" class="col-sm-1 col-form-label">ปีการศึกษา</span>
-                                            <div class="col-sm-2" >
+                                            <div class="col-sm-2">
                                                 <select class="form-control" id="general_form_year" name="general_form_year">
                                                     <option selected disabled>เลือกปีการศึกษา</option>
                                                     <option value="<?php echo (date('Y') + 544) ?>"><?php echo (date('Y') + 544) ?></option>
@@ -214,7 +214,7 @@ if ($_SESSION['_role'] != 'student') {
                                         <div class="form-group row">
                                             <span for="email" class="col-sm-2 col-form-label">Email</span>
                                             <div class="col-sm-10" id="divEmail">
-                                                
+
                                             </div>
                                         </div>
 
@@ -422,13 +422,13 @@ if ($_SESSION['_role'] != 'student') {
                     processData: false, // tell jQuery not to process the data
                     contentType: false,
                     success: function(Res) {
-                        console.log(Res);
-                        // if (Res.status == 'ok') {
-                        //     alert(Res.msg);
-                        //     window.location.replace('./../student/');
-                        // } else {
-                        //     alert(Res.msg)
-                        // }
+                        console.log(Res)
+                        if (Res.status == 'ok') {
+                            alert(Res.msg);
+                            window.location.replace('./../student/');
+                        } else {
+                            alert(Res.msg)
+                        }
                     },
                     error: function(xhr, status, error) {
                         console.log("Error:", error);
@@ -515,7 +515,7 @@ if ($_SESSION['_role'] != 'student') {
         var general_form_year = $("#general_form_year").val();
         var tel = $("#tel").val();
         var general_form_opinion = $("#general_form_opinion").val();
-       
+
         var selectTeacher = $("#selectTeacher").val();
 
         var edulevel = $('input[name="edulevel"]:checked').map(function() {
@@ -523,7 +523,7 @@ if ($_SESSION['_role'] != 'student') {
         }).get();
 
 
-       
+
 
         var sector_doc = $('input[name="sector_doc"]:checked').map(function() {
             return $(this).val();
@@ -561,8 +561,8 @@ if ($_SESSION['_role'] != 'student') {
         }
 
 
-        console.log("general_form_semester : "+$("#general_form_semester").val())
-       
+        console.log("general_form_semester : " + $("#general_form_semester").val())
+
         if (general_form_semester === "" || general_form_semester === null) {
             errors.push("* โปรดกรอกปีที่เข้าศึกษาตั้งแต่ภาคการศึกษา");
             $("#general_form_semester").focus();
@@ -575,7 +575,7 @@ if ($_SESSION['_role'] != 'student') {
             errors.push("* โปรดกรอกเบอร์โทรศัพท์ที่สามารถติดต่อได้");
             $("#tel").focus();
         }
-        
+
         if (general_form_opinion === "") {
             errors.push("* โปรดกรอกความประสงค์");
             $("#selectTeacher").focus();
