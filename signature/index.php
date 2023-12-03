@@ -17,7 +17,7 @@ include('./../manage/header.php');
         if ($_SESSION['_role'] == 'student') {
             include('./../manage/sidebar.php');
         } else {
-            include('./../manage/sidebar_teacher.php');
+            include('./../manage/sidebar.php');
         }
         ?>
 

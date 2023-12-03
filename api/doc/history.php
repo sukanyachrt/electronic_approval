@@ -35,7 +35,7 @@ if ($data == "history_doc") {
         $connect2->queryData();
         $rsconnect2 = $connect2->fetch_AssocData();
         $advisor_approve = $rsconnect2['approve_status_name'];
-        if ($advisor_approve != "รอการอนุมัติ") {
+        if ($advisor_approve == "อนุมัติ") {
             #ข้อมูลการอนุมัติประธาน
             $connect2->sql = "SELECT DATETIME,master_comment,approve_status_name 
             FROM approve_status AS t2
@@ -44,7 +44,7 @@ if ($data == "history_doc") {
             $connect2->queryData();
             $rsconnect2 = $connect2->fetch_AssocData();
             $master_approve = $rsconnect2['approve_status_name'];
-            if ($master_approve != "รอการอนุมัติ") {
+            if ($master_approve == "อนุมัติ") {
                 #ข้อมูลการอนุมัติของคณบดี
                 $connect2->sql = "SELECT DATETIME,deen_comment,approve_status_name 
                 FROM approve_status AS t2

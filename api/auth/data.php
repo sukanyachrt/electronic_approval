@@ -40,7 +40,7 @@ if ($data == "checklogin") {
             if ($rsconnect['user_password'] == $password) {
                 $position_role="";
                 if($rsconnect['position_role']=="adviser" || $rsconnect['position_role']=="master" || $rsconnect['position_role']=="deen"){
-                    $position_role="approve";
+                    $position_role=$rsconnect['position_role'];
                 }
                 else if($rsconnect['position_role']=="admin"){
                     $position_role="admin";

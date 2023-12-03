@@ -193,18 +193,6 @@ if ($_SESSION['_role'] != 'student') {
     }
 
 
-    function convertDate(dateApr) {
-        var parts = dateApr.split(" ");
-
-        var datePart = parts[0];
-        console.log(parts[1])
-        var parts2 = datePart.split("-");
-
-        var formattedDate = parts2[2] + "/" + parts2[1] + "/" + parts2[0];
-
-        return [formattedDate, parts[1]];
-
-    }
 </script>
 
 </html>
