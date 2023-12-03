@@ -52,10 +52,13 @@ if ($data == "teacherAll") {
             $connect->sql = "INSERT INTO `general_form`
            (form_id,`general_form_title`,
              `general_form_semester`,
-             `general_form_year`, `general_form_opinion`,general_form_sector,general_form_education)
+             `general_form_year`, `general_form_opinion`,
+             general_form_sector,general_form_education,
+             general_form_type_semester,general_form_major_code,general_form_tel)
                VALUES ('" . $form_id . "','" . $data['general_form_title'] . "',
                '" . $data['general_form_semester'] . "','" . $newgeneral_form_year . "',
-               '" . $data['general_form_opinion'] . "','" . $general_form_sector . "','" . $data['edulevel'] . "')";
+               '" . $data['general_form_opinion'] . "','" . $general_form_sector . "',
+               '" . $data['edulevel'] . "','".$data['semester']."','".$data['major_id']."','".$data['tel']."')";
             $connect->queryData();
             $affect = $connect->affected_rows();
             $id = $connect->id_insertrows(); // นำ id ไปใช้ต่อ
@@ -68,8 +71,8 @@ if ($data == "teacherAll") {
                 #insert advisor_approve (อาจารย์)
                 if ($approve_status_id > 0) {
                     $connect->sql = "INSERT INTO `advisor_approve` 
-                   ( `advisor_comment`, `advisor_status_id`, `genaral_form_id`)
-                    VALUES ('','" . $approve_status_id . "','" . $id . "')";
+                   ( `advisor_comment`, `advisor_status_id`, `genaral_form_id`,advisor_user_id)
+                    VALUES ('','" . $approve_status_id . "','" . $id . "','".$data['selectTeacher']."')";
                     $connect->queryData();
                     $affect_ad = $connect->affected_rows();
                     $id = $connect->id_insertrows();

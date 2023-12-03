@@ -1,6 +1,6 @@
 <?php
 
-include('./../manage/header.php');
+include('./../admin/header.php');
 
 ?>
 <link rel="stylesheet" href="./../asset/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -15,11 +15,11 @@ include('./../manage/header.php');
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
         <?php
-        include("./../manage/navbar.php")
+        include("./../admin/navbar.php")
 
         ?>
 
-        <?php include('./../manage/sidebar.php') ?>
+        <?php include('./../admin/sidebar_admin.php') ?>
 
         <div class="content-wrapper newFont">
 
@@ -82,7 +82,7 @@ include('./../manage/header.php');
                                 </div>
 
                                 <div class="col-2 ">
-                                    <input type="checkbox"  class="radio" id="edulevel" onclick="Checkedulevel(this)" name="edulevel" value="ปริญญาเอก">
+                                    <input type="checkbox" class="radio" id="edulevel" onclick="Checkedulevel(this)" name="edulevel" value="ปริญญาเอก">
                                     <span for="input-level-phd">&nbsp;เอก</span>
                                 </div>
 
@@ -198,7 +198,7 @@ include('./../manage/header.php');
                                 </div>
                                 <div class="col-5 text-center" style="display: flex;">
                                     <span style="border-bottom: 1px dashed black; width: 100%;">
-                                        <img id="imageSign_student" src="./../api/images/nosign.png" style="margin-bottom: -10px;" width="150px" height="60px" />
+                                        <img id="imageSign_student" style="margin-bottom: -10px;" width="150px" height="60px" />
                                     </span>
                                 </div>
                             </div>
@@ -245,7 +245,7 @@ include('./../manage/header.php');
 
                                 </div>
                                 <div class="col-5" style="border-bottom: 1px dashed black; width: 100%;">
-                                    <span id="divComment_master"></span>
+                                    <span id="divComment_direct"></span>
                                 </div>
 
                             </div>
@@ -291,7 +291,7 @@ include('./../manage/header.php');
                                 </div>
                                 <div class="col-5 text-center" style="display: flex;">
                                     <span style="border-bottom: 1px dashed black; width: 100%;">
-                                        <img id="imageTeacher" src="./../api/images/nosign.png" style="margin-bottom: -10px;" width="150px" height="60px" />
+                                        <img id="imageTeacher" src="./../api/images/M6113391.png" style="margin-bottom: -10px;" width="150px" height="60px" />
                                     </span>
                                 </div>
                                 <div class="col-1">
@@ -302,7 +302,7 @@ include('./../manage/header.php');
                                 </div>
                                 <div class="col-4 text-center" style="display: flex;">
                                     <span style="border-bottom: 1px dashed black; width: 100%;">
-                                        <img id="imageMaster" src="./../api/images/nosign.png" style="margin-bottom: -10px;" width="150px" height="60px" />
+                                        <img id="imageDirect" src="./../api/images/M6113391.png" style="margin-bottom: -10px;" width="150px" height="60px" />
                                     </span>
                                 </div>
 
@@ -330,7 +330,7 @@ include('./../manage/header.php');
                                             (
                                         </div>
                                         <div class="col-9 text-center" style="border-bottom: 1px dashed black; width: 100%;">
-                                            <span id="spanName_master">-</span>
+                                            <span id="spanName_direct">-</span>
                                         </div>
                                         <div class="col-1 text-left" style="align-items:center;">
                                             )
@@ -363,7 +363,7 @@ include('./../manage/header.php');
 
                                         </div>
                                         <div class="col-9 text-center" style="border-bottom: 1px dashed black; width: 100%;">
-                                            <span id="spanDate_master">
+                                            <span id="spanDate_direct">
                                                 -
                                             </span>
                                         </div>
@@ -384,7 +384,7 @@ include('./../manage/header.php');
                             </div>
                             <div class="row" style="align-items: flex-end;">
                                 <div class="col-6" style="border-bottom: 1px dashed black; width: 100%;">
-                                    <span id="divComment_deen">-</span>
+                                    <span id="divComment_master">-</span>
                                 </div>
                                 <div class="col-1">
 
@@ -405,7 +405,7 @@ include('./../manage/header.php');
                                 </div>
                                 <div class="col-5 text-center" style="display: flex;">
                                     <span style="border-bottom: 1px dashed black; width: 100%;">
-                                        <img id="imageDeen" src="./../api/images/nosign.png" style="margin-bottom: -10px;" width="150px" height="60px" />
+                                        <img id="imageMaster" src="./../api/images/M6113391.png" style="margin-bottom: -10px;" width="150px" height="60px" />
                                     </span>
                                 </div>
                                 <div class="col-1">
@@ -420,7 +420,7 @@ include('./../manage/header.php');
                                             (
                                         </div>
                                         <div class="col-9 text-center" style="border-bottom: 1px dashed black; width: 100%;">
-                                            <span id="spanName_deen"> - </span>
+                                            <span id="spanName_master"> - </span>
                                         </div>
                                         <div class="col-1 text-left" style="align-items:center;">
                                             )
@@ -439,7 +439,7 @@ include('./../manage/header.php');
                                             <br />
                                         </div>
                                         <div class="col-9 text-center" style="border-bottom: 1px dashed black; width: 100%;">
-                                            <span id="spanDate_deen"> - </span>
+                                            <span id="spanDate_master"> - </span>
                                         </div>
                                         <div class="col-1 text-left" style="align-items:center;">
 
@@ -481,7 +481,7 @@ include('./../manage/header.php');
                         <div class="row no-print justify-content-end" style="padding: 10px;">
                             <div class="col-12">
                                 <button type="button" id="goBackButton" value="" class="btn btn-default float-right" style="margin-right: 5px;">
-                                    <i class="fas fa-solid fa-arrow-left"></i> ย้อนกลับ
+                                <i class="fas fa-solid fa-arrow-left"></i> ย้อนกลับ
                                 </button>
                                 <a onclick="window.print()" id="print" class="btn btn-primary float-right" style="margin-right: 5px;">
                                     <i class="fas fa-print"></i> Print
@@ -495,11 +495,11 @@ include('./../manage/header.php');
             </section>
             <!-- /.content -->
         </div>
-        <?php include("./../manage/footer.php") ?>
+        <?php include("./../admin/footer.php") ?>
 
     </div>
 
-    <?php include("./../manage/scripts.php") ?>
+    <?php include("./../admin/scripts.php") ?>
 
 </body>
 <script src="./../asset/dist/js/moment.js"></script>
@@ -508,122 +508,83 @@ include('./../manage/header.php');
     $(function() {
         var idDoc = $('#btnId_doc').val();
         $.ajax({
-            url: `./../api/doc/previewform.php?v=dataDoc&idDoc=${idDoc}`, // Replace with the URL of your data source
+            url: `./../api/documents/approve_doc.php?v=dataDoc&idDoc=${idDoc}`, // Replace with the URL of your data source
             type: "GET",
             dataType: "json",
             success: function(Res) {
                 console.log(Res)
-                //ข้อมูลเอกสาร
                 var datadoc = Res[0];
-                $('#divTitle').text(datadoc.general_form_title)
-                $('#divFirstname').text(`${datadoc.prefix_name}${datadoc.student_name}`);
+                $('#divTitle').text(datadoc.form_title)
+                $('#divFirstname').text(`${datadoc.student_name}`);
                 $('#divLastname').text(`${datadoc.student_lastname}`);
 
-                $('#edulevel[value="' + datadoc.general_form_education + '"]').prop('checked', true);
-                $('#sector_doc[value="' + datadoc.general_form_sector + '"]').prop('checked', true);
-                $('#sector_master[value="' + datadoc.general_form_sector + '"]').prop('checked', true);
-                $('#semester[value="' + datadoc.general_form_type_semester + '"]').prop('checked', true);
+                $('#edulevel[value="' + datadoc.edulevel + '"]').prop('checked', true);
+                $('#sector_doc[value="' + datadoc.type_sector + '"]').prop('checked', true);
+                $('#sector_master[value="' + datadoc.type_sector + '"]').prop('checked', true);
+                $('#semester[value="' + datadoc.semester + '"]').prop('checked', true);
 
-                $('#divStudentcode').text(datadoc.student_code);
-                $('#divMajor').text(datadoc.major_name);
-                $('#divNoMajor').text(datadoc.general_form_major_code);
-                $('#divYear_semester').text(datadoc.general_form_semester);
-                $('#divYear_study').text(datadoc.general_form_year);
-                $('#divPhone').text(datadoc.general_form_tel);
-                $('#divEmail').text(datadoc.student_email);
-                $('#divPurpose').text(datadoc.general_form_opinion);
+                $('#divStudentcode').text(datadoc.doc_studentcode);
+                $('#divMajor').text(datadoc.name_major);
+                $('#divNoMajor').text(datadoc.major_name);
+                $('#divYear_semester').text(datadoc.year_semester);
+                $('#divYear_study').text(datadoc.year_study);
+                $('#divPhone').text(datadoc.telephone);
+                $('#divEmail').text(datadoc.email);
+                $('#divPurpose').text(datadoc.purpose);
                 $("#imageSign_student").attr("src", "data:image/jpeg;base64," + datadoc.image_sign);
 
                 $('#spanName_student').text(`${datadoc.student_name} ${datadoc.student_lastname}`);
-                $('#divDate_student').text(convertToThaiBuddhistDate(datadoc.DATETIME));
+                 $('#divDate_student').text(convertToThaiBuddhistDate(datadoc.date_insert));
 
 
-
-
-                //ข้อมูลการอนุมัติของอาจารย์
-                var dataApr_advisor = Res[1];
-                $('#divComment_teacher').text(dataApr_advisor.advisor_comment)
-                $('#spanName_teacher').text(`${dataApr_advisor.user_name}`);
-                if (dataApr_advisor.DATETIME) {
-
-                    $('#spanDate_teacher').text(convertToThaiBuddhistDate(dataApr_advisor.DATETIME));
-                    $("#imageTeacher").attr("src", "data:image/jpeg;base64," + dataApr_advisor.image_sign);
-                } else {
-                    $('#spanDate_teacher').text("-");
+                var dataApr = Res[1];
+                $('#imageTeacher').hide()
+                $('#imageDirect').hide()
+                $('#imageMaster').hide();
+                console.log(dataApr.length)
+                if(dataApr.length<3){
+                    $('#print').hide()
                 }
+                $.each(dataApr, function(index, item) {
 
-                
-                //ข้อมูลการอนุมัติของประธาน
-                var dataApr_master = Res[2];
+                    if (item.role_approve == "อาจารย์") {
+                        $('#imageTeacher').show();
+                        $("#imageTeacher").attr("src", "data:image/jpeg;base64," + item.image_sign);
+                        $('#spanName_teacher').text(`${item.user_name}`);
+                        if (item.date_approve == null) {
+                            $('#spanDate_teacher').text(`-`);
+                        } else {
+                            
+                            $('#spanDate_teacher').text(convertToThaiBuddhistDate(item.date_approve));
+                        }
 
-                if (dataApr_master.DATETIME) {
-                    $('#divComment_master').text(dataApr_master.advisor_comment)
-                    $('#spanName_master').text(`${dataApr_master.user_name}`);
-                    $('#spanDate_master').text(convertToThaiBuddhistDate(dataApr_master.DATETIME));
-                    $("#imageMaster").attr("src", "data:image/jpeg;base64," + dataApr_master.image_sign);
-                } else {
-                    $('#spanDate_master').text("-");
-                }
+                        $('#divComment_teacher').text(`${item.comment_approve}`)
 
-                //ข้อมูลการอนุมัติของคณบดี
-                var dataApr_deen = Res[2];
+                    }
+                    if (item.role_approve == "ประธานหลักสูตร") {
+                        $('#imageDirect').show()
+                        $("#imageDirect").attr("src", "data:image/jpeg;base64," + item.image_sign);
+                        $('#spanName_direct').text(`${item.user_name}`);
+                        if (item.date_approve == null) {
+                            $('#spanDate_direct').text(`-`);
+                        } else {
+                            $('#spanDate_direct').text(convertToThaiBuddhistDate(item.date_approve));
+                        }
+                        $('#divComment_direct').text(`${item.comment_approve}`)
 
-                if (dataApr_deen.DATETIME) {
-                    $('#divComment_deen').text(dataApr_deen.advisor_comment)
-                    $('#spanName_deen').text(`${dataApr_deen.user_name}`);
-                    $('#spanDate_deen').text(convertToThaiBuddhistDate(dataApr_deen.DATETIME));
-                    $("#imageDeen").attr("src", "data:image/jpeg;base64," + dataApr_deen.image_sign);
-                } else {
-                    $('#spanDate_deen').text("-");
-                }
+                    }
+                    if (item.role_approve == "คณบดี") {
+                        $('#imageMaster').show()
+                        $('#spanName_master').text(`${item.user_name}`);
 
-                // $('#imageTeacher').hide()
-                // $('#imageDirect').hide()
-                // $('#imageMaster').hide();
-                // console.log(dataApr.length)
-                // if(dataApr.length<3){
-                //     $('#print').hide()
-                // }
-                // $.each(dataApr, function(index, item) {
-
-                //     if (item.role_approve == "อาจารย์") {
-                //         $('#imageTeacher').show();
-                //         $("#imageTeacher").attr("src", "data:image/jpeg;base64," + item.image_sign);
-                //         $('#spanName_teacher').text(`${item.user_name}`);
-                //         if (item.date_approve == null) {
-                //             $('#spanDate_teacher').text(`-`);
-                //         } else {
-
-                //             $('#spanDate_teacher').text(convertToThaiBuddhistDate(item.date_approve));
-                //         }
-
-                //         $('#divComment_teacher').text(`${item.comment_approve}`)
-
-                //     }
-                //     if (item.role_approve == "ประธานหลักสูตร") {
-                //         $('#imageDirect').show()
-                //         $("#imageDirect").attr("src", "data:image/jpeg;base64," + item.image_sign);
-                //         $('#spanName_direct').text(`${item.user_name}`);
-                //         if (item.date_approve == null) {
-                //             $('#spanDate_direct').text(`-`);
-                //         } else {
-                //             $('#spanDate_direct').text(convertToThaiBuddhistDate(item.date_approve));
-                //         }
-                //         $('#divComment_direct').text(`${item.comment_approve}`)
-
-                //     }
-                //     if (item.role_approve == "คณบดี") {
-                //         $('#imageMaster').show()
-                //         $('#spanName_master').text(`${item.user_name}`);
-
-                //         if (item.date_approve == null) {
-                //             $('#spanDate_master').text(`-`);
-                //         } else {
-                //             $('#spanDate_master').text(convertToThaiBuddhistDate(item.date_approve));
-                //         }
-                //         $('#divComment_master').text(`${item.comment_approve}`)
-                //     }
-                // })
+                        if (item.date_approve == null) {
+                            $('#spanDate_master').text(`-`);
+                        } else {
+                            $('#spanDate_master').text(convertToThaiBuddhistDate(item.date_approve));
+                        }
+                        $('#divComment_master').text(`${item.comment_approve}`)
+                    }
+                })
 
 
 

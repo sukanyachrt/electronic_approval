@@ -39,8 +39,8 @@ if ($data == "checklogin") {
             $rsconnect = $connect->fetch_AssocData();
             if ($rsconnect['user_password'] == $password) {
                 $position_role="";
-                if($rsconnect['position_role']=="teacher" || $rsconnect['position_role']=="direct" || $rsconnect['position_role']=="master"){
-                    $position_role="teacher";
+                if($rsconnect['position_role']=="adviser" || $rsconnect['position_role']=="master" || $rsconnect['position_role']=="deen"){
+                    $position_role="approve";
                 }
                 else if($rsconnect['position_role']=="admin"){
                     $position_role="admin";

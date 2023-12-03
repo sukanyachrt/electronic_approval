@@ -1,7 +1,7 @@
 <?php
 
 include('./../manage/header.php');
-if($_SESSION['_role']!='student'){
+if ($_SESSION['_role'] != 'student') {
     header("Location: ./../error/");
 }
 ?>
@@ -31,16 +31,39 @@ if($_SESSION['_role']!='student'){
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title text-bold">ประวัติการยื่นเอกสาร</h3>
+                                    <div class="card-tools">
+                                        <div class="input-group input-group-sm" style="width: 300px;">
+                                            <input type="text" id="searchInput" class="form-control float-right" placeholder="ค้นหาข้อมูล">
+
+
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table id="tb_history" class="table table-bordered table-hover">
-                                        <thead>
-
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table id="tb_historydoc" class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">ลำดับ</th>
+                                                    <th class="text-center">รหัสฟอร์ม</th>
+                                                    <th class="text-center">เรื่อง</th>
+                                                    <th class="text-center">วันที่ยื่นคำขอ</th>
+                                                    <th>อาจารย์</th>
+                                                    <th>ประธาน</th>
+                                                    <th>คณบดี</th>
+                                                    <th class="text-center">สถานะ</th>
+                                                    <th class="text-center">preview</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -77,72 +100,81 @@ if($_SESSION['_role']!='student'){
 <script src="./../asset/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script>
     $(function() {
-        $.ajax({
-            url: "./../api/documents/data.php?v=header_data", // Replace with the URL of your data source
-            type: "GET",
-            dataType: "json",
-            success: function(Res) {
-                $('#tb_history thead').html();
-                var tb_history = '';
-                $.each(Res[0], function(index, item) {
-
-                    tb_history += '<th class="text-center" style="vertical-align: middle;" rowspan="' + item.rows + '" colspan="' + item.cols + '">' + item.title + '</th>';
-
-                });
-                
-                var t_status = '';
-                $.each(Res[1], function(index, item) {
-                    console.log(item.title)
-                    t_status += '<th class="text-center">' + item.title + '</th>';
-
-                });
-                $('#tb_history thead').html('<tr>' + tb_history + '</tr>' + t_status + '</tr>');
-            }
+        $('#searchInput').on('keyup', function() {
+            const searchText = $(this).val().toLowerCase();
+            $('#tb_historydoc tbody tr').each(function() {
+                const rowText = $(this).text().toLowerCase();
+                if (rowText.includes(searchText)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
         });
+
+        function convertDate(date) {
+            var parts = date.split(" ");
+
+            var datePart = parts[0];
+            var parts2 = datePart.split("-");
+
+            var formattedDate = parts2[2] + "/" + parts2[1] + "/" + parts2[0];
+
+            return [formattedDate, parts[1]];
+
+        }
+
+
         $.ajax({
-            url: "./../api/documents/data.php?v=history_doc", // Replace with the URL of your data source
+            url: "./../api/doc/history.php?v=history_doc", // Replace with the URL of your data source
             type: "GET",
             dataType: "json",
             success: function(Res) {
                 console.log(Res)
-                $('#tb_history tbody').html('');
+                $('#tb_historydoc tbody').html('')
                 $.each(Res, function(index, item) {
-                    var data_approve = '';
-                    $.each(item.data_approve, function(i, data_) {
-                        if (data_.status_approve == undefined) {
-                            data_approve += '<td class="text-center">-</td>';
-                        } else {
-                            var spanStatus = '';
-                            if (data_.status_approve == "อนุมัติ") {
-                                spanStatus = '<small class="badge badge-success">' + data_.status_approve + '</small>'
-                            } else if (data_.status_approve == "รอการอนุมัติ") {
-                                spanStatus = '<small class="badge badge-info">' + data_.status_approve + '</small>'
-                            } else {
-                                spanStatus = '<small class="badge badge-danger">' + data_.status_approve + '</small>'
-                            }
-                            var datetimeString = '-';
-                            if (data_.date_approve != null) {
-                                datetimeString = convertDate(data_.date_approve);
+                    var date_insert = convertDate(item.datetime);
+                    $('#tb_historydoc tbody').append(`
+                    <tr>
+                        <td class="text-center">${index+1}</td>
+                        <td class="text-center">${item.form_id}</td>
+                        <td class="text-left">${item.general_form_title}</td>
+                        <td class="text-center">${date_insert[0]}</td>
+                        <td class="text-center">
+                        ${item.advisor_approve === "รอการอนุมัติ" 
+                            ? '<span class="badge bg-warning">'+item.advisor_approve+'</span>' 
+                            : item.advisor_approve === "อนุมัติ" 
+                            ? '<span class="badge bg-success">'+item.advisor_approve+'</span>'
+                            : '<span class="badge bg-danger">'+item.advisor_approve+'</span>'}
+                        </td>
+                        <td class="text-center">
+                            ${item.master_approve === "รอการอนุมัติ" 
+                            ? '<span class="badge bg-warning">'+item.master_approve+'</span>' 
+                            : item.master_approve === "อนุมัติ" 
+                            ? '<span class="badge bg-success">'+item.master_approve+'</span>'
+                            : '<span class="badge bg-danger">'+item.master_approve+'</span>'}
+                        </td>
+                        <td class="text-center">
+                            ${item.deen_approve === "รอการอนุมัติ" 
+                            ? '<span class="badge bg-warning">'+item.deen_approve+'</span>' 
+                            : item.deen_approve === "อนุมัติ" 
+                            ? '<span class="badge bg-success">'+item.deen_approve+'</span>'
+                            : '<span class="badge bg-danger">'+item.deen_approve+'</span>'}
+                        </td>
+                        <td class="text-center">
+                           
+                            ${item.form_status_name === "กำลังดำเนินการ" 
+                            ? '<span class="badge bg-info">'+item.form_status_name+'</span>' 
+                            : item.form_status_name === "แก้ไข" 
+                            ? '<span class="badge bg-warning">'+item.form_status_name+'</span>'
+                            : '<span class="badge bg-success">'+item.form_status_name+'</span>'}
+                        </td>
+                        <td class="text-center" style="vertical-align: middle;" ><button  onclick="modalDocShow(${item.form_id})" type="button" class="badge badge badge-primary" >Preview</button></td>
+                    </tr>
+                    `);
 
-                            }
-
-
-
-                            data_approve += '<td >' + 'สถานะ : ' + spanStatus + '<br/> วันที่อนุมัติ : ' + (datetimeString[0]) + '<br/> เวลาที่อนุมัติ : ' + (datetimeString[1] !== undefined ? datetimeString[1] : '-') + '</td>';
-
-                        }
-
-                    })
-
-
-                    $("#tb_history tbody").append('<tr>' +
-                        '<td style="vertical-align: middle;" ><button  onclick="modalDocShow(' + item.id + ')" type="button" class="badge badge badge-primary" >Preview</button></td>' +
-
-                        '<td style="vertical-align: middle;">' + item.form_title + '</td>' +
-                        '<td style="vertical-align: middle;">' + item.date_insert + '</td>' +
-                        data_approve +
-                        '</tr>');
                 });
+
             },
             error: function(xhr, status, error) {
                 console.log("Error: " + error);
@@ -157,7 +189,7 @@ if($_SESSION['_role']!='student'){
         console.log(idDoc)
         var url = 'previewform.php?id=' + idDoc;
         window.location = url;
-       
+
     }
 
 
@@ -170,7 +202,7 @@ if($_SESSION['_role']!='student'){
 
         var formattedDate = parts2[2] + "/" + parts2[1] + "/" + parts2[0];
 
-        return [formattedDate, parts[1] ];
+        return [formattedDate, parts[1]];
 
     }
 </script>
