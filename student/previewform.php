@@ -566,7 +566,7 @@ include('./../manage/header.php');
                 }
 
                 //ข้อมูลการอนุมัติของคณบดี
-                var dataApr_deen = Res[2];
+                var dataApr_deen = Res[3];
 
                 if (dataApr_deen.DATETIME) {
                     $('#divComment_deen').text(dataApr_deen.advisor_comment)

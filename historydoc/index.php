@@ -39,11 +39,11 @@ include('./../manage/header.php');
                 <div class="container-fluid">
                     <div class="row justify-content-center">
 
-                        <a class="col-12 col-sm-6 col-md-3" style="cursor: pointer;" href="./../historydoc/">
-                            <div class="info-box mb-3">
+                        <a class="col-12 col-sm-6 col-md-3 " style="cursor: pointer;">
+                            <div class="info-box mb-3 selected-card">
                                 <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-solid fa-check"></i></span>
 
-                                <div class="info-box-content">
+                                <div class="info-box-content ">
                                     <span class="info-box-text">ประวัติการอนุมัติที่ผ่านมา</span>
                                     <span class="info-box-number" id="apr_historyApr">0</span>
                                 </div>
@@ -51,8 +51,8 @@ include('./../manage/header.php');
 
                             </div>
                         </a>
-                        <div class="col-12 col-sm-6 col-md-3" style="cursor: pointer;">
-                            <div class="info-box mb-3 selected-card">
+                        <a class="col-12 col-sm-6 col-md-3" style="cursor: pointer;" href="./../<?php echo $_SESSION['_role'] ?>">
+                            <div class="info-box mb-3">
                                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-solid fa-check"></i></span>
 
                                 <div class="info-box-content">
@@ -62,7 +62,7 @@ include('./../manage/header.php');
 
 
                             </div>
-                        </div>
+                        </a>
 
 
 
@@ -70,26 +70,40 @@ include('./../manage/header.php');
                     </div>
                     <div class="row">
                         <div class="col-12 mt-3">
-                            <div class="card card-warning">
+                            <!-- DIRECT CHAT PRIMARY -->
+                            <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title text-bold text-white">
-                                        รอการอนุมัติ
-                                    </h3>
+                                    <h3 class="card-title"><b>ประวัติการอนุมัติที่ผ่านมา</b></h3>
+                                    <div class="card-tools">
+                                        <div class="input-group input-group-sm" style="width: 300px;">
+                                            <input type="text" id="searchInput" class="form-control float-right" placeholder="ค้นหาข้อมูล">
+
+
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-body">
-                                    <table id="tb_approve_advisor" class="table table-bordered table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>ไฟล์คำขอ</th>
-                                                <th>เรื่อง</th>
-                                                <th>ผู้ส่งคำขอ</th>
-                                                <th>วันที่ยื่นคำขอ</th>
-                                                <th>สถานะการอนุมัติ</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+                                <div class="card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table m-0" id="tbHistory_doc">
+                                            <thead>
+                                                <tr>
+                                                    <th>ไฟล์คำขอ</th>
+                                                    <th>เรื่อง</th>
+                                                    <th>ผู้ส่งคำขอ</th>
+                                                    <th>วันที่ยื่นคำขอ</th>
+                                                    <th>สถานะการอนุมัติ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -547,100 +561,123 @@ include('./../manage/header.php');
                             </div>
                         </div>
                     </div>
-                    <div class="row justify-content-end " style="padding: 10px;">
-                        <div class="col-12">
-                            <input type="hidden" id="btnId_doc" name="btnId_doc" value="">
-                            <input type="hidden" id="genaral_form_id" name="genaral_form_id" value="">
-
-                            <input type="hidden" id="btnRole_approve" name="role_approve" value="">
-                            <button type="button" id="btnApprove_yes" value="" onclick="fnApprove('ไม่อนุมัติ')" class="btn btn-danger float-right" style="margin-right: 5px;">
-                                <i class="fas fa-window-close"></i> ไม่อนุมัติเอกสาร
-                            </button>
-                            <button type="button" value="" onclick="fnApprove('อนุมัติ')" class="btn btn-success float-right" style="margin-right: 5px;">
-                                <i class="fas fa-check"></i>อนุมัติเอกสาร
-                            </button>
-                        </div>
-
-                    </div>
+                    
 
 
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-notApprove">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="confirmApprove">
-                    <div class="modal-header bg-primary">
-                        <h4 class="modal-title">ยืนยันการอนุมัติเอกสาร</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">เหตุผลในการไม่อนุมัติเอกสาร :</label>
-                            <input type="text" autocomplete="yes" class="form-control" id="txtcomment" name="txtcomment" placeholder="เหตุผลในการไม่อนุมัติเอกสาร">
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-center">
-                        <input type="hidden" id="btnStatus" name="btnStatus" value="">
-                        <button type="submit" class="btn btn-primary">ยืนยัน</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </body>
-<script src="./../asset/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="./../manage/changepage.js"></script>
-<script src="./../asset/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="./../asset/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="./../asset/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="./../asset/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script src="./../asset/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-<script src="./../asset/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="./../asset/plugins/jszip/jszip.min.js"></script>
-<script src="./../asset/plugins/pdfmake/pdfmake.min.js"></script>
-<script src="./../asset/plugins/pdfmake/vfs_fonts.js"></script>
-<script src="./../asset/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="./../asset/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="./../asset/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script src="./../asset/dist/js/moment.js"></script>
 <script src="./../asset/dist/js/function.js"></script>
-<script src="./../asset/plugins/jquery-validation/jquery.validate.min.js"></script>
-
 <script>
     $(function() {
-        loadData();
-        CountStatus()
+        ShowDataDoc();
+        CountStatus();
     });
 
-    function loadData() {
+    function CountStatus() {
         $.ajax({
-            url: "./../api/doc/approve.php?v=checkapproveAdvisor",
+            url: "./../api/doc/approve.php?v=countStatusApr",
             type: "GET",
             success: function(Res) {
-               // console.log(Res)
-                $('#tb_approve_advisor tbody').html('');
+                console.log(Res);
                 $.each(Res, function(index, item) {
-                    var date_insert = convertDate(item.DATETIME);
-                    $("#tb_approve_advisor").append('<tr>' +
-                        '<td style="vertical-align: middle;"><button  onclick="modalDocShow(' + item.idApr + ',' + item.form_id + ',' + item.genaral_form_id + ')" type="button" class="badge badge badge-primary" data-toggle="modal" data-target=".bd-example-modal-xl">Preview</button></td>' +
-                        '<td style="vertical-align: middle;">' + item.general_form_title + '</td>' +
-                        '<td style="vertical-align: middle;">' + item.fullname + '</td>' +
-                        '<td style="vertical-align: middle;">' + date_insert[0] + '</td>' +
-                        '<td style="vertical-align: middle;"><span class="badge badge-warning">' + item.approve_status_name + '</span></td>' +
-                        '</tr>');
+                    if (item.status_approve == "รอการอนุมัติ") {
+                        $('#apr_waitApr').text(item.numrow + " รายการ")
+
+                    } else {
+                        $('#apr_historyApr').text(item.numrow + " รายการ")
+                    }
                 });
             }
         });
     }
 
-    function modalDocShow(idApr, form_id, genaral_form_id) {
+
+    function ShowDataDoc() {
+        $.ajax({
+            url: "./../api/doc/history_approve.php?v=docApr",
+            type: "POST",
+            success: function(Res) {
+                console.log(Res)
+                $('#tbHistory_doc tbody').html('');
+                $.each(Res, function(index, item) {
+                    var date_insert = convertDate(item.DATETIME);
+                    $("#tbHistory_doc").append(`<tr>
+                        <td style="vertical-align: middle;">
+                            <button onclick="modalDocShow_(${item.idApr}, ${item.form_id}, ${item.genaral_form_id})" 
+                                type="button" class="badge badge badge-primary" 
+                                data-toggle="modal" data-target=".bd-example-modal-xl">
+                                Preview
+                            </button>
+                        </td>
+                        <td style="vertical-align: middle;">${item.general_form_title}</td>
+                        <td style="vertical-align: middle;">${item.fullname}</td>
+                        <td style="vertical-align: middle;">${date_insert[0]}</td>
+                        <td>
+                            ${item.approve_status_name === "รอการอนุมัติ" 
+                            ? '<span class="badge bg-warning">'+item.approve_status_name+'</span>'
+                            : item.approve_status_name === "อนุมัติ" 
+                            ? '<span class="badge bg-success">'+item.approve_status_name+'</span>'
+                            : '<span class="badge bg-danger">'+item.approve_status_name+'</span>'}
+                        </td>
+                    </tr>`);
+                });
+            }
+        });
+
+
+        // $.ajax({
+        //     url: "./../api/documents/status_doc.php?v=checkstatusApr",
+        //     type: "POST",
+        //     success: function(Res) {
+        //         console.log(Res);
+        //         $('#tbHistory_doc tbody').html('');
+        //         var tbHistory_doc = '';
+        //         $.each(Res[0], function(index, item) {
+        //             data_approve = '';
+        //             $.each(item.data_approve, function(i, data_) {
+        //                 if (data_.status_approve == undefined) {
+        //                     data_approve += '<td>-</td>';
+        //                 } else {
+        //                     var spanStatus = '';
+        //                     if (data_.status_approve == "อนุมัติ") {
+        //                         spanStatus = '<small class="badge badge-success">' + data_.status_approve + '</small>'
+        //                     } else if (data_.status_approve == "รอการอนุมัติ") {
+        //                         spanStatus = '<small class="badge badge-info">' + data_.status_approve + '</small>'
+        //                     } else {
+        //                         spanStatus = '<small class="badge badge-danger">' + data_.status_approve + '</small>'
+        //                     }
+
+
+        //                     data_approve += '<td>' + spanStatus + '</td>';
+
+        //                 }
+
+        //             })
+
+
+        //             var date_insert = convertDate(item.date_insert);
+        //             tbHistory_doc += '<tr>' +
+        //                 '<td><button  onclick="modalDocShow(' + item.id + ')" type="button" class="badge badge badge-primary" >Preview</button></td>' +
+        //                 '<td>' + item.form_title + '</td>' +
+        //                 '<td>' + item.fullname + '</td>' +
+        //                 '<td>' + date_insert[0] + '</td>' +
+        //                 data_approve +
+        //                 '</tr>';
+        //         });
+        //         $('#tbHistory_doc tbody').html(tbHistory_doc);
+        //     }
+        // });
+    }
+
+    function modalDocShow_(idApr, form_id, genaral_form_id) {
+       
+
+
         $('#btnApprove_yes').val(idApr);
         $('#btnId_doc').val(form_id);
         $('#genaral_form_id').val(genaral_form_id);
@@ -688,7 +725,7 @@ include('./../manage/header.php');
                     $('#spanDate_teacher').text(convertToThaiBuddhistDate(dataApr_advisor.DATETIME));
                     $("#imageTeacher").attr("src", "data:image/jpeg;base64," + dataApr_advisor.image_sign);
                 } else {
-
+                    
                     $('#spanDate_teacher').text("-");
                 }
 
@@ -723,12 +760,33 @@ include('./../manage/header.php');
                     $("#imageDeen").attr("src", "data:image/jpeg;base64," + dataApr_deen.image_sign);
                 }
 
+
+
+
             }
         });
     }
+    $('#searchInput').on('keyup', function() {
+        const searchText = $(this).val().toLowerCase();
+        $('#tbHistory_doc tbody tr').each(function() {
+            const rowText = $(this).text().toLowerCase();
+            if (rowText.includes(searchText)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
 
-    function convertDate(date) {
-        var parts = date.split(" ");
+    function modalDocShow(idDoc) {
+        console.log(idDoc)
+        var url = 'previewform.php?id=' + idDoc;
+        window.location = url;
+
+    }
+
+    function convertDate(dateApr) {
+        var parts = dateApr.split(" ");
 
         var datePart = parts[0];
         var parts2 = datePart.split("-");
@@ -738,341 +796,6 @@ include('./../manage/header.php');
         return [formattedDate, parts[1]];
 
     }
-
-    function fnApprove(status) {
-        $('#btnStatus').val(status);
-        if (status == "ไม่อนุมัติ") {
-            $('#modal-notApprove').modal('show');
-        } else if (status == "อนุมัติ") {
-            var idApr = $('#btnApprove_yes').val();
-            var form_id = $('#btnId_doc').val();
-            var genaral_form_id = $('#genaral_form_id').val();
-
-            let data = {
-                "status": $('#btnStatus').val(),
-                "idApr": idApr,
-                "form_id": form_id,
-                "genaral_form_id": genaral_form_id,
-                "comment": $('#txtcomment').val()
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: `./../api/doc/approve.php?v=updateAprAdvisor`,
-                data: data,
-                success: function(response) {
-                    console.log(response)
-                    //$('#modal-notApprove').modal('hide');
-                    $('.modal.fade.bd-example-modal-xl').modal('hide');
-                    loadData();
-                    CountStatus();
-                },
-                error: function(error) {
-                    console.log(error)
-                }
-            });
-        }
-    }
-
-    $('#confirmApprove').validate({
-        rules: {
-            txtcomment: {
-                required: true,
-            },
-
-        },
-        messages: {
-            txtcomment: {
-                required: "โปรดกรอกเหตุผลในการไม่อนุมัติเอกสาร",
-
-            },
-
-
-
-        },
-        errorElement: 'span',
-        errorPlacement: function(error, element) {
-            error.addClass('invalid-feedback');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function(element, errorClass, validClass) {
-            $(element).addClass('is-invalid');
-        },
-        unhighlight: function(element, errorClass, validClass) {
-            $(element).removeClass('is-invalid');
-        },
-        submitHandler: function(form) {
-            var idApr = $('#btnApprove_yes').val();
-            var form_id = $('#btnId_doc').val();
-            var genaral_form_id = $('#genaral_form_id').val();
-
-            let data = {
-                "status": $('#btnStatus').val(),
-                "idApr": idApr,
-                "form_id": form_id,
-                "genaral_form_id": genaral_form_id,
-                "comment": $('#txtcomment').val()
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: `./../api/doc/approve.php?v=updateAprAdvisor`,
-                data: data,
-                success: function(response) {
-                    //console.log(response)
-                    $('#modal-notApprove').modal('hide');
-                    $('.modal.fade.bd-example-modal-xl').modal('hide');
-                    loadData();
-                    CountStatus();
-                    form.reset();
-                },
-                error: function(error) {
-                    console.log(error)
-                }
-            });
-        }
-
-    });
-
-    function CountStatus() {
-        $.ajax({
-            url: "./../api/doc/approve.php?v=countStatusApr",
-            type: "GET",
-            success: function(Res) {
-                console.log(Res);
-                $.each(Res, function(index, item) {
-                    if (item.status_approve == "รอการอนุมัติ") {
-                        $('#apr_waitApr').text(item.numrow + " รายการ")
-
-                    } else {
-                        $('#apr_historyApr').text(item.numrow + " รายการ")
-                    }
-                });
-            }
-        });
-    }
-
-    // function CountStatus() {
-    //     $.ajax({
-    //         url: "./../api/documents/status_doc.php?v=countStatusApr",
-    //         type: "GET",
-    //         success: function(Res) {
-    //             console.log(Res);
-    //             $.each(Res, function(index, item) {
-    //                 if (item.status_approve == "รอการอนุมัติ") {
-    //                     $('#apr_waitApr').text(item.numrow + " รายการ")
-
-    //                 } else {
-    //                     $('#apr_historyApr').text(item.numrow + " รายการ")
-    //                 }
-    //             });
-    //         }
-    //     });
-    // }
-
-    // function loadData() {
-    //     $.ajax({
-    //         url: "./../api/documents/approve_doc.php?v=checkapprove",
-    //         type: "GET",
-    //         dataType: "json",
-    //         success: function(Res) {
-    //             console.log(Res);
-    //             $('#tb_approve_teacher tbody').html('');
-    //             $.each(Res, function(index, item) {
-    //                 $("#tb_approve_teacher").append('<tr>' +
-    //                     '<td style="vertical-align: middle;"><button  onclick="modalDocShow(' + item.id + ',' + item.document_form + ')" type="button" class="badge badge badge-primary" data-toggle="modal" data-target=".bd-example-modal-xl">Preview</button></td>' +
-    //                     '<td style="vertical-align: middle;">' + item.form_title + '</td>' +
-    //                     '<td style="vertical-align: middle;">' + item.fullname + '</td>' +
-    //                     '<td style="vertical-align: middle;">' + item.date_insert + '</td>' +
-    //                     '<td style="vertical-align: middle;"><span class="badge badge-warning">' + item.status_approve + '</span></td>' +
-    //                     '</tr>');
-    //             });
-    //         },
-    //         error: function(xhr, status, error) {
-    //             console.log("Error: " + error);
-    //         }
-    //     });
-    // }
-
-
-
-
-    // function fnApprove(status) {
-    //     var textareaValues = $(".textarea.form-control").map(function() {
-    //         if ($(this).val() != "") {
-    //             console.log($(this).val())
-    //             return $(this).val();
-    //         }
-
-    //     }).get();
-
-    //     if (status == "ไม่อนุมัติ" && textareaValues.length == 0) {
-
-    //         alert("โปรดแสดงความเห็นถึงเหตุผลที่ไม่ทำการอนุมัติ")
-
-
-    //     } else {
-    //         var role_approve = $('#btnRole_approve').val();
-    //         var id = $('#btnApprove_yes').val();
-    //         var idDoc = $('#btnId_doc').val()
-
-    //         let data = {
-    //             "status": status,
-    //             "id": id,
-    //             "idDoc": idDoc,
-    //             "comment": textareaValues[0] || "",
-    //             "role_approve": role_approve
-    //         }
-    //         console.log(data)
-    //         $.ajax({
-    //             url: "./../api/documents/approve_doc.php?v=approvebyid",
-    //             type: "POST",
-    //             data: data,
-    //             success: function(Res) {
-    //                 CountStatus();
-    //                 if (Res.status == "ok") {
-
-    //                     loadData();
-    //                     $('.modal.fade.bd-example-modal-xl').modal('hide');
-    //                 } else {
-    //                     alert(Res.msg);
-    //                 }
-    //             }
-    //         });
-    //     }
-    // }
-
-    // function modalDocShow(idApr, idDoc) {
-    //     $('#btnApprove_yes').val(idApr);
-    //     $('#btnId_doc').val(idDoc)
-    //     $.ajax({
-    //         url: `./../api/documents/approve_doc.php?v=dataDoc&idDoc=${idDoc}`, // Replace with the URL of your data source
-    //         type: "GET",
-    //         dataType: "json",
-    //         success: function(Res) {
-    //             // console.log(Res)
-    //             //#region  Res[0] ข้อมูล doc
-    //             var datadoc = Res[0];
-    //             $('#divTitle').text(datadoc.form_title)
-    //             $('#divFirstname').text(`${datadoc.student_name}`);
-    //             $('#divLastname').text(`${datadoc.student_lastname}`);
-
-    //             $('#edulevel[value="' + datadoc.edulevel + '"]').prop('checked', true);
-    //             $('#sector_doc[value="' + datadoc.type_sector + '"]').prop('checked', true);
-    //             $('#sector_master[value="' + datadoc.type_sector + '"]').prop('checked', true);
-    //             $('#semester[value="' + datadoc.semester + '"]').prop('checked', true);
-
-    //             $('#divStudentcode').text(datadoc.doc_studentcode);
-    //             $('#divMajor').text(datadoc.name_major);
-    //             $('#divNoMajor').text(datadoc.major_name);
-    //             $('#divYear_semester').text(datadoc.year_semester);
-    //             $('#divYear_study').text(datadoc.year_study);
-    //             $('#divPhone').text(datadoc.telephone);
-    //             $('#divEmail').text(datadoc.email);
-    //             $('#divPurpose').text(datadoc.purpose);
-    //             $("#imageSign_student").attr("src", "data:image/jpeg;base64," + datadoc.image_sign);
-
-    //             $('#spanName_student').text(`${datadoc.student_name} ${datadoc.student_lastname}`);
-    //             $('#divDate_student').text(convertToThaiBuddhistDate(datadoc.date_insert));
-
-    //             //#region  Res[1] ข้อมูล ผู้อนุมัติต่างๆ
-
-    //             var dataApr = Res[1];
-
-    //             //#region ประธาน
-    //             $('.imageDirect_no').show();
-    //             $('.imageDirect').hide();
-
-    //             //#region  คณะบดี
-    //             $('.imageMaster').hide();
-    //             $('.imageMaster_no').show();
-
-    //             //#region  comment_approve
-    //             $('.comment_teacher_no').show();
-    //             $('.comment_direct_no').show();
-    //             $('.comment_master_no').show();
-
-    //             $('.comment_teacher').hide();
-    //             $('.comment_direct').hide();
-    //             $('.comment_master').hide();
-
-
-
-
-    //             $.each(dataApr, function(index, item) {
-    //                 if (item.role_approve == "อาจารย์") {
-    //                     $('.comment_teacher_no').show();
-    //                     $("#imageTeacher").attr("src", "data:image/jpeg;base64," + item.image_sign);
-    //                     $('#spanName_teacher').text(`${item.user_name}`);
-    //                     if (item.date_approve == null) {
-    //                         $('#spanDate_teacher').text(`-`);
-    //                     } else {
-    //                         $('#spanDate_teacher').text(`${item.date_approve}`);
-    //                     }
-
-    //                     $('#divComment_teacher').text(`${item.comment_approve}`)
-    //                 }
-
-    //                 if (item.role_approve == "ประธานหลักสูตร") {
-
-    //                     $('.comment_direct_no').show();
-    //                     //   $('#approve_comment_direct').text(item.comment_approve)
-
-    //                     $('.imageDirect_no').hide();
-    //                     $('.imageDirect').show();
-
-    //                     $("#imageDirect").attr("src", "data:image/jpeg;base64," + item.image_sign);
-    //                     $('#spanName_direct').text(`${item.user_name}`);
-    //                     if (item.date_approve == null) {
-    //                         $('#spanDate_direct').text(`-`);
-    //                     } else {
-    //                         $('#spanDate_direct').text(`${item.date_approve}`);
-    //                     }
-    //                     $('#divComment_direct').text(`${item.comment_approve}`)
-    //                 }
-
-    //                 if (item.role_approve == "คณบดี") {
-
-    //                     $('.comment_master_no').show();
-    //                     // $('#approve_comment_master').text(item.comment_approve)
-
-
-    //                     $('.imageMaster').show();
-    //                     $('.imageMaster_no').hide();
-    //                     $("#imageMaster").attr("src", "data:image/jpeg;base64," + item.image_sign);
-
-    //                     $('#spanName_master').text(`(----------------------${item.user_name}----------------------)`);
-    //                     $('#spanDate_master').text(`----------${item.date_approve}-----------`);
-
-    //                     if (item.date_approve == null) {
-    //                         $('#spanDate_master').text(`-`);
-    //                     } else {
-    //                         $('#spanDate_master').text(`${item.date_approve}`);
-    //                     }
-    //                 }
-
-
-    //                 if (index === (dataApr.length) - 1) {
-    //                     $('#btnRole_approve').val(item.role_approve)
-    //                     if (item.role_approve === "อาจารย์") {
-    //                         $('.comment_teacher_no').hide();
-    //                         $('.comment_teacher').show();
-    //                     } else if (item.role_approve === "ประธานหลักสูตร") {
-    //                         $('.comment_direct_no').hide();
-    //                         $('.comment_direct').show();
-    //                     } else if (item.role_approve === "คณบดี") {
-    //                         $('.comment_master_no').hide();
-    //                         $('.comment_master').show();
-    //                     }
-
-    //                 }
-
-
-    //             });
-    //         }
-    //     });
-
-    // }
 </script>
 
 </html>

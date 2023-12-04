@@ -237,3 +237,74 @@ else if ($data == "updateAprDeen") { #deen
 
     echo json_encode($dataApr);
 }
+else if($data=="countStatusApr"){
+    
+    $status_doc = ["อนุมัติ", "ไม่อนุมัติ", "รอการอนุมัติ"];
+    #advisor
+    foreach ($status_doc as $item) {
+        $connect->sql = "SELECT COUNT(*) as numrow
+        FROM 	general_form AS t1
+        INNER JOIN advisor_approve AS t2 ON t1.genaral_form_id = t2.genaral_form_id
+        INNER JOIN approve_status AS t3 ON t2.advisor_status_id = t3.approve_status_id
+        INNER JOIN form ON t1.form_id = form.form_id
+        INNER JOIN student ON form.student_code = student.student_code
+        INNER JOIN prefix ON student.PREFIX = prefix.prefix_id
+        WHERE advisor_user_id='" . $_SESSION['_id'] . "' AND approve_status_name='".$item."'";
+        $connect->queryData();
+        while ($rsconnect = $connect->fetch_AssocData()) {
+            array_push($result, ['numrow' => $rsconnect['numrow'], 'status_approve' => $item]);
+        }
+    }
+
+     #master
+     foreach ($status_doc as $item) {
+        $connect->sql = "SELECT COUNT(*) as numrow
+        FROM 	general_form AS t1
+        INNER JOIN approve_status AS t3
+        INNER JOIN form ON t1.form_id = form.form_id
+        INNER JOIN student ON form.student_code = student.student_code
+        INNER JOIN prefix ON student.PREFIX = prefix.prefix_id
+        INNER JOIN master_approve AS t2 ON t3.approve_status_id = t2.aprove_status_id 
+        AND t1.genaral_form_id = t2.genaral_form_id
+        WHERE master_user_id='" . $_SESSION['_id'] . "' AND approve_status_name='".$item."'";
+        $connect->queryData();
+        while ($rsconnect = $connect->fetch_AssocData()) {
+            array_push($result, ['numrow' => $rsconnect['numrow'], 'status_approve' => $item]);
+        }
+    }
+
+     #deen
+     foreach ($status_doc as $item) {
+        $connect->sql = "SELECT   COUNT(*) as numrow
+        FROM 	general_form AS t1
+        INNER JOIN approve_status AS t3
+        INNER JOIN form ON t1.form_id = form.form_id
+        INNER JOIN student ON form.student_code = student.student_code
+        INNER JOIN prefix ON student.PREFIX = prefix.prefix_id
+        INNER JOIN deen_approve AS t2 ON t3.approve_status_id = t2.aprove_status_id 
+        AND t1.genaral_form_id = t2.genaral_form_id
+        WHERE deen_user_id='" . $_SESSION['_id'] . "' AND approve_status_name='".$item."'";
+        $connect->queryData();
+        while ($rsconnect = $connect->fetch_AssocData()) {
+            array_push($result, ['numrow' => $rsconnect['numrow'], 'status_approve' => $item]);
+        }
+    }
+
+    $result_ =  filterAndSumStatus($result);
+    echo json_encode($result_);
+}
+
+function filterAndSumStatus($statusApr)
+{
+    $result = array_reduce($statusApr, function ($carry, $item) {
+        if ($item['status_approve'] == 'อนุมัติ' || $item['status_approve'] == 'ไม่อนุมัติ') {
+            $carry[0]['numrow'] += intval($item['numrow']);
+        }
+        if ($item['status_approve'] == 'รอการอนุมัติ') {
+            $carry[] = $item;
+        }
+        return $carry;
+    }, [['numrow' => 0, 'status_approve' => 'ประวัติการอนุมัติ']]);
+
+    return $result;
+}

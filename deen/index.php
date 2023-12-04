@@ -39,7 +39,7 @@ include('./../manage/header.php');
                 <div class="container-fluid">
                     <div class="row justify-content-center">
 
-                        <a class="col-12 col-sm-6 col-md-3" style="cursor: pointer;" href="historydoc.php">
+                    <a class="col-12 col-sm-6 col-md-3" style="cursor: pointer;" href="./../historydoc/">
                             <div class="info-box mb-3">
                                 <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-solid fa-check"></i></span>
 
@@ -616,7 +616,7 @@ include('./../manage/header.php');
 <script>
     $(function() {
         loadData();
-        //  CountStatus()
+        CountStatus()
     });
 
     function loadData() {
@@ -693,26 +693,28 @@ include('./../manage/header.php');
 
                 //ข้อมูลการอนุมัติของประธาน
                 var dataApr_master = Res[2];
-
-                if (dataApr_master.DATETIME) {
+                if (dataApr_master.DATETIME == null || dataApr_master.DATETIME == undefined) {
+                    $('#spanDate_master').text("-");
+                    $('#divComment_master').text("-");
+                    $('#spanName_master').text("-");
+                } else {
                     $('#divComment_master').text(dataApr_master.advisor_comment)
                     $('#spanName_master').text(`${dataApr_master.user_name}`);
                     $('#spanDate_master').text(convertToThaiBuddhistDate(dataApr_master.DATETIME));
                     $("#imageMaster").attr("src", "data:image/jpeg;base64," + dataApr_master.image_sign);
-                } else {
-                    $('#spanDate_master').text("-");
                 }
 
                 //ข้อมูลการอนุมัติของคณบดี
-                var dataApr_deen = Res[2];
-
-                if (dataApr_deen.DATETIME) {
+                var dataApr_deen = Res[3];
+                if (dataApr_deen.DATETIME == null || dataApr_deen.DATETIME == undefined) {
+                    $('#spanDate_deen').text("-");
+                    $('#divComment_deen').text("-");
+                    $('#spanName_deen').text("-");
+                } else {
                     $('#divComment_deen').text(dataApr_deen.advisor_comment)
                     $('#spanName_deen').text(`${dataApr_deen.user_name}`);
                     $('#spanDate_deen').text(convertToThaiBuddhistDate(dataApr_deen.DATETIME));
                     $("#imageDeen").attr("src", "data:image/jpeg;base64," + dataApr_deen.image_sign);
-                } else {
-                    $('#spanDate_deen').text("-");
                 }
             }
         });
@@ -756,6 +758,7 @@ include('./../manage/header.php');
                     //$('#modal-notApprove').modal('hide');
                     $('.modal.fade.bd-example-modal-xl').modal('hide');
                     loadData();
+                    CountStatus()
                    
                 },
                 error: function(error) {
@@ -814,6 +817,7 @@ include('./../manage/header.php');
                     $('#modal-notApprove').modal('hide');
                     $('.modal.fade.bd-example-modal-xl').modal('hide');
                     loadData();
+                    CountStatus()
                     form.reset();
                 },
                 error: function(error) {
@@ -824,6 +828,22 @@ include('./../manage/header.php');
 
     });
 
+    function CountStatus() {
+        $.ajax({
+            url: "./../api/doc/approve.php?v=countStatusApr",
+            type: "GET",
+            success: function(Res) {
+                $.each(Res, function(index, item) {
+                    if (item.status_approve == "รอการอนุมัติ") {
+                        $('#apr_waitApr').text(item.numrow + " รายการ")
+
+                    } else {
+                        $('#apr_historyApr').text(item.numrow + " รายการ")
+                    }
+                });
+            }
+        });
+    }
    
 </script>
 
