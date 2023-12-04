@@ -39,7 +39,7 @@ include('./../manage/header.php');
                 <div class="container-fluid">
                     <div class="row justify-content-center">
 
-                    <a class="col-12 col-sm-6 col-md-3" style="cursor: pointer;" href="./../historydoc/">
+                        <a class="col-12 col-sm-6 col-md-3" style="cursor: pointer;" href="./../historydoc/">
                             <div class="info-box mb-3">
                                 <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-solid fa-check"></i></span>
 
@@ -77,10 +77,11 @@ include('./../manage/header.php');
                                     </h3>
                                 </div>
                                 <div class="card-body">
-                                    <table id="tb_approve_advisor" class="table table-bordered table-hover">
+                                    <table id="tb_approve_deen" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
                                                 <th>ไฟล์คำขอ</th>
+                                                <th>รหัสฟอร์ม</th>
                                                 <th>เรื่อง</th>
                                                 <th>ผู้ส่งคำขอ</th>
                                                 <th>วันที่ยื่นคำขอ</th>
@@ -551,7 +552,7 @@ include('./../manage/header.php');
                         <div class="col-12">
                             <input type="hidden" id="btnId_doc" name="btnId_doc" value="">
                             <input type="hidden" id="genaral_form_id" name="genaral_form_id" value="">
-                            
+
                             <input type="hidden" id="btnRole_approve" name="role_approve" value="">
                             <button type="button" id="btnApprove_yes" value="" onclick="fnApprove('ไม่อนุมัติ')" class="btn btn-danger float-right" style="margin-right: 5px;">
                                 <i class="fas fa-window-close"></i> ไม่อนุมัติเอกสาร
@@ -594,6 +595,7 @@ include('./../manage/header.php');
             </div>
         </div>
     </div>
+    <input type="hidden" id="btnSignDeen" name="btnSignDeen" value="">
 </body>
 <script src="./../asset/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="./../manage/changepage.js"></script>
@@ -625,11 +627,12 @@ include('./../manage/header.php');
             type: "GET",
             success: function(Res) {
                 console.log(Res)
-                $('#tb_approve_advisor tbody').html('');
+                $('#tb_approve_deen tbody').html('');
                 $.each(Res, function(index, item) {
                     var date_insert = convertDate(item.DATETIME);
-                    $("#tb_approve_advisor").append('<tr>' +
-                        '<td style="vertical-align: middle;"><button  onclick="modalDocShow(' + item.idApr + ',' + item.form_id + ',' + item.genaral_form_id + ')" type="button" class="badge badge badge-primary" data-toggle="modal" data-target=".bd-example-modal-xl">Preview</button></td>' +
+                    $("#tb_approve_deen").append('<tr>' +
+                        '<td style="vertical-align: middle;"><button  onclick="modalDocShow(' + item.idApr + ',' + item.form_id + ',' + item.genaral_form_id + ')" type="button" class="badge badge badge-primary">Preview</button></td>' +
+                        '<td style="vertical-align: middle;">' + item.form_id + '</td>' +
                         '<td style="vertical-align: middle;">' + item.general_form_title + '</td>' +
                         '<td style="vertical-align: middle;">' + item.fullname + '</td>' +
                         '<td style="vertical-align: middle;">' + date_insert[0] + '</td>' +
@@ -640,10 +643,40 @@ include('./../manage/header.php');
         });
     }
 
-    function modalDocShow(idApr, form_id,genaral_form_id) {
+    function modalDocShow(idApr, form_id, genaral_form_id) {
+        //check ลายเซนต์
+        if ($('#btnSignDeen').val() == "") {
+            $.ajax({
+                url: `./../api/sign/data.php?v=checksignApr`, // Replace with the URL of your data source
+                type: "GET",
+                dataType: "json",
+                success: function(Res) {
+                    console.log(Res)
+                    if (Res.status == "ok") {
+                        $('#btnSignDeen').val("yes")
+                        ShowModalDeen(idApr, form_id, genaral_form_id)
+                    } else {
+                        alert(Res.msg);
+                        window.location.replace('./../signature/');
+                    }
+                }
+            });
+
+        } else {
+            ShowModalDeen(idApr, form_id, genaral_form_id)
+        }
+
+
+
+    }
+
+    function ShowModalDeen(idApr, form_id, genaral_form_id) {
+        console.log("idApr : " + idApr + " form_id : " + form_id + " genaral_form_id : " + genaral_form_id);
+            
         $('#btnApprove_yes').val(idApr);
         $('#btnId_doc').val(form_id);
         $('#genaral_form_id').val(genaral_form_id);
+        $('.modal.fade.bd-example-modal-xl').modal('show');
         $.ajax({
             url: `./../api/doc/previewform.php?v=dataDoc&idDoc=${form_id}`, // Replace with the URL of your data source
             type: "GET",
@@ -740,12 +773,12 @@ include('./../manage/header.php');
             var idApr = $('#btnApprove_yes').val();
             var form_id = $('#btnId_doc').val();
             var genaral_form_id = $('#genaral_form_id').val();
-            
+
             let data = {
                 "status": $('#btnStatus').val(),
                 "idApr": idApr,
                 "form_id": form_id,
-                "genaral_form_id" : genaral_form_id,
+                "genaral_form_id": genaral_form_id,
                 "comment": $('#txtcomment').val()
             }
 
@@ -759,7 +792,7 @@ include('./../manage/header.php');
                     $('.modal.fade.bd-example-modal-xl').modal('hide');
                     loadData();
                     CountStatus()
-                   
+
                 },
                 error: function(error) {
                     console.log(error)
@@ -799,12 +832,12 @@ include('./../manage/header.php');
             var idApr = $('#btnApprove_yes').val();
             var form_id = $('#btnId_doc').val();
             var genaral_form_id = $('#genaral_form_id').val();
-            
+
             let data = {
                 "status": $('#btnStatus').val(),
                 "idApr": idApr,
                 "form_id": form_id,
-                "genaral_form_id" : genaral_form_id,
+                "genaral_form_id": genaral_form_id,
                 "comment": $('#txtcomment').val()
             }
 
@@ -844,7 +877,6 @@ include('./../manage/header.php');
             }
         });
     }
-   
 </script>
 
 </html>

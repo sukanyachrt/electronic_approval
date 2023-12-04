@@ -92,6 +92,7 @@ include('./../manage/header.php');
                                             <thead>
                                                 <tr>
                                                     <th>ไฟล์คำขอ</th>
+                                                    <th>รหัสฟอร์ม</th>
                                                     <th>เรื่อง</th>
                                                     <th>ผู้ส่งคำขอ</th>
                                                     <th>วันที่ยื่นคำขอ</th>
@@ -614,6 +615,7 @@ include('./../manage/header.php');
                                 Preview
                             </button>
                         </td>
+                        <td style="vertical-align: middle;">${item.form_id }</td>
                         <td style="vertical-align: middle;">${item.general_form_title}</td>
                         <td style="vertical-align: middle;">${item.fullname}</td>
                         <td style="vertical-align: middle;">${date_insert[0]}</td>

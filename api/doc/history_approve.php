@@ -26,7 +26,7 @@ if ($data == "docApr") {
 	INNER JOIN form ON t1.form_id = form.form_id
 	INNER JOIN student ON form.student_code = student.student_code
 	INNER JOIN prefix ON student.PREFIX = prefix.prefix_id
-    WHERE advisor_user_id='" . $_SESSION['_id'] . "' AND approve_status_name!='รอการอนุมัติ'";
+    WHERE advisor_user_id='" . $_SESSION['_id'] . "' AND approve_status_name!='รอการอนุมัติ' ORDER BY t1.form_id  DESC";
     $connect->queryData();
     while ($rsconnect = $connect->fetch_AssocData()) {
         array_push($result, $rsconnect);
@@ -45,7 +45,7 @@ if ($data == "docApr") {
 	INNER JOIN prefix ON student.PREFIX = prefix.prefix_id
 	INNER JOIN master_approve AS t2 ON t3.approve_status_id = t2.aprove_status_id 
 	AND t1.genaral_form_id = t2.genaral_form_id
-    WHERE master_user_id='" . $_SESSION['_id'] . "' AND approve_status_name!='รอการอนุมัติ'";
+    WHERE master_user_id='" . $_SESSION['_id'] . "' AND approve_status_name!='รอการอนุมัติ' ORDER BY t1.form_id  DESC";
     $connect->queryData();
     while ($rsconnect = $connect->fetch_AssocData()) {
         array_push($result, $rsconnect);
@@ -64,7 +64,7 @@ if ($data == "docApr") {
 	INNER JOIN prefix ON student.PREFIX = prefix.prefix_id
 	INNER JOIN deen_approve AS t2 ON t3.approve_status_id = t2.aprove_status_id 
 	AND t1.genaral_form_id = t2.genaral_form_id
-    WHERE deen_user_id='" . $_SESSION['_id'] . "' AND approve_status_name!='รอการอนุมัติ'";
+    WHERE deen_user_id='" . $_SESSION['_id'] . "' AND approve_status_name!='รอการอนุมัติ' ORDER BY t1.form_id  DESC";
     $connect->queryData();
     while ($rsconnect = $connect->fetch_AssocData()) {
         array_push($result, $rsconnect);

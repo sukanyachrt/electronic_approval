@@ -44,22 +44,22 @@ if ($data == "checkapproveAdvisor") { #advisor
             $rsconnect = $connect->fetch_AssocData();
             $approve_status_id = $rsconnect['approve_status_id'];
 
-            $connect->sql = "SELECT user_id 
+                    $connect->sql = "SELECT user_id 
 					FROM `user`
 					INNER JOIN position ON `user`.POSITION = position.position_id
 					where position_role='master'";
-            $connect->queryData();
-            $rsconnect = $connect->fetch_AssocData();
-            $user_code = $rsconnect['user_id'];
-            if ($user_code > 0) {
-                $connect->sql = "INSERT INTO `master_approve`(
-                         `master_user_id`, `master_comment`, 
-                         `aprove_status_id`,
-                          `genaral_form_id`) VALUES
-                           ('" . $user_code . "',
-                           '','" . $approve_status_id . "','" . $dataApr['genaral_form_id'] . "')";
-                $connect->queryData();
-            }
+                    $connect->queryData();
+                    $rsconnect = $connect->fetch_AssocData();
+                    $user_code = $rsconnect['user_id'];
+                    if ($user_code > 0) {
+                        $connect->sql = "INSERT INTO `master_approve`(
+                                `master_user_id`, `master_comment`, 
+                                `aprove_status_id`,
+                                `genaral_form_id`) VALUES
+                                ('" . $user_code . "',
+                                '','" . $approve_status_id . "','" . $dataApr['genaral_form_id'] . "')";
+                        $connect->queryData();
+                    }
         } else {
             #เปลี่ยนสถานะเอกสาร
             $connect->sql = "SELECT * FROM 	`form_status` WHERE form_status_name='แก้ไข'";
@@ -298,13 +298,18 @@ function filterAndSumStatus($statusApr)
 {
     $result = array_reduce($statusApr, function ($carry, $item) {
         if ($item['status_approve'] == 'อนุมัติ' || $item['status_approve'] == 'ไม่อนุมัติ') {
+            // รวมค่า numrow ของสถานะ 'อนุมัติ' หรือ 'ไม่อนุมัติ'
             $carry[0]['numrow'] += intval($item['numrow']);
         }
+
         if ($item['status_approve'] == 'รอการอนุมัติ') {
-            $carry[] = $item;
+            // รวมค่า 'numrow' ของสถานะ 'รอการอนุมัติ'
+            $carry[1]['numrow'] += intval($item['numrow']);
+            $carry[1]['status_approve'] = 'รอการอนุมัติ';
         }
+
         return $carry;
-    }, [['numrow' => 0, 'status_approve' => 'ประวัติการอนุมัติ']]);
+    }, [['numrow' => 0, 'status_approve' => 'ประวัติการอนุมัติ'], ['numrow' => 0, 'status_approve' => 'รอการอนุมัติ']]);
 
     return $result;
 }

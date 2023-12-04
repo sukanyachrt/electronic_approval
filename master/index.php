@@ -39,7 +39,7 @@ include('./../manage/header.php');
                 <div class="container-fluid">
                     <div class="row justify-content-center">
 
-                    <a class="col-12 col-sm-6 col-md-3" style="cursor: pointer;" href="./../historydoc/">
+                        <a class="col-12 col-sm-6 col-md-3" style="cursor: pointer;" href="./../historydoc/">
                             <div class="info-box mb-3">
                                 <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-solid fa-check"></i></span>
 
@@ -77,10 +77,11 @@ include('./../manage/header.php');
                                     </h3>
                                 </div>
                                 <div class="card-body">
-                                    <table id="tb_approve_advisor" class="table table-bordered table-hover">
+                                    <table id="tb_approve_master" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
                                                 <th>ไฟล์คำขอ</th>
+                                                <th>รหัสฟอร์ม</th>
                                                 <th>เรื่อง</th>
                                                 <th>ผู้ส่งคำขอ</th>
                                                 <th>วันที่ยื่นคำขอ</th>
@@ -551,7 +552,7 @@ include('./../manage/header.php');
                         <div class="col-12">
                             <input type="hidden" id="btnId_doc" name="btnId_doc" value="">
                             <input type="hidden" id="genaral_form_id" name="genaral_form_id" value="">
-                            
+
                             <input type="hidden" id="btnRole_approve" name="role_approve" value="">
                             <button type="button" id="btnApprove_yes" value="" onclick="fnApprove('ไม่อนุมัติ')" class="btn btn-danger float-right" style="margin-right: 5px;">
                                 <i class="fas fa-window-close"></i> ไม่อนุมัติเอกสาร
@@ -594,6 +595,7 @@ include('./../manage/header.php');
             </div>
         </div>
     </div>
+    <input type="hidden" id="btnSignMas" name="btnSignMas" value="">
 </body>
 <script src="./../asset/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="./../manage/changepage.js"></script>
@@ -625,11 +627,12 @@ include('./../manage/header.php');
             type: "GET",
             success: function(Res) {
                 console.log(Res)
-                $('#tb_approve_advisor tbody').html('');
+                $('#tb_approve_master tbody').html('');
                 $.each(Res, function(index, item) {
                     var date_insert = convertDate(item.DATETIME);
-                    $("#tb_approve_advisor").append('<tr>' +
-                        '<td style="vertical-align: middle;"><button  onclick="modalDocShow(' + item.idApr + ',' + item.form_id + ',' + item.genaral_form_id + ')" type="button" class="badge badge badge-primary" data-toggle="modal" data-target=".bd-example-modal-xl">Preview</button></td>' +
+                    $("#tb_approve_master").append('<tr>' +
+                        '<td style="vertical-align: middle;"><button  onclick="modalDocAprMaster(' + item.idApr + ',' + item.form_id + ',' + item.genaral_form_id + ')" type="button" class="badge badge badge-primary">Preview</button></td>' +
+                        '<td style="vertical-align: middle;">' + item.form_id + '</td>' +
                         '<td style="vertical-align: middle;">' + item.general_form_title + '</td>' +
                         '<td style="vertical-align: middle;">' + item.fullname + '</td>' +
                         '<td style="vertical-align: middle;">' + date_insert[0] + '</td>' +
@@ -640,86 +643,115 @@ include('./../manage/header.php');
         });
     }
 
-    function modalDocShow(idApr, form_id,genaral_form_id) {
-        $('#btnApprove_yes').val(idApr);
-        $('#btnId_doc').val(form_id);
-        $('#genaral_form_id').val(genaral_form_id);
-        $.ajax({
-            url: `./../api/doc/previewform.php?v=dataDoc&idDoc=${form_id}`, // Replace with the URL of your data source
-            type: "GET",
-            dataType: "json",
-            success: function(Res) {
-
-                console.log(Res)
-                //ข้อมูลเอกสาร
-                var datadoc = Res[0];
-                $('#divTitle').text(datadoc.general_form_title)
-                $('#divFirstname').text(`${datadoc.prefix_name}${datadoc.student_name}`);
-                $('#divLastname').text(`${datadoc.student_lastname}`);
-
-                $('#edulevel[value="' + datadoc.general_form_education + '"]').prop('checked', true);
-                $('#sector_doc[value="' + datadoc.general_form_sector + '"]').prop('checked', true);
-                $('#sector_master[value="' + datadoc.general_form_sector + '"]').prop('checked', true);
-                $('#semester[value="' + datadoc.general_form_type_semester + '"]').prop('checked', true);
-
-                $('#divStudentcode').text(datadoc.student_code);
-                $('#divMajor').text(datadoc.major_name);
-                $('#divNoMajor').text(datadoc.general_form_major_code);
-                $('#divYear_semester').text(datadoc.general_form_semester);
-                $('#divYear_study').text(datadoc.general_form_year);
-                $('#divPhone').text(datadoc.general_form_tel);
-                $('#divEmail').text(datadoc.student_email);
-                $('#divPurpose').text(datadoc.general_form_opinion);
-                $("#imageSign_student").attr("src", "data:image/jpeg;base64," + datadoc.image_sign);
-
-                $('#spanName_student').text(`${datadoc.student_name} ${datadoc.student_lastname}`);
-                $('#divDate_student').text(convertToThaiBuddhistDate(datadoc.DATETIME));
-
-
-
-
-                //ข้อมูลการอนุมัติของอาจารย์
-                var dataApr_advisor = Res[1];
-                $('#divComment_teacher').text(dataApr_advisor.advisor_comment)
-                $('#spanName_teacher').text(`${dataApr_advisor.user_name}`);
-                if (dataApr_advisor.DATETIME) {
-
-                    $('#spanDate_teacher').text(convertToThaiBuddhistDate(dataApr_advisor.DATETIME));
-                    $("#imageTeacher").attr("src", "data:image/jpeg;base64," + dataApr_advisor.image_sign);
-                } else {
-                    $('#spanDate_teacher').text("-");
+    function modalDocAprMaster(idApr, form_id, genaral_form_id) {
+        //check ลายเซนต์
+        if ($('#btnSignMas').val() == "") {
+            $.ajax({
+                url: `./../api/sign/data.php?v=checksignApr`, // Replace with the URL of your data source
+                type: "GET",
+                dataType: "json",
+                success: function(Res) {
+                    console.log(Res)
+                    if (Res.status == "ok") {
+                        $('#btnSignMas').val("yes");
+                        ShowModalMaster(idApr, form_id, genaral_form_id);
+                    } else {
+                        alert(Res.msg);
+                        window.location.replace('./../signature/');
+                    }
                 }
+            });
+
+        } else {
+           ShowModalMaster(idApr, form_id, genaral_form_id);
+
+        }
 
 
-                //ข้อมูลการอนุมัติของประธาน
-                var dataApr_master = Res[2];
-                if (dataApr_master.DATETIME == null || dataApr_master.DATETIME == undefined) {
-                    $('#spanDate_master').text("-");
-                    $('#divComment_master').text("-");
-                    $('#spanName_master').text("-");
-                } else {
-                    $('#divComment_master').text(dataApr_master.advisor_comment)
-                    $('#spanName_master').text(`${dataApr_master.user_name}`);
-                    $('#spanDate_master').text(convertToThaiBuddhistDate(dataApr_master.DATETIME));
-                    $("#imageMaster").attr("src", "data:image/jpeg;base64," + dataApr_master.image_sign);
-                }
 
-                //ข้อมูลการอนุมัติของคณบดี
-                var dataApr_deen = Res[3];
-                if (dataApr_deen.DATETIME == null || dataApr_deen.DATETIME == undefined) {
-                    $('#spanDate_deen').text("-");
-                    $('#divComment_deen').text("-");
-                    $('#spanName_deen').text("-");
-                } else {
-                    $('#divComment_deen').text(dataApr_deen.advisor_comment)
-                    $('#spanName_deen').text(`${dataApr_deen.user_name}`);
-                    $('#spanDate_deen').text(convertToThaiBuddhistDate(dataApr_deen.DATETIME));
-                    $("#imageDeen").attr("src", "data:image/jpeg;base64," + dataApr_deen.image_sign);
-                }
-            }
-        });
     }
 
+    function ShowModalMaster (idApr, form_id, genaral_form_id){
+        console.log("idApr : " +idApr+" form_id : "+ form_id +" genaral_form_id : "+ genaral_form_id);
+            $('#btnApprove_yes').val(idApr);
+            $('#btnId_doc').val(form_id);
+            $('#genaral_form_id').val(genaral_form_id);
+            $('.modal.fade.bd-example-modal-xl').modal('show');
+            $.ajax({
+                url: `./../api/doc/previewform.php?v=dataDoc&idDoc=${form_id}`, // Replace with the URL of your data source
+                type: "GET",
+                dataType: "json",
+                success: function(Res) {
+
+                    console.log(Res)
+                    //ข้อมูลเอกสาร
+                    var datadoc = Res[0];
+                    $('#divTitle').text(datadoc.general_form_title)
+                    $('#divFirstname').text(`${datadoc.prefix_name}${datadoc.student_name}`);
+                    $('#divLastname').text(`${datadoc.student_lastname}`);
+
+                    $('#edulevel[value="' + datadoc.general_form_education + '"]').prop('checked', true);
+                    $('#sector_doc[value="' + datadoc.general_form_sector + '"]').prop('checked', true);
+                    $('#sector_master[value="' + datadoc.general_form_sector + '"]').prop('checked', true);
+                    $('#semester[value="' + datadoc.general_form_type_semester + '"]').prop('checked', true);
+
+                    $('#divStudentcode').text(datadoc.student_code);
+                    $('#divMajor').text(datadoc.major_name);
+                    $('#divNoMajor').text(datadoc.general_form_major_code);
+                    $('#divYear_semester').text(datadoc.general_form_semester);
+                    $('#divYear_study').text(datadoc.general_form_year);
+                    $('#divPhone').text(datadoc.general_form_tel);
+                    $('#divEmail').text(datadoc.student_email);
+                    $('#divPurpose').text(datadoc.general_form_opinion);
+                    $("#imageSign_student").attr("src", "data:image/jpeg;base64," + datadoc.image_sign);
+
+                    $('#spanName_student').text(`${datadoc.student_name} ${datadoc.student_lastname}`);
+                    $('#divDate_student').text(convertToThaiBuddhistDate(datadoc.DATETIME));
+
+
+
+
+                    //ข้อมูลการอนุมัติของอาจารย์
+                    var dataApr_advisor = Res[1];
+                    $('#divComment_teacher').text(dataApr_advisor.advisor_comment)
+                    $('#spanName_teacher').text(`${dataApr_advisor.user_name}`);
+                    if (dataApr_advisor.DATETIME) {
+
+                        $('#spanDate_teacher').text(convertToThaiBuddhistDate(dataApr_advisor.DATETIME));
+                        $("#imageTeacher").attr("src", "data:image/jpeg;base64," + dataApr_advisor.image_sign);
+                    } else {
+                        $('#spanDate_teacher').text("-");
+                    }
+
+
+                    //ข้อมูลการอนุมัติของประธาน
+                    var dataApr_master = Res[2];
+                    if (dataApr_master.DATETIME == null || dataApr_master.DATETIME == undefined) {
+                        $('#spanDate_master').text("-");
+                        $('#divComment_master').text("-");
+                        $('#spanName_master').text("-");
+                    } else {
+                        $('#divComment_master').text(dataApr_master.advisor_comment)
+                        $('#spanName_master').text(`${dataApr_master.user_name}`);
+                        $('#spanDate_master').text(convertToThaiBuddhistDate(dataApr_master.DATETIME));
+                        $("#imageMaster").attr("src", "data:image/jpeg;base64," + dataApr_master.image_sign);
+                    }
+
+                    //ข้อมูลการอนุมัติของคณบดี
+                    var dataApr_deen = Res[3];
+                    if (dataApr_deen.DATETIME == null || dataApr_deen.DATETIME == undefined) {
+                        $('#spanDate_deen').text("-");
+                        $('#divComment_deen').text("-");
+                        $('#spanName_deen').text("-");
+                    } else {
+                        $('#divComment_deen').text(dataApr_deen.advisor_comment)
+                        $('#spanName_deen').text(`${dataApr_deen.user_name}`);
+                        $('#spanDate_deen').text(convertToThaiBuddhistDate(dataApr_deen.DATETIME));
+                        $("#imageDeen").attr("src", "data:image/jpeg;base64," + dataApr_deen.image_sign);
+                    }
+                }
+            });
+    }
     function convertDate(date) {
         var parts = date.split(" ");
 
@@ -740,12 +772,12 @@ include('./../manage/header.php');
             var idApr = $('#btnApprove_yes').val();
             var form_id = $('#btnId_doc').val();
             var genaral_form_id = $('#genaral_form_id').val();
-            
+
             let data = {
                 "status": $('#btnStatus').val(),
                 "idApr": idApr,
                 "form_id": form_id,
-                "genaral_form_id" : genaral_form_id,
+                "genaral_form_id": genaral_form_id,
                 "comment": $('#txtcomment').val()
             }
 
@@ -798,12 +830,12 @@ include('./../manage/header.php');
             var idApr = $('#btnApprove_yes').val();
             var form_id = $('#btnId_doc').val();
             var genaral_form_id = $('#genaral_form_id').val();
-            
+
             let data = {
                 "status": $('#btnStatus').val(),
                 "idApr": idApr,
                 "form_id": form_id,
-                "genaral_form_id" : genaral_form_id,
+                "genaral_form_id": genaral_form_id,
                 "comment": $('#txtcomment').val()
             }
 

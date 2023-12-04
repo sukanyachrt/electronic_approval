@@ -514,6 +514,10 @@ include('./../manage/header.php');
             success: function(Res) {
                 console.log(Res)
                 //ข้อมูลเอกสาร
+                $("#imageTeacher").attr("src", "./../api/images/nosign.png");
+                $("#imageMaster").attr("src", "./../api/images/nosign.png");
+                $("#imageDeen").attr("src", "./../api/images/nosign.png");
+                //ข้อมูลเอกสาร
                 var datadoc = Res[0];
                 $('#divTitle').text(datadoc.general_form_title)
                 $('#divFirstname').text(`${datadoc.prefix_name}${datadoc.student_name}`);
@@ -549,32 +553,39 @@ include('./../manage/header.php');
                     $('#spanDate_teacher').text(convertToThaiBuddhistDate(dataApr_advisor.DATETIME));
                     $("#imageTeacher").attr("src", "data:image/jpeg;base64," + dataApr_advisor.image_sign);
                 } else {
+                    
                     $('#spanDate_teacher').text("-");
                 }
 
-                
+
+
+
                 //ข้อมูลการอนุมัติของประธาน
                 var dataApr_master = Res[2];
-
-                if (dataApr_master.DATETIME) {
+                if (dataApr_master.DATETIME == null || dataApr_master.DATETIME == undefined) {
+                    $('#spanDate_master').text("-");
+                    $('#divComment_master').text("-");
+                    $('#spanName_master').text("-");
+                } else {
                     $('#divComment_master').text(dataApr_master.advisor_comment)
                     $('#spanName_master').text(`${dataApr_master.user_name}`);
                     $('#spanDate_master').text(convertToThaiBuddhistDate(dataApr_master.DATETIME));
                     $("#imageMaster").attr("src", "data:image/jpeg;base64," + dataApr_master.image_sign);
-                } else {
-                    $('#spanDate_master').text("-");
                 }
+
+
 
                 //ข้อมูลการอนุมัติของคณบดี
                 var dataApr_deen = Res[3];
-
-                if (dataApr_deen.DATETIME) {
+                if (dataApr_deen.DATETIME == null || dataApr_deen.DATETIME == undefined) {
+                    $('#spanDate_deen').text("-");
+                    $('#divComment_deen').text("-");
+                    $('#spanName_deen').text("-");
+                } else {
                     $('#divComment_deen').text(dataApr_deen.advisor_comment)
                     $('#spanName_deen').text(`${dataApr_deen.user_name}`);
                     $('#spanDate_deen').text(convertToThaiBuddhistDate(dataApr_deen.DATETIME));
                     $("#imageDeen").attr("src", "data:image/jpeg;base64," + dataApr_deen.image_sign);
-                } else {
-                    $('#spanDate_deen').text("-");
                 }
 
                 // $('#imageTeacher').hide()

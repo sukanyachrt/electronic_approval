@@ -68,3 +68,31 @@ if ($data == "users") {
     }
     echo json_encode($result);
 }
+else if($data=="checksignApr"){
+    $student_code = $_SESSION["_code"];
+   
+
+
+    $imagePath = "./../images/" . $_SESSION['_code'] . '.png';
+
+    $imageData = file_get_contents($imagePath);
+
+    if ($imageData === false) {
+        $result = [
+            'status' => "no",
+            'msg' => "ยังไม่มีรูปลายเซนต์โปรดเพิ่มลายเซนต์ก่อนค่ะ"
+        ];
+    } else {
+        // แปลงข้อมูลภาพเป็นรหัส Base64
+        $base64ImageData = base64_encode($imageData);
+        $result = [
+            'status' => "ok",
+            'image_sign' => $base64ImageData,
+            
+        ];
+    }
+
+
+    
+    echo json_encode($result);
+}
