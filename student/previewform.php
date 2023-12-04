@@ -82,7 +82,7 @@ include('./../manage/header.php');
                                 </div>
 
                                 <div class="col-2 ">
-                                    <input type="checkbox"  class="radio" id="edulevel" onclick="Checkedulevel(this)" name="edulevel" value="ปริญญาเอก">
+                                    <input type="checkbox" class="radio" id="edulevel" onclick="Checkedulevel(this)" name="edulevel" value="ปริญญาเอก">
                                     <span for="input-level-phd">&nbsp;เอก</span>
                                 </div>
 
@@ -483,6 +483,9 @@ include('./../manage/header.php');
                                 <button type="button" id="goBackButton" value="" class="btn btn-default float-right" style="margin-right: 5px;">
                                     <i class="fas fa-solid fa-arrow-left"></i> ย้อนกลับ
                                 </button>
+                                <button type="button" id="btnConfirmId" onclick="modalconfirmEdit()" value="<?php echo $_GET['id'] ?>" class="btn btn-warning float-right" style="margin-right: 5px;">
+                                    <i class="fas fa-solid fa-arrow-doc"></i> แก้ไขเอกสาร
+                                </button>
                                 <a onclick="window.print()" id="print" class="btn btn-primary float-right" style="margin-right: 5px;">
                                     <i class="fas fa-print"></i> Print
                                 </a>
@@ -496,7 +499,27 @@ include('./../manage/header.php');
             <!-- /.content -->
         </div>
         <?php include("./../manage/footer.php") ?>
-
+        <!-- confrom การแก้ไขข้อมูล -->
+        <div class="modal fade" id="modal-confirmEdit">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header bg-warning">
+                        <h4 class="modal-title">แจ้งเตือน</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>ต้องการแก้ไขข้อมูลใช่ไหม ?</p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button"  onclick="confirmYes()" class="btn btn-warning">ยืนยัน</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        <input type="hidden" id="btnStatus" name="btnStatus" value="<?php echo $_GET['status'] ?>">                     
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <?php include("./../manage/scripts.php") ?>
@@ -506,6 +529,13 @@ include('./../manage/header.php');
 <script src="./../asset/dist/js/function.js"></script>
 <script>
     $(function() {
+        console.log($('#btnStatus').val())
+        if($('#btnStatus').val()=="เสร็จสิ้น"){
+            $('#btnConfirmId').hide();
+        }
+        else{
+            $('#btnConfirmId').show();
+        }
         var idDoc = $('#btnId_doc').val();
         $.ajax({
             url: `./../api/doc/previewform.php?v=dataDoc&idDoc=${idDoc}`, // Replace with the URL of your data source
@@ -552,12 +582,12 @@ include('./../manage/header.php');
                     $('#spanDate_teacher').text("-");
                 }
 
-                
+
                 //ข้อมูลการอนุมัติของประธาน
                 var dataApr_master = Res[2];
 
                 if (dataApr_master.DATETIME) {
-                    $('#divComment_master').text(dataApr_master.advisor_comment)
+                    $('#divComment_master').text(dataApr_master.master_comment)
                     $('#spanName_master').text(`${dataApr_master.user_name}`);
                     $('#spanDate_master').text(convertToThaiBuddhistDate(dataApr_master.DATETIME));
                     $("#imageMaster").attr("src", "data:image/jpeg;base64," + dataApr_master.image_sign);
@@ -569,7 +599,7 @@ include('./../manage/header.php');
                 var dataApr_deen = Res[3];
 
                 if (dataApr_deen.DATETIME) {
-                    $('#divComment_deen').text(dataApr_deen.advisor_comment)
+                    $('#divComment_deen').text(dataApr_deen.deen_comment)
                     $('#spanName_deen').text(`${dataApr_deen.user_name}`);
                     $('#spanDate_deen').text(convertToThaiBuddhistDate(dataApr_deen.DATETIME));
                     $("#imageDeen").attr("src", "data:image/jpeg;base64," + dataApr_deen.image_sign);
@@ -633,6 +663,15 @@ include('./../manage/header.php');
     $('#goBackButton').click(function() {
         window.history.back();
     });
+    function modalconfirmEdit() {
+        $('#modal-confirmEdit').modal('show');
+    }
+    function confirmYes(){
+        $('#modal-confirmEdit').modal('hide');
+        var form_id =$('#btnConfirmId').val()
+        var url = 'editd.php?id=' + form_id;
+        window.location = url;
+    }
 </script>
 
 </html>

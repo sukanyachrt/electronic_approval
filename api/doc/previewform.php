@@ -54,6 +54,9 @@ if ($data == "dataDoc") {
 
     #ข้อมูลการอนุมัติของอาจารย์
     $result_advisor = array();
+    $result_deen = array();
+    $result_master = array();
+    
     $connect->sql = "SELECT
 	advisor_approve_id,
 	t1.advisor_comment,
@@ -79,59 +82,65 @@ if ($data == "dataDoc") {
 
 
     #ข้อมูลการอนุมัติของประธาน
-    $result_master = array();
-    $connect->sql = "SELECT
-	`user`.user_code,
-	`user`.user_name,
-	t1.DATETIME,
-	t1.master_comment ,approve_status_name
-    FROM 	approve_status AS t2
-	INNER JOIN `user`
-	INNER JOIN master_approve AS t1 ON t2.approve_status_id = t1.aprove_status_id 
-	AND `user`.user_id = t1.master_user_id
-    WHERE genaral_form_id='" . $genaral_form_id . "'";
-    $connect->queryData();
-    $row = $connect->num_rows();
-    if ($row > 0) {
-        $rsconnect = $connect->fetch_AssocData();
-        if ($rsconnect['approve_status_name'] != "รอการอนุมัติ") {
-            $imagePath = "./../images/" . $rsconnect['user_code'] . '.png';
-            $imageData = file_get_contents($imagePath);
-            $base64ImageData = base64_encode($imageData);
-            $rsconnect["image_sign"] = $base64ImageData;
-            $result_master = $rsconnect;
+
+    if ($rsconnect['approve_status_name'] == "อนุมัติ") {
+        $connect->sql = "SELECT
+        `user`.user_code,
+        `user`.user_name,
+        t1.DATETIME,
+        t1.master_comment ,approve_status_name
+        FROM 	approve_status AS t2
+        INNER JOIN `user`
+        INNER JOIN master_approve AS t1 ON t2.approve_status_id = t1.aprove_status_id 
+        AND `user`.user_id = t1.master_user_id
+        WHERE genaral_form_id='" . $genaral_form_id . "'";
+        $connect->queryData();
+        $row = $connect->num_rows();
+        if ($row > 0) {
+            $rsconnect = $connect->fetch_AssocData();
+            if ($rsconnect['approve_status_name'] != "รอการอนุมัติ") {
+                $imagePath = "./../images/" . $rsconnect['user_code'] . '.png';
+                $imageData = file_get_contents($imagePath);
+                $base64ImageData = base64_encode($imageData);
+                $rsconnect["image_sign"] = $base64ImageData;
+                $result_master = $rsconnect;
+
+
+                #ข้อมูลการอนุมัติของคณบดี
+                if ($rsconnect['approve_status_name'] == "อนุมัติ") {
+                    $connect->sql = "SELECT
+                `user`.user_code,
+                `user`.user_name,
+                approve_status_name,
+                deen_approve.deen_comment,
+                deen_approve.DATETIME 
+                FROM
+                approve_status AS t2
+                INNER JOIN `user`
+                INNER JOIN deen_approve ON t2.approve_status_id = deen_approve.aprove_status_id 
+                AND `user`.user_id = deen_approve.deen_user_id
+                WHERE genaral_form_id='" . $genaral_form_id . "'";
+                    $connect->queryData();
+                    $row = $connect->num_rows();
+                    if ($row > 0) {
+                        $rsconnect = $connect->fetch_AssocData();
+                        if ($rsconnect['approve_status_name'] != "รอการอนุมัติ") {
+                            $imagePath = "./../images/" . $rsconnect['user_code'] . '.png';
+                            $imageData = file_get_contents($imagePath);
+                            $base64ImageData = base64_encode($imageData);
+                            $rsconnect["image_sign"] = $base64ImageData;
+                            $result_deen = $rsconnect;
+                        }
+                    }
+                }
+            }
         }
     }
 
-    #ข้อมูลการอนุมัติของคณบดี
-    $result_deen = array();
-    $connect->sql = "SELECT
-	`user`.user_code,
-	`user`.user_name,
-	approve_status_name,
-	deen_approve.deen_comment,
-	deen_approve.DATETIME 
-    FROM
-	approve_status AS t2
-	INNER JOIN `user`
-	INNER JOIN deen_approve ON t2.approve_status_id = deen_approve.aprove_status_id 
-	AND `user`.user_id = deen_approve.deen_user_id
-    WHERE genaral_form_id='" . $genaral_form_id . "'";
-    $connect->queryData();
-    $row = $connect->num_rows();
-    if ($row > 0) {
-        $rsconnect = $connect->fetch_AssocData();
-        if ($rsconnect['approve_status_name'] != "รอการอนุมัติ") {
-            $imagePath = "./../images/" . $rsconnect['user_code'] . '.png';
-            $imageData = file_get_contents($imagePath);
-            $base64ImageData = base64_encode($imageData);
-            $rsconnect["image_sign"] = $base64ImageData;
-            $result_deen = $rsconnect;
-        }
-    }
 
 
 
 
-    echo json_encode([$result, $result_advisor, $result_master,$result_deen]);
+
+    echo json_encode([$result, $result_advisor, $result_master, $result_deen]);
 }

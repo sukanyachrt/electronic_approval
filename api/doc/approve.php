@@ -1,5 +1,5 @@
 <?php
-//error_reporting(0);
+error_reporting(0);
 header('Content-Type: application/json');
 include('./../Connect_Data.php');
 date_default_timezone_set("Asia/Bangkok");
@@ -44,22 +44,40 @@ if ($data == "checkapproveAdvisor") { #advisor
             $rsconnect = $connect->fetch_AssocData();
             $approve_status_id = $rsconnect['approve_status_id'];
 
-                    $connect->sql = "SELECT user_id 
+            $connect->sql = "SELECT user_id 
 					FROM `user`
 					INNER JOIN position ON `user`.POSITION = position.position_id
 					where position_role='master'";
+            $connect->queryData();
+            $rsconnect = $connect->fetch_AssocData();
+            $user_code = $rsconnect['user_id'];
+            if ($user_code > 0) {
+
+                $connect->sql = "SELECT * 
+                        FROM `master_approve`
+                        WHERE genaral_form_id='" . $dataApr['genaral_form_id'] . "'";
+                $connect->queryData();
+                $rsconnect = $connect->fetch_AssocData();
+                if ($rsconnect['genaral_form_id'] == $dataApr['genaral_form_id']) {
+                    #upadate
+                    $connect->sql = "UPDATE `master_approve` SET
+                             `master_user_id`='" . $user_code . "',
+                             `master_comment`='',
+                             `aprove_status_id`='" . $approve_status_id . "',
+                             `datetime`=NULL
+                              WHERE genaral_form_id= '" . $dataApr['genaral_form_id'] . "'";
                     $connect->queryData();
-                    $rsconnect = $connect->fetch_AssocData();
-                    $user_code = $rsconnect['user_id'];
-                    if ($user_code > 0) {
-                        $connect->sql = "INSERT INTO `master_approve`(
+                } else {
+
+                    $connect->sql = "INSERT INTO `master_approve`(
                                 `master_user_id`, `master_comment`, 
                                 `aprove_status_id`,
                                 `genaral_form_id`) VALUES
                                 ('" . $user_code . "',
                                 '','" . $approve_status_id . "','" . $dataApr['genaral_form_id'] . "')";
-                        $connect->queryData();
-                    }
+                    $connect->queryData();
+                }
+            }
         } else {
             #เปลี่ยนสถานะเอกสาร
             $connect->sql = "SELECT * FROM 	`form_status` WHERE form_status_name='แก้ไข'";
@@ -107,8 +125,7 @@ if ($data == "checkapproveAdvisor") { #advisor
         array_push($result, $rsconnect);
     }
     echo json_encode($result);
-}
-else if ($data == "updateAprMaster") { #master
+} else if ($data == "updateAprMaster") { #master
     $dataApr = $_POST;
     if ($_SESSION['_role'] == "master") {
 
@@ -129,15 +146,34 @@ else if ($data == "updateAprMaster") { #master
             $rsconnect = $connect->fetch_AssocData();
             $user_code = $rsconnect['user_id'];
             if ($user_code > 0) {
-                $connect->sql = "INSERT INTO `deen_approve`
-                (`deen_user_id`,
-                 `deen_comment`, `aprove_status_id`,
-                  `genaral_form_id`) VALUES 
-                  ('".$user_code."',
-                  '','".$approve_status_id."',
-                  '".$dataApr['genaral_form_id']."')";
+
+                $connect->sql = "SELECT genaral_form_id 
+                FROM `deen_approve`
+                where genaral_form_id='" . $dataApr['genaral_form_id'] . "'";
                 $connect->queryData();
-                
+                $rsconnect = $connect->fetch_AssocData();
+                $rsconnect = $connect->fetch_AssocData();
+                if ($rsconnect['genaral_form_id'] == $dataApr['genaral_form_id']) {
+                    #update
+                    $connect->sql = "UPDATE `deen_approve` SET 
+                   `deen_user_id`='".$user_code."',
+                    `deen_comment`='',
+                    `aprove_status_id`='".$approve_status_id."',
+                    `datetime`=NULL
+                    WHERE genaral_form_id='".$dataApr['genaral_form_id']."'";
+                    $connect->queryData();
+                    
+
+                } else {
+                    $connect->sql = "INSERT INTO `deen_approve`
+                            (`deen_user_id`,
+                             `deen_comment`, `aprove_status_id`,
+                              `genaral_form_id`) VALUES 
+                              ('" . $user_code . "',
+                              '','" . $approve_status_id . "',
+                              '" . $dataApr['genaral_form_id'] . "')";
+                    $connect->queryData();
+                }
             }
         } else {
             #เปลี่ยนสถานะเอกสาร
@@ -156,9 +192,9 @@ else if ($data == "updateAprMaster") { #master
         $approve_status_id = $rsconnect['approve_status_id'];
 
         $connect->sql = "UPDATE `master_approve` SET 
-        `master_comment`='".$dataApr['comment']."',
+        `master_comment`='" . $dataApr['comment'] . "',
         `aprove_status_id`='" . $approve_status_id . "',
-        `datetime`='".date('Y-m-d H:i:s')."'
+        `datetime`='" . date('Y-m-d H:i:s') . "'
         WHERE master_approve_id ='" . $dataApr['idApr'] . "' ";
         $connect->queryData();
     } else {
@@ -169,8 +205,7 @@ else if ($data == "updateAprMaster") { #master
     }
 
     echo json_encode($dataApr);
-}
-else if ($data == "checkapproveDeen") { #deen
+} else if ($data == "checkapproveDeen") { #deen
     $connect->sql = "SELECT
 	t1.general_form_title,
 	t3.approve_status_name,
@@ -189,8 +224,7 @@ else if ($data == "checkapproveDeen") { #deen
         array_push($result, $rsconnect);
     }
     echo json_encode($result);
-}
-else if ($data == "updateAprDeen") { #deen
+} else if ($data == "updateAprDeen") { #deen
     $dataApr = $_POST;
     if ($_SESSION['_role'] == "deen") {
 
@@ -204,9 +238,7 @@ else if ($data == "updateAprDeen") { #deen
 
             $connect->sql = "UPDATE `form` SET `form_status_id`='" . $form_status_id . "' WHERE form_id='" . $dataApr['form_id'] . "'";
             $connect->queryData();
-                
-            }
-         else {
+        } else {
             #เปลี่ยนสถานะเอกสาร
             $connect->sql = "SELECT * FROM 	`form_status` WHERE form_status_name='แก้ไข'";
             $connect->queryData();
@@ -223,9 +255,9 @@ else if ($data == "updateAprDeen") { #deen
         $approve_status_id = $rsconnect['approve_status_id'];
 
         $connect->sql = "UPDATE `deen_approve` SET 
-        `deen_comment`='".$dataApr['comment']."',
+        `deen_comment`='" . $dataApr['comment'] . "',
         `aprove_status_id`='" . $approve_status_id . "',
-        `datetime`='".date('Y-m-d H:i:s')."'
+        `datetime`='" . date('Y-m-d H:i:s') . "'
         WHERE deen_approve_id ='" . $dataApr['idApr'] . "' ";
         $connect->queryData();
     } else {
@@ -236,9 +268,8 @@ else if ($data == "updateAprDeen") { #deen
     }
 
     echo json_encode($dataApr);
-}
-else if($data=="countStatusApr"){
-    
+} else if ($data == "countStatusApr") {
+
     $status_doc = ["อนุมัติ", "ไม่อนุมัติ", "รอการอนุมัติ"];
     #advisor
     foreach ($status_doc as $item) {
@@ -249,15 +280,15 @@ else if($data=="countStatusApr"){
         INNER JOIN form ON t1.form_id = form.form_id
         INNER JOIN student ON form.student_code = student.student_code
         INNER JOIN prefix ON student.PREFIX = prefix.prefix_id
-        WHERE advisor_user_id='" . $_SESSION['_id'] . "' AND approve_status_name='".$item."'";
+        WHERE advisor_user_id='" . $_SESSION['_id'] . "' AND approve_status_name='" . $item . "'";
         $connect->queryData();
         while ($rsconnect = $connect->fetch_AssocData()) {
             array_push($result, ['numrow' => $rsconnect['numrow'], 'status_approve' => $item]);
         }
     }
 
-     #master
-     foreach ($status_doc as $item) {
+    #master
+    foreach ($status_doc as $item) {
         $connect->sql = "SELECT COUNT(*) as numrow
         FROM 	general_form AS t1
         INNER JOIN approve_status AS t3
@@ -266,15 +297,15 @@ else if($data=="countStatusApr"){
         INNER JOIN prefix ON student.PREFIX = prefix.prefix_id
         INNER JOIN master_approve AS t2 ON t3.approve_status_id = t2.aprove_status_id 
         AND t1.genaral_form_id = t2.genaral_form_id
-        WHERE master_user_id='" . $_SESSION['_id'] . "' AND approve_status_name='".$item."'";
+        WHERE master_user_id='" . $_SESSION['_id'] . "' AND approve_status_name='" . $item . "'";
         $connect->queryData();
         while ($rsconnect = $connect->fetch_AssocData()) {
             array_push($result, ['numrow' => $rsconnect['numrow'], 'status_approve' => $item]);
         }
     }
 
-     #deen
-     foreach ($status_doc as $item) {
+    #deen
+    foreach ($status_doc as $item) {
         $connect->sql = "SELECT   COUNT(*) as numrow
         FROM 	general_form AS t1
         INNER JOIN approve_status AS t3
@@ -283,7 +314,7 @@ else if($data=="countStatusApr"){
         INNER JOIN prefix ON student.PREFIX = prefix.prefix_id
         INNER JOIN deen_approve AS t2 ON t3.approve_status_id = t2.aprove_status_id 
         AND t1.genaral_form_id = t2.genaral_form_id
-        WHERE deen_user_id='" . $_SESSION['_id'] . "' AND approve_status_name='".$item."'";
+        WHERE deen_user_id='" . $_SESSION['_id'] . "' AND approve_status_name='" . $item . "'";
         $connect->queryData();
         while ($rsconnect = $connect->fetch_AssocData()) {
             array_push($result, ['numrow' => $rsconnect['numrow'], 'status_approve' => $item]);

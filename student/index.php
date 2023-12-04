@@ -78,10 +78,9 @@ if ($_SESSION['_role'] != 'student') {
             <!-- /.content -->
         </div>
         <?php include("./../manage/footer.php") ?>
+        
 
-    </div>
-
-    <?php include("./../manage/scripts.php") ?>
+        <?php include("./../manage/scripts.php") ?>
 
 </body>
 <script src="./../asset/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -169,7 +168,7 @@ if ($_SESSION['_role'] != 'student') {
                             ? '<span class="badge bg-warning">'+item.form_status_name+'</span>'
                             : '<span class="badge bg-success">'+item.form_status_name+'</span>'}
                         </td>
-                        <td class="text-center" style="vertical-align: middle;" ><button  onclick="modalDocShow(${item.form_id})" type="button" class="badge badge badge-primary" >Preview</button></td>
+                        <td class="text-center" style="vertical-align: middle;" ><button  onclick="modalDocShow('${item.form_id}', '${item.form_status_name}')" type="button" class="badge badge badge-primary" >Preview</button></td>
                     </tr>
                     `);
 
@@ -185,14 +184,24 @@ if ($_SESSION['_role'] != 'student') {
 
     });
 
-    function modalDocShow(idDoc) {
+    function modalconfirmEdit(form_id) {
+        $('#btnConfirmId').val(form_id)
+        $('#modal-confirmEdit').modal('show');
+    }
+
+    function confirmYes(){
+        $('#modal-confirmEdit').modal('hide');
+        var form_id =$('#btnConfirmId').val()
+        var url = 'editd.php?id=' + form_id;
+        window.location = url;
+    }
+
+    function modalDocShow(idDoc,status) {
         console.log(idDoc)
-        var url = 'previewform.php?id=' + idDoc;
+        var url = 'previewform.php?id=' + idDoc+"&status="+status;
         window.location = url;
 
     }
-
-
 </script>
 
 </html>

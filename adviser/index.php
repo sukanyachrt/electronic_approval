@@ -741,7 +741,7 @@ include('./../manage/header.php');
                     $('#divComment_master').text("-");
                     $('#spanName_master').text("-");
                 } else {
-                    $('#divComment_master').text(dataApr_master.advisor_comment)
+                    $('#divComment_master').text(dataApr_master.master_comment)
                     $('#spanName_master').text(`${dataApr_master.user_name}`);
                     $('#spanDate_master').text(convertToThaiBuddhistDate(dataApr_master.DATETIME));
                     $("#imageMaster").attr("src", "data:image/jpeg;base64," + dataApr_master.image_sign);
@@ -756,7 +756,7 @@ include('./../manage/header.php');
                     $('#divComment_deen').text("-");
                     $('#spanName_deen').text("-");
                 } else {
-                    $('#divComment_deen').text(dataApr_deen.advisor_comment)
+                    $('#divComment_deen').text(dataApr_deen.deen_comment)
                     $('#spanName_deen').text(`${dataApr_deen.user_name}`);
                     $('#spanDate_deen').text(convertToThaiBuddhistDate(dataApr_deen.DATETIME));
                     $("#imageDeen").attr("src", "data:image/jpeg;base64," + dataApr_deen.image_sign);
