@@ -214,8 +214,31 @@ if($_SESSION['_role']!='admin'){
         } else {
             checkbox.closest('.info-box').removeClass('selected-card');
         }
-        var dataFind = ["เสร็จสิ้น"];
-        ShowDataDoc(dataFind);
+
+        const checkbox_1 = $('.checkbox1[value="กำลังดำเนินการ"]');
+        if (checkbox_1.is(':checked')) {
+            var dataFind = ["กำลังดำเนินการ"];
+           checkbox_1.closest('.info-box').addClass('selected-card');
+        } else {
+            checkbox_1.closest('.info-box').removeClass('selected-card');
+        }
+
+        const checkbox_2 = $('.checkbox1[value="แก้ไข"]');
+        if (checkbox_2.is(':checked')) {
+            var dataFind = ["แก้ไข"];
+            checkbox_2.closest('.info-box').addClass('selected-card');
+        } else {
+            checkbox_2.closest('.info-box').removeClass('selected-card');
+        }
+
+        const checkedCheckboxes = $('.checkbox1:checked'); // เลือก checkboxes ที่ถูกติ๊กเช็ค
+        const uncheckedCheckboxes = $('.checkbox1:not(:checked)'); // เลือก checkboxes ที่ไม่ถูกติ๊กเช็ค
+        const checkedValues = checkedCheckboxes.map(function() {
+            return this.value;
+        }).get();
+
+        ShowDataDoc(checkedValues);
+        
 
     });
 
@@ -224,9 +247,7 @@ if($_SESSION['_role']!='admin'){
             url: "./../api/doc/status_doc.php?v=countStatusAdmin",
             type: "GET",
             success: function(Res) {
-                console.log("ddd");
-                console.log(Res);
-                $.each(Res, function(index, item) {
+               $.each(Res, function(index, item) {
                     if (item.status_doc == "เสร็จสิ้น") {
                         $('#apr_apr').text(item.numrow + " รายการ")
 
@@ -249,8 +270,6 @@ if($_SESSION['_role']!='admin'){
                 dataFind: dataFind
             },
             success: function(Res) {
-                console.log(Res);
-                
                 $('#tbStatus_doc tbody').html('')
                 $.each(Res, function(index, item) {
                     var date_insert = convertDate(item.datetime);
