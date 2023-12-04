@@ -24,7 +24,7 @@ if ($data == "checkstatusAdmin") {
         INNER JOIN form_status AS t2 ON form.form_status_id = t2.form_status_id
         INNER JOIN student AS t3 ON form.student_code = t3.student_code
         INNER JOIN prefix AS t4 ON t3.PREFIX = t4.prefix_id
-        WHERE form_status_name='" . $item . "'";
+        WHERE form_status_name='" . $item . "' ORDER BY  t1.form_id DESC";
         $connect->queryData();
         while ($rsconnect = $connect->fetch_AssocData()) {
 
@@ -65,11 +65,31 @@ if ($data == "checkstatusAdmin") {
 
 
             array_push($result, [
-                'form_id' => $rsconnect['form_id'], 'form_status_name' => $rsconnect['form_status_name'],'fullname'=>$rsconnect['fullname'],
+                'form_id' => $rsconnect['form_id'], 'form_status_name' => $rsconnect['form_status_name'], 'fullname' => $rsconnect['fullname'],
                 'general_form_title' => $rsconnect['general_form_title'], 'datetime' => $rsconnect['DATETIME'],
                 'advisor_approve' => $advisor_approve, 'master_approve' => $master_approve, 'deen_approve' => $deen_approve
             ]);
         }
+    }
+    echo json_encode($result);
+} else if ($data == "countStatusAdmin") {
+    $status_doc = ["เสร็จสิ้น", "กำลังดำเนินการ", "แก้ไข"];
+    foreach ($status_doc as $item) {
+
+        $connect->sql = "SELECT  COUNT(*) AS numrow,form_status.form_status_name 
+        FROM  general_form
+        INNER JOIN form ON general_form.form_id = form.form_id
+        INNER JOIN form_status ON form.form_status_id = form_status.form_status_id 
+        WHERE form_status_name='" . $item . "'";
+        $connect->queryData();
+        $rsconnect = $connect->fetch_AssocData();
+        if($rsconnect['numrow']>=0){
+            array_push($result, ['status_doc'=>$item,'numrow'=>$rsconnect['numrow']]);
+        }
+        else{
+            array_push($result, ['status_doc'=>$item,'numrow'=>0]);
+        }
+        
     }
     echo json_encode($result);
 }

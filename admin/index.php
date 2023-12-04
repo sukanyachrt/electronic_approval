@@ -84,7 +84,7 @@ if($_SESSION['_role']!='admin'){
                                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-solid fa-check"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">ผ่านการอนุมัติ</span>
+                                    <span class="info-box-text">เสร็จสิ้น</span>
                                     <span class="info-box-number" id="apr_apr">0</span>
                                 </div>
 
@@ -205,7 +205,8 @@ if($_SESSION['_role']!='admin'){
 <script src="./../manage/changepage.js?v=1"></script>
 <script>
     $(function() {
-        const checkbox = $('.checkbox1[value="อนุมัติ"]');
+        countStatusAdmin();
+        const checkbox = $('.checkbox1[value="เสร็จสิ้น"]');
         checkbox.prop('checked', true);
 
         if (checkbox.is(':checked')) {
@@ -215,26 +216,29 @@ if($_SESSION['_role']!='admin'){
         }
         var dataFind = ["เสร็จสิ้น"];
         ShowDataDoc(dataFind);
-        // $.ajax({
-        //     url: "./../api/documents/status_doc.php?v=countStatusAdmin",
-        //     type: "GET",
-        //     success: function(Res) {
-        //         console.log(Res);
-        //         $.each(Res, function(index, item) {
-        //             if (item.status_doc == "อนุมัติ") {
-        //                 $('#apr_apr').text(item.numrow + " รายการ")
-
-        //             } else if (item.status_doc == "รอการอนุมัติ") {
-        //                 $('#apr_wait').text(item.numrow + " รายการ")
-        //             } else {
-        //                 $('#apr_noapr').text(item.numrow + " รายการ")
-        //             }
-        //         });
-        //     }
-        // });
-
 
     });
+
+    function countStatusAdmin(){
+        $.ajax({
+            url: "./../api/doc/status_doc.php?v=countStatusAdmin",
+            type: "GET",
+            success: function(Res) {
+                console.log("ddd");
+                console.log(Res);
+                $.each(Res, function(index, item) {
+                    if (item.status_doc == "เสร็จสิ้น") {
+                        $('#apr_apr').text(item.numrow + " รายการ")
+
+                    } else if (item.status_doc == "กำลังดำเนินการ") {
+                        $('#apr_wait').text(item.numrow + " รายการ")
+                    } else {
+                        $('#apr_noapr').text(item.numrow + " รายการ")
+                    }
+                });
+            }
+        });
+    }
 
     function ShowDataDoc(dataFind) {
         $.ajax({
