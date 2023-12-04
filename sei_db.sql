@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2023 at 03:10 PM
+-- Generation Time: Dec 04, 2023 at 05:56 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -20,6 +20,50 @@ SET time_zone = "+00:00";
 --
 -- Database: `sei_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `advisor_approve`
+--
+
+CREATE TABLE `advisor_approve` (
+  `advisor_approve_id` int(11) NOT NULL,
+  `advisor_comment` text NOT NULL,
+  `advisor_status_id` int(11) NOT NULL,
+  `datetime` datetime DEFAULT NULL,
+  `genaral_form_id` int(11) NOT NULL,
+  `advisor_user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `advisor_approve`
+--
+
+INSERT INTO `advisor_approve` (`advisor_approve_id`, `advisor_comment`, `advisor_status_id`, `datetime`, `genaral_form_id`, `advisor_user_id`) VALUES
+(14, 'aadad', 2, '2023-12-03 21:44:17', 24, 1),
+(15, '', 1, '2023-12-03 21:59:57', 25, 1),
+(16, '', 1, '2023-12-04 23:15:09', 26, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `approve_status`
+--
+
+CREATE TABLE `approve_status` (
+  `approve_status_id` int(11) NOT NULL,
+  `approve_status_name` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `approve_status`
+--
+
+INSERT INTO `approve_status` (`approve_status_id`, `approve_status_name`) VALUES
+(1, 'อนุมัติ'),
+(2, 'ไม่อนุมัติ'),
+(3, 'รอการอนุมัติ');
 
 -- --------------------------------------------------------
 
@@ -46,6 +90,29 @@ INSERT INTO `carousel` (`carousel_id`, `carousel_img`, `carousel_link`, `carouse
 (15, 'cover_20220623144018.png', 'https://sei.rmutto.ac.th/resource/doc/100_%E0%B8%84%E0%B8%B9%E0%B9%88%E0%B8%A1%E0%B8%B7%E0%B8%AD%E0%B8%A1%E0%B8%B2%E0%B8%95%E0%B8%A3%E0%B8%90%E0%B8%B2%E0%B8%99%E0%B8%82%E0%B8%B1%E0%B9%89%E0%B8%99%E0%B8%95%E0%B8%AD%E0%B8%99%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9B%E0%B8%8F%E0%B8%B4%E0%B8%9A%E0%B8%B1%E0%B8%95%E0%B8%B4%E0%B8%87%E0%B8%B2%E0%B8%99.pdf', 'Y'),
 (20, 'cover_20220520132808.png', '#', 'Y'),
 (50, 'cover_20220623153225.jpg', 'https://docs.google.com/forms/d/e/1FAIpQLSdRP_4GH11M_teZRKMxKhyOjnuJIvtmezhLZ4lEDmUYwviiug/viewform?fbzx=-8304694729903455360', 'Y');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `deen_approve`
+--
+
+CREATE TABLE `deen_approve` (
+  `deen_approve_id` int(11) NOT NULL,
+  `deen_user_id` int(11) NOT NULL,
+  `deen_comment` text NOT NULL,
+  `aprove_status_id` int(11) NOT NULL,
+  `datetime` datetime NOT NULL,
+  `genaral_form_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `deen_approve`
+--
+
+INSERT INTO `deen_approve` (`deen_approve_id`, `deen_user_id`, `deen_comment`, `aprove_status_id`, `datetime`, `genaral_form_id`) VALUES
+(1, 78, '', 1, '2023-12-03 22:27:03', 25),
+(2, 78, '', 1, '2023-12-04 23:27:54', 26);
 
 -- --------------------------------------------------------
 
@@ -183,7 +250,11 @@ INSERT INTO `document_form` (`id`, `id_student`, `form_title`, `student_code`, `
 (8, 1, 'แจ้งจบการศึกษา', '10163406640280', '1234', '1/2553', '2553', '0947643570', 'neiylove_infinite@hotmil.com', 'แจ้งการจบการศึกศึษา', 'แบบ 1.2', 'ปริญญาเอก', 'ภาคปกติ', '2023-11-04 23:12:26', 'อนุมัติ'),
 (9, 7, 'ทดสอบการสร้างเรื่อง', 'M6110949', '12345', '2553', '1/2553', '1234567890', 'karn.yondddg@melivecode.com', 'ทดสอบการสร้างเรื่อง', 'แบบ 1.1', 'ปริญญาเอก', 'ภาคปกติ', '2023-11-05 00:07:59', 'อนุมัติ'),
 (10, 11, 'ทดสอบการสร้างเรื่อง', 'M6110949', '12345', '2553', '1/2553', '1234567890', 'karn.yondddg@melivecode.com', 'ทดสอบการสร้างเรื่อง', '', 'ปริญญาโท', 'ภาคนอกเวลาราชการ', '2023-11-05 00:10:27', 'อนุมัติ'),
-(11, 11, 'ทดสอบการขอแบบไม่อนุมัติ', '016330663033-2', '123456', '1/2553', '2553', '1234567890', 'karn.yondddg@melivecode.com', 'ทดสอบการขอแบบไม่อนุมัติ', '', 'ปริญญาโท', 'ภาคปกติ', '2023-11-05 01:49:41', 'ไม่อนุมัติ');
+(11, 11, 'ทดสอบการขอแบบไม่อนุมัติ', '016330663033-2', '123456', '1/2553', '2553', '1234567890', 'karn.yondddg@melivecode.com', 'ทดสอบการขอแบบไม่อนุมัติ', '', 'ปริญญาโท', 'ภาคปกติ', '2023-11-05 01:49:41', 'ไม่อนุมัติ'),
+(12, 1, 'ddddd', 'dddd', '12', '2553', '1/2553', '1234567890', 'karn.yong@meliveddddcode.com', 'dddd', 'แบบ 1.1', 'ปริญญาเอก', 'ภาคปกติ', '2023-11-05 21:43:52', 'รอการอนุมัติ'),
+(13, 1, 'แจ้งจบการศึกษา', '116590421002-8', '123456', '1/2553', '2553', '1234567890', 'karn.yonddg@melivecode.com', 'แจ้งจบการศึกษา', 'แบบ 1.1', 'ปริญญาเอก', 'ภาคปกติ', '2023-11-05 22:00:13', 'รอการอนุมัติ'),
+(14, 1, 'ddddd', 'dddd', '12', '2553', '1/2553', '1234567890', 'karn.yong@meliveddddcode.com', 'gfsgsgdgd', '', 'ปริญญาโท', 'ภาคปกติ', '2023-11-14 20:22:00', 'รอการอนุมัติ'),
+(15, 6, 'dDdAD', 'ADADAD', 'ADADAD', '2556', '2556', '4222', 'karn.yonsg@melivecode.com', 'ADAWAFAF', 'แบบ 1.1', 'ปริญญาเอก', 'ภาคปกติ', '2023-11-15 20:55:03', 'รอการอนุมัติ');
 
 -- --------------------------------------------------------
 
@@ -215,7 +286,11 @@ INSERT INTO `document_form_approve` (`id`, `document_form`, `id_approve`, `role_
 (65, 10, 2, 'อาจารย์', '', 'อนุมัติ', '2023-11-05 14:02:23'),
 (66, 11, 1, 'อาจารย์', 'ทดสอบการไม่อนุมัติ', 'ไม่อนุมัติ', '2023-11-04 18:50:56'),
 (68, 10, 77, 'ประธานหลักสูตร', 'ssss', 'อนุมัติ', '2023-11-05 14:03:56'),
-(69, 10, 78, 'คณบดี', '-', 'อนุมัติ', '2023-11-05 14:04:48');
+(69, 10, 78, 'คณบดี', '-', 'อนุมัติ', '2023-11-05 14:04:48'),
+(70, 12, 1, 'อาจารย์', '', 'รอการอนุมัติ', NULL),
+(71, 13, 2, 'อาจารย์', '', 'รอการอนุมัติ', NULL),
+(72, 14, 1, 'อาจารย์', '', 'รอการอนุมัติ', NULL),
+(73, 15, 1, 'อาจารย์', '', 'รอการอนุมัติ', NULL);
 
 -- --------------------------------------------------------
 
@@ -3488,27 +3563,73 @@ INSERT INTO `event_history` (`eventhistory_id`, `EVENT`, `STUDENT_CODE`, `eventh
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `form`
+--
+
+CREATE TABLE `form` (
+  `form_id` int(11) NOT NULL,
+  `student_code` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `form_status_id` int(11) NOT NULL,
+  `datetime` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `form`
+--
+
+INSERT INTO `form` (`form_id`, `student_code`, `form_status_id`, `datetime`) VALUES
+(1, '116590421002-8', 2, '2023-12-03 18:03:29'),
+(2, '116590421002-8', 3, '2023-12-03 18:42:14'),
+(3, '116590421002-8', 3, '2023-12-04 22:50:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `form_status`
+--
+
+CREATE TABLE `form_status` (
+  `form_status_id` int(11) NOT NULL,
+  `form_status_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `form_status`
+--
+
+INSERT INTO `form_status` (`form_status_id`, `form_status_name`) VALUES
+(1, 'กำลังดำเนินการ'),
+(2, 'แก้ไข'),
+(3, 'เสร็จสิ้น');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `general_form`
 --
 
 CREATE TABLE `general_form` (
   `genaral_form_id` int(11) NOT NULL,
+  `form_id` int(11) NOT NULL,
   `general_form_title` varchar(100) NOT NULL,
-  `student_code` varchar(20) NOT NULL,
   `general_form_semester` varchar(10) NOT NULL,
   `general_form_year` date NOT NULL,
   `general_form_opinion` varchar(100) NOT NULL,
-  `adviser_comment` varchar(100) NOT NULL,
-  `adviser_comment_date` varchar(100) NOT NULL
+  `general_form_education` varchar(50) DEFAULT NULL,
+  `general_form_sector` varchar(100) DEFAULT NULL,
+  `general_form_type_semester` varchar(50) NOT NULL,
+  `general_form_major_code` varchar(50) NOT NULL,
+  `general_form_tel` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `general_form`
 --
 
-INSERT INTO `general_form` (`genaral_form_id`, `general_form_title`, `student_code`, `general_form_semester`, `general_form_year`, `general_form_opinion`, `adviser_comment`, `adviser_comment_date`) VALUES
-(3, 'ขอย้ายสาขา', '016441111001-3', '1/2566', '0000-00-00', '', '', ''),
-(4, 'ขอย้ายสาขา', '016441111001-3', '1/2566', '0000-00-00', '', '', '');
+INSERT INTO `general_form` (`genaral_form_id`, `form_id`, `general_form_title`, `general_form_semester`, `general_form_year`, `general_form_opinion`, `general_form_education`, `general_form_sector`, `general_form_type_semester`, `general_form_major_code`, `general_form_tel`) VALUES
+(24, 1, 'ยืนขอคำร้อง', '1', '2024-12-03', 'ฟดห', 'ปริญญาโท', 'แผน ข', 'ภาคปกติ', '54', '081'),
+(25, 2, 'ทดสอบครั้งที่ 2', '1', '2024-12-03', 'ทดสอบครั้งที่ 2', 'ปริญญาเอก', 'แบบ 1.2', 'ภาคปกติ', '', '081'),
+(26, 3, 'dadasdasda', '1', '2023-12-04', 'adaDADAD', 'ปริญญาโท', 'แผน ก แบบ ก 1', 'ภาคปกติ', '', '01');
 
 -- --------------------------------------------------------
 
@@ -3540,6 +3661,29 @@ INSERT INTO `major` (`major_id`, `EDULEVEL`, `major_name`, `major_name_en`, `maj
 (20, 10, 'วิศวกรรมเมคคาทรอนิกส์และหุ่นยนต์', 'Mechatronics and Robotics Engineering', 'วิศวกรรมศาสตรบัณฑิต (วศ.บ.)', 'Bachelor of Engineering (B.Eng.)', '<h3>รหัสและชื่อหลักสูตร</h3><div>รหัสหลักสูตร&nbsp; &nbsp; &nbsp;25581931100289</div><div>ภาษาไทย : <span style=\"white-space:pre\">	</span>หลักสูตรวิศวกรรมศาสตร์บัณฑิต สาขาวิชาวิศวกรรมเมคคาทรอนิกส์และหุ่นยนต์</div><div>ภาษาอังกฤษ :&nbsp; <span style=\"white-space:pre\">	</span>Bachelor of Engineering Program in Mechatronics and Robotics Engineering</div><div><br></div><h3>จำนวนหน่วยกิตที่เรียนตลอดหลักสูตร</h3><div>จำนวนหน่วยกิตรวมที่เรียนตลอดหลักสูตร&nbsp; ไม่น้อยกว่า 124 หน่วยกิต</div><div><br></div><div><br></div><h3>คุณสมบัติของผู้เข้าศึกษา</h3><div><br></div><div>สำเร็จการศึกษาตาม 1, 2 หรือ 3&nbsp; และผ่านการคัดเลือกตามหลักเกณฑ์ของสำนักงานคณะกรรมการการอุดมศึกษา และ/หรือเป็นไปตามระเบียบข้อบังคับที่มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออกกำหนด</div><div>1. ผู้ที่เข้าศึกษาในหลักสูตรปริญญาตรี 4 ปี ต้องเป็นผู้สำเร็จการศึกษาชั้นมัธยมศึกษาตอนปลาย หรือการศึกษาระดับประกาศนียบัตรวิชาชีพ (ปวช.) สายช่างอุตสาหกรรม หรือเทียบเท่าจากสถาบันการศึกษาภายในประเทศที่กระทรวงศึกษาธิการรับรอง หรือสถาบันการศึกษาต่างประเทศที่มหาวิทยาลัยรับรอง ทั้งนี้ให้อยู่ในดุลยพินิจของอาจารย์ประจำหลักสูตร</div><div>2. ผู้ที่เข้าศึกษาในหลักสูตรปริญญาตรี เทียบโอน ต้องเป็นผู้ที่สำเร็จการศึกษาระดับประกาศนียบัตรวิชาชีพชั้นสูง สายช่างอุตสาหกรรม หรือเทียบเท่า หรือระดับอนุปริญญาหรือเทียบเท่า หรือปริญญาชั้นใดชั้นหนึ่ง หรือเทียบเท่าจากสถาบันการศึกษาที่มหาวิทยาลัยรับรอง ทั้งนี้ให้อยู่ในดุลยพินิจของอาจารย์ประจำหลักสูตร</div><div>3. คุณสมบัติอื่นๆ ที่นอกเหนือจากข้อ 1 และ 2 ให้อยู่ในดุลพินิจของอาจารย์ประจำหลักสูตร</div><div><br></div><div><br></div><div><br></div><h3>อาชีพที่สามารถประกอบได้หลังสำเร็จการศึกษา</h3><div>1. วิศวกรเมคคาทรอนิกส์และหุ่นยนต</div><div>2. นักวิชาการ / ผู้ช่วยนักวิจัยด้านวิศวกรรมเมคคาทรอนิกส์และหุ่นยนต์ ในองค์กรภาครัฐหรือเอกชน</div><div>3. นักออกแบบและพัฒนาระบบอัตโนมัติในงานอุตสาหกรรม</div><div>4. นักวิเคราะห์โครงการ</div><div>5. ผู้ตรวจสอบระบบการผลิตในโรงงานอุตสาหกรรม</div><div>6. วิศวกรจัดซื้ออุปกรณ์ระบบอัตโนมัติ</div><div>7. อาจารย์ ผู้สอนในสถาบันการศึกษาที่ผลิตระดับประกาศนียบัตรวิชาชีพ หรือประกาศนียบัตรวิชาชีพชั้นสูง</div>                    ', 'major_20220520131925.png', NULL, 'Y', NULL, ''),
 (30, 10, 'วิศวกรรมเกษตร', 'Agricultural Engineering', 'วิศวกรรมศาสตร์บัณฑิต วิศวกรรมเกษตร', 'Bachelor of Engineering (Agricultural Engineering)', '<h3>รหัสและชื่อหลักสูตร</h3><div>รหัสหลักสูตร&nbsp; &nbsp; &nbsp;25481931107679</div><div>ภาษาไทย : <span style=\"white-space:pre\">	</span>หลักสูตรวิศวกรรมศาสตรบัณฑิต สาขาวิชาวิศวกรรมเกษตร</div><div>ภาษาอังกฤษ :&nbsp; <span style=\"white-space:pre\">	</span>Bachelor of Engineering Agricultural Engineering</div><div><br></div><div>จำนวนหน่วยกิตที่เรียนตลอดหลักสูตร</div><div>จำนวนหน่วยกิตรวมที่เรียนตลอดหลักสูตร&nbsp; ไม่น้อยกว่า 148 หน่วยกิต</div><div><br></div><div><br></div><h3>คุณสมบัติของผู้เข้าศึกษา</h3><div><br></div><div>สำเร็จการศึกษาตาม 1 หรือ 2 หรือ 3 และผ่านการคัดเลือกตามหลักเกณฑ์ของสำนักงาน คณะกรรมการการอุดมศึกษา และ/หรือเป็นไปตามระเบียบข้อบังคับที่มหาวิทยาลัยเทคโนโลยีราชมงคล ตะวันออกำหนด</div><div>1. การศึกษาไม่ต่ำกว่าระดับมัธยมศึกษาตอนปลายตามหลักสูตรของกระทรวงศึกษาธิการหรือ เทียบเท่า</div><div>2. การศึกษาระดับประกาศนียบัตรวิชาชีพ (ปวช.) สายช่างอุตสาหกรรม และสายเกษตรกรรม</div><div>3. การศึกษาระดับประกาศนียบัตรวิชาชีพชั้นสูง (ปวส.) สายช่างอุตสาหกรรม โดยการ เทียบโอนผลการเรียนรู้ให้เป็นไปตามเกณฑ์ที่มหาวิทยาลัยกำหนด ทั้งนี้ให้อยู่ในดุลยพินิจ ของอาจารย์ประจำหลักสูตร</div><div><br></div><div><br></div><h3>อาชีพที่สามารถประกอบได้หลังสำเร็จการศึกษา</h3><div><br></div><div>- ﻿วิศวกรภาคเอกชน ทำงานได้ทั้งด้านวิศวกรรมเกษตร และวิศวกรรมเครื่องกล เช่น ในกลุ่มอุตสาหกรรมยานยนต์ และชิ้นส่วนรถยนต์ กลุ่มบริษัทแปรรูปผลผลิตการเกษตร ผลิตเครื่องจักกลเกษตร ผลิตอาหารสัตว์ โรงสีข้าง ฯลฯ</div><div>-วิศวกรหรือนักวิจัย ในหน่วยงานราชการ/รัฐวิสาหกิจ เช่น กรมวิชาการเกษตร กรมส่งเสริมการเกษตร กรมชลประทาน สถาบันการศึกษาและสถาบันวิจัยต่างๆ การไฟฟ้า และการปะปา</div><div>-ประกอบอาชีพอิสระ นำความรู้และเทคโนโลยีต่างๆไปใช้ประกอบธุรกิจทางการเกษตร เพื่อเพิ่มมูลค่าของผลผลิตทางการเกษตร</div>                    ', 'major_20220520131948.png', NULL, 'Y', NULL, ''),
 (40, 10, 'วิศวกรรมอุตสาหการและโลจิสติกส์', 'Bachelor of Engineering Program in Industrial Engineering and Logistics ', 'วิศวกรรมศาสตร์บัณฑิต วิศวกรรมอุตสาหการและโลจิสติกส์', 'Bachelor of Engineering (Industrial Engineering and Logistics )', '<h3>รหัสและชื่อหลักสูตร</h3><div>รหัสหลักสูตร&nbsp; : -</div><div>ภาษาไทย : <span style=\"white-space:pre\">	</span>วิศวกรรมศาสตร์บัณฑิต วิศวกรรมอุตสาหการและโลจิสติกส์</div><div>ภาษาอังกฤษ :&nbsp; <span style=\"white-space:pre\">	</span>Bachelor of Engineering Program in Industrial Engineering and Logistics&nbsp;</div><div>จำนวนหน่วยกิตที่เรียนตลอดหลักสูตร</div><div>จำนวนหน่วยกิตรวมที่เรียนตลอดหลักสูตร&nbsp; ไม่น้อยกว่า 138 หน่วยกิต</div><div><br></div><div>หลักสูตร ปริญญาตรี 4 ปี</div><div><br></div><h3>คุณสมบัติของผู้เข้าศึกษา</h3><div>สำเร็จการศึกษาตาม 1, 2 หรือ 3&nbsp; และผ่านการคัดเลือกตามหลักเกณฑ์ของสำนักงานคณะกรรมการการอุดมศึกษา และ/หรือเป็นไปตามระเบียบข้อบังคับที่มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออกกำหนด</div><div>1. ผู้ที่เข้าศึกษาในหลักสูตรปริญญาตรี 4 ปี ต้องเป็นผู้สำเร็จการศึกษาชั้นมัธยมศึกษาตอนปลาย หรือการศึกษาระดับประกาศนียบัตรวิชาชีพ (ปวช.) สายช่างอุตสาหกรรม หรือเทียบเท่าจากสถาบันการศึกษาภายในประเทศที่กระทรวงศึกษาธิการรับรอง หรือสถาบันการศึกษาต่างประเทศที่มหาวิทยาลัยรับรอง ทั้งนี้ให้อยู่ในดุลยพินิจของอาจารย์ประจำหลักสูตร</div><div>2. ผู้ที่เข้าศึกษาในหลักสูตรปริญญาตรี เทียบโอน ทั้งนี้ให้อยู่ในดุลยพินิจของอาจารย์ประจำหลักสูตร</div><div>3. คุณสมบัติอื่นๆ ที่นอกเหนือจากข้อ 1 และ 2 ให้อยู่ในดุลพินิจของอาจารย์ประจำหลักสูตร</div><div><br></div><h3>โลจิสติกส์ กับศาสตร์ที่เกี่ยวข้อง</h3><div>โลจิสติกส์ มีศาสตร์แขนงต่าง ๆ ที่เกี่ยวข้องอยู่ 3 ศาสตร์ด้วยกัน ได้แก่</div><div>1. ด้านวิศวกรรมศาสตร์ โดยในส่วนของวิศวกรรมศาสตร์ มีสาขาวิชาที่มีความเกี่ยวข้องคือ สาขาวิศวกรรมอุตสาหการ (Industrial Engineering) และสาขาวิศวกรรมโยธา (Civil Engineering) โดยในสาขาวิชาเหล่านี้จะเรียนรู้ถึงวิธีการเคลื่อนที่ย้ายสินค้าเป็นหลัก เพื่อให้การขนส่งสินค้านั้นมีประสิทธิภาพสูงสุด ใช้ทรัพยากรต่าง ๆ ไม่ว่าจะเป็นเชื้อเพลิง หรือเวลาในการขนส่งให้น้อยที่สุด</div><div>2. ด้านบริหารธุรกิจ สำหรับสาขาด้านบริหารธุรกิจจะเน้นมองในเรื่องของการขนส่งระหว่างประเทศ โดยจะพิจารณาจากภาษี กฎหมาย ค่าระวาง นโยบาย หรือยุทธศาสตร์ทางด้านโลจิสติกส์ของแต่ละประเทศและเรื่องการค้าระหว่างประเทศ เพื่อนำมาประกอบการวางแผนขนส่งสินค้าไปยังประเทศต่าง ๆ</div><div>3. ด้านการจัดการสารสนเทศ ส่วนในด้านการจัดการสารสนเทศ จะเป็นการศึกษาเกี่ยวกับ software และ hardware ที่นำมาควบรวมกันเป็น solution หรือ บริการ ที่จะช่วยทำให้การดำเนินการทางโลจิสติกส์มีความคล่องตัวมากยิ่งขึ้น ใช้เวลาในการดำเนินงานให้น้อยมากที่สุด</div><div><br></div><h3>อาชีพที่สามารถประกอบได้หลังสำเร็จการศึกษา</h3><div>1. สามารถทำงานในบริษัทที่ต้องการ สามารถเลือกได้หลากหลายสายงานที่ต้องการทำ&nbsp; เช่น ฝ่ายจัดซื้อ ฝ่ายผลิต ฝ่ายจัดส่งและคลังสินค้า ฝ่ายควบคุมวัตถุดิบ ฝ่ายซัพพลายเชนและโลจิสติกส์ ฝ่ายการขนส่ง ฯลฯ</div><div>2.นักวิเคราะห์ด้านโลจิสติกส์และโซ่อุปทาน</div><div>3.นักวางแผน วัตถุดิบ การผลิต หรือการกระจายสินค้า</div><div>4.นักวิเคราะห์กระบวนการทางธุรกิจ</div><div>5.ทำธุรกิจส่วนตัว เช่น นำเข้าและส่งออก ผู้ให้บริการทางด้านโลจิสติกส์ ตัวแทนขนส่งทางบก ทางทะเล หรือทางอากาศ ฯลฯ</div><div>6.ทำงานสายวิชาการ เช่น นักวิชาการ นักวิจัย อาจารย์ในสาขาวิชาการจัดการโลจิสติกส์ ฯลฯ</div><div>7.รับราชการ เช่น กรมการขนส่งทางน้ำและพาณิชย์นาวี กรมประมง กรมการขนส่งทางอากาศ กรมศุลกากร และหน่วยงานอื่น ๆ ที่เกี่ยวข้อง</div><div><br></div>                    ', 'major_20220520132017.png', NULL, 'Y', NULL, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `master_approve`
+--
+
+CREATE TABLE `master_approve` (
+  `master_approve_id` int(11) NOT NULL,
+  `master_user_id` int(11) NOT NULL,
+  `master_comment` text NOT NULL,
+  `aprove_status_id` int(11) NOT NULL,
+  `datetime` datetime NOT NULL,
+  `genaral_form_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `master_approve`
+--
+
+INSERT INTO `master_approve` (`master_approve_id`, `master_user_id`, `master_comment`, `aprove_status_id`, `datetime`, `genaral_form_id`) VALUES
+(1, 77, '', 1, '2023-12-03 22:26:10', 25),
+(7, 77, '', 1, '2023-12-04 23:22:56', 26);
 
 -- --------------------------------------------------------
 
@@ -5968,11 +6112,11 @@ CREATE TABLE `position` (
 --
 
 INSERT INTO `position` (`position_id`, `position_name`, `position_role`) VALUES
-(10, 'คณบดี', 'master'),
+(10, 'คณบดี', 'deen'),
 (20, 'รองคณบดีฝ่ายวิชาการและวิจัย', ''),
 (22, 'รองคณบดีฝ่ายกิจการนักศึกษา', ''),
-(25, 'ประธานหลักสูตร', 'direct'),
-(30, 'อาจารย์', 'teacher'),
+(25, 'ประธานหลักสูตร', 'master'),
+(30, 'อาจารย์', 'adviser'),
 (40, 'หัวหน้าสำนักงาน', ''),
 (41, 'เจ้าหน้าที่ฝ่ายวิชาการ', 'admin'),
 (42, 'เจ้าหน้าที่ฝ่ายกิจการนักศึกษา', '');
@@ -7143,10 +7287,34 @@ INSERT INTO `_mecha_courseregis` (`mecha_courseregisid`, `mecha_studentid`, `mec
 --
 
 --
+-- Indexes for table `advisor_approve`
+--
+ALTER TABLE `advisor_approve`
+  ADD PRIMARY KEY (`advisor_approve_id`),
+  ADD KEY `advisor_status_id` (`advisor_status_id`),
+  ADD KEY `genaral_form_id` (`genaral_form_id`),
+  ADD KEY `advisor_approve` (`advisor_user_id`);
+
+--
+-- Indexes for table `approve_status`
+--
+ALTER TABLE `approve_status`
+  ADD PRIMARY KEY (`approve_status_id`);
+
+--
 -- Indexes for table `carousel`
 --
 ALTER TABLE `carousel`
   ADD PRIMARY KEY (`carousel_id`);
+
+--
+-- Indexes for table `deen_approve`
+--
+ALTER TABLE `deen_approve`
+  ADD PRIMARY KEY (`deen_approve_id`),
+  ADD KEY `aprove` (`aprove_status_id`),
+  ADD KEY `form_` (`genaral_form_id`),
+  ADD KEY `deen_approve` (`deen_user_id`);
 
 --
 -- Indexes for table `doc`
@@ -7209,10 +7377,24 @@ ALTER TABLE `event_history`
   ADD KEY `STUDENT_CODE` (`STUDENT_CODE`);
 
 --
+-- Indexes for table `form`
+--
+ALTER TABLE `form`
+  ADD PRIMARY KEY (`form_id`),
+  ADD KEY `form_status_id` (`form_status_id`);
+
+--
+-- Indexes for table `form_status`
+--
+ALTER TABLE `form_status`
+  ADD PRIMARY KEY (`form_status_id`);
+
+--
 -- Indexes for table `general_form`
 --
 ALTER TABLE `general_form`
-  ADD PRIMARY KEY (`genaral_form_id`);
+  ADD PRIMARY KEY (`genaral_form_id`),
+  ADD KEY `form_id` (`form_id`);
 
 --
 -- Indexes for table `major`
@@ -7220,6 +7402,15 @@ ALTER TABLE `general_form`
 ALTER TABLE `major`
   ADD PRIMARY KEY (`major_id`) USING BTREE,
   ADD KEY `EDULEVEL` (`EDULEVEL`);
+
+--
+-- Indexes for table `master_approve`
+--
+ALTER TABLE `master_approve`
+  ADD PRIMARY KEY (`master_approve_id`),
+  ADD KEY `approve` (`aprove_status_id`),
+  ADD KEY `form` (`genaral_form_id`),
+  ADD KEY `master_approve` (`master_user_id`);
 
 --
 -- Indexes for table `news`
@@ -7335,6 +7526,24 @@ ALTER TABLE `_mecha_courseregis`
 --
 
 --
+-- AUTO_INCREMENT for table `advisor_approve`
+--
+ALTER TABLE `advisor_approve`
+  MODIFY `advisor_approve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `approve_status`
+--
+ALTER TABLE `approve_status`
+  MODIFY `approve_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `deen_approve`
+--
+ALTER TABLE `deen_approve`
+  MODIFY `deen_approve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `doc`
 --
 ALTER TABLE `doc`
@@ -7344,13 +7553,13 @@ ALTER TABLE `doc`
 -- AUTO_INCREMENT for table `document_form`
 --
 ALTER TABLE `document_form`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `document_form_approve`
 --
 ALTER TABLE `document_form_approve`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `event`
@@ -7365,10 +7574,28 @@ ALTER TABLE `event_history`
   MODIFY `eventhistory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3146;
 
 --
+-- AUTO_INCREMENT for table `form`
+--
+ALTER TABLE `form`
+  MODIFY `form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `form_status`
+--
+ALTER TABLE `form_status`
+  MODIFY `form_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `general_form`
 --
 ALTER TABLE `general_form`
-  MODIFY `genaral_form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `genaral_form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT for table `master_approve`
+--
+ALTER TABLE `master_approve`
+  MODIFY `master_approve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `news`
@@ -7447,6 +7674,22 @@ ALTER TABLE `_mecha_courseregis`
 --
 
 --
+-- Constraints for table `advisor_approve`
+--
+ALTER TABLE `advisor_approve`
+  ADD CONSTRAINT `advisor_approve` FOREIGN KEY (`advisor_user_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `advisor_status_id` FOREIGN KEY (`advisor_status_id`) REFERENCES `approve_status` (`approve_status_id`),
+  ADD CONSTRAINT `genaral_form_id` FOREIGN KEY (`genaral_form_id`) REFERENCES `general_form` (`genaral_form_id`);
+
+--
+-- Constraints for table `deen_approve`
+--
+ALTER TABLE `deen_approve`
+  ADD CONSTRAINT `aprove` FOREIGN KEY (`aprove_status_id`) REFERENCES `approve_status` (`approve_status_id`),
+  ADD CONSTRAINT `deen_approve` FOREIGN KEY (`deen_user_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `form_` FOREIGN KEY (`genaral_form_id`) REFERENCES `general_form` (`genaral_form_id`);
+
+--
 -- Constraints for table `document_form`
 --
 ALTER TABLE `document_form`
@@ -7472,10 +7715,30 @@ ALTER TABLE `event_history`
   ADD CONSTRAINT `event_history_ibfk_1` FOREIGN KEY (`EVENT`) REFERENCES `event` (`event_id`) ON UPDATE CASCADE;
 
 --
+-- Constraints for table `form`
+--
+ALTER TABLE `form`
+  ADD CONSTRAINT `form_status_id` FOREIGN KEY (`form_status_id`) REFERENCES `form_status` (`form_status_id`);
+
+--
+-- Constraints for table `general_form`
+--
+ALTER TABLE `general_form`
+  ADD CONSTRAINT `form_id` FOREIGN KEY (`form_id`) REFERENCES `form` (`form_id`);
+
+--
 -- Constraints for table `major`
 --
 ALTER TABLE `major`
   ADD CONSTRAINT `major_ibfk_1` FOREIGN KEY (`EDULEVEL`) REFERENCES `edulevel` (`edulevel_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `master_approve`
+--
+ALTER TABLE `master_approve`
+  ADD CONSTRAINT `approve` FOREIGN KEY (`aprove_status_id`) REFERENCES `approve_status` (`approve_status_id`),
+  ADD CONSTRAINT `form` FOREIGN KEY (`genaral_form_id`) REFERENCES `general_form` (`genaral_form_id`),
+  ADD CONSTRAINT `master_approve` FOREIGN KEY (`master_user_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `news`
