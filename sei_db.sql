@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2023 at 05:56 PM
+-- Generation Time: Dec 05, 2023 at 04:13 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -41,9 +41,8 @@ CREATE TABLE `advisor_approve` (
 --
 
 INSERT INTO `advisor_approve` (`advisor_approve_id`, `advisor_comment`, `advisor_status_id`, `datetime`, `genaral_form_id`, `advisor_user_id`) VALUES
-(14, 'aadad', 2, '2023-12-03 21:44:17', 24, 1),
-(15, '', 1, '2023-12-03 21:59:57', 25, 1),
-(16, '', 1, '2023-12-04 23:15:09', 26, 1);
+(18, '', 1, '2023-12-05 22:03:50', 28, 2),
+(19, '', 1, '2023-12-05 22:07:43', 29, 1);
 
 -- --------------------------------------------------------
 
@@ -111,8 +110,8 @@ CREATE TABLE `deen_approve` (
 --
 
 INSERT INTO `deen_approve` (`deen_approve_id`, `deen_user_id`, `deen_comment`, `aprove_status_id`, `datetime`, `genaral_form_id`) VALUES
-(1, 78, '', 1, '2023-12-03 22:27:03', 25),
-(2, 78, '', 1, '2023-12-04 23:27:54', 26);
+(6, 78, '', 1, '2023-12-05 22:04:19', 28),
+(7, 78, '', 1, '2023-12-05 22:08:25', 29);
 
 -- --------------------------------------------------------
 
@@ -217,80 +216,6 @@ CREATE TABLE `document` (
   `document_name` varchar(100) NOT NULL,
   `document_form` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `document_form`
---
-
-CREATE TABLE `document_form` (
-  `id` int(11) NOT NULL,
-  `id_student` int(11) NOT NULL,
-  `form_title` varchar(255) NOT NULL,
-  `student_code` varchar(20) NOT NULL,
-  `major_name` varchar(20) NOT NULL,
-  `year_semester` varchar(10) NOT NULL,
-  `year_study` varchar(10) NOT NULL,
-  `telephone` varchar(20) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `purpose` text NOT NULL,
-  `type_sector` varchar(20) NOT NULL,
-  `edulevel` varchar(20) NOT NULL,
-  `semester` varchar(20) NOT NULL,
-  `date_insert` datetime NOT NULL,
-  `status_doc` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `document_form`
---
-
-INSERT INTO `document_form` (`id`, `id_student`, `form_title`, `student_code`, `major_name`, `year_semester`, `year_study`, `telephone`, `email`, `purpose`, `type_sector`, `edulevel`, `semester`, `date_insert`, `status_doc`) VALUES
-(8, 1, 'แจ้งจบการศึกษา', '10163406640280', '1234', '1/2553', '2553', '0947643570', 'neiylove_infinite@hotmil.com', 'แจ้งการจบการศึกศึษา', 'แบบ 1.2', 'ปริญญาเอก', 'ภาคปกติ', '2023-11-04 23:12:26', 'อนุมัติ'),
-(9, 7, 'ทดสอบการสร้างเรื่อง', 'M6110949', '12345', '2553', '1/2553', '1234567890', 'karn.yondddg@melivecode.com', 'ทดสอบการสร้างเรื่อง', 'แบบ 1.1', 'ปริญญาเอก', 'ภาคปกติ', '2023-11-05 00:07:59', 'อนุมัติ'),
-(10, 11, 'ทดสอบการสร้างเรื่อง', 'M6110949', '12345', '2553', '1/2553', '1234567890', 'karn.yondddg@melivecode.com', 'ทดสอบการสร้างเรื่อง', '', 'ปริญญาโท', 'ภาคนอกเวลาราชการ', '2023-11-05 00:10:27', 'อนุมัติ'),
-(11, 11, 'ทดสอบการขอแบบไม่อนุมัติ', '016330663033-2', '123456', '1/2553', '2553', '1234567890', 'karn.yondddg@melivecode.com', 'ทดสอบการขอแบบไม่อนุมัติ', '', 'ปริญญาโท', 'ภาคปกติ', '2023-11-05 01:49:41', 'ไม่อนุมัติ'),
-(12, 1, 'ddddd', 'dddd', '12', '2553', '1/2553', '1234567890', 'karn.yong@meliveddddcode.com', 'dddd', 'แบบ 1.1', 'ปริญญาเอก', 'ภาคปกติ', '2023-11-05 21:43:52', 'รอการอนุมัติ'),
-(13, 1, 'แจ้งจบการศึกษา', '116590421002-8', '123456', '1/2553', '2553', '1234567890', 'karn.yonddg@melivecode.com', 'แจ้งจบการศึกษา', 'แบบ 1.1', 'ปริญญาเอก', 'ภาคปกติ', '2023-11-05 22:00:13', 'รอการอนุมัติ'),
-(14, 1, 'ddddd', 'dddd', '12', '2553', '1/2553', '1234567890', 'karn.yong@meliveddddcode.com', 'gfsgsgdgd', '', 'ปริญญาโท', 'ภาคปกติ', '2023-11-14 20:22:00', 'รอการอนุมัติ'),
-(15, 6, 'dDdAD', 'ADADAD', 'ADADAD', '2556', '2556', '4222', 'karn.yonsg@melivecode.com', 'ADAWAFAF', 'แบบ 1.1', 'ปริญญาเอก', 'ภาคปกติ', '2023-11-15 20:55:03', 'รอการอนุมัติ');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `document_form_approve`
---
-
-CREATE TABLE `document_form_approve` (
-  `id` int(11) NOT NULL,
-  `document_form` int(11) NOT NULL,
-  `id_approve` int(11) NOT NULL,
-  `role_approve` varchar(20) NOT NULL,
-  `comment_approve` text NOT NULL,
-  `status_approve` varchar(20) NOT NULL,
-  `date_approve` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `document_form_approve`
---
-
-INSERT INTO `document_form_approve` (`id`, `document_form`, `id_approve`, `role_approve`, `comment_approve`, `status_approve`, `date_approve`) VALUES
-(53, 8, 2, 'อาจารย์', 'ทดสอบการอนุมัติ', 'อนุมัติ', '2023-11-04 16:21:50'),
-(55, 8, 77, 'ประธานหลักสูตร', 'ฟดหหหหหหหหหหหหห', 'อนุมัติ', '2023-11-04 16:31:46'),
-(60, 8, 78, 'คณบดี', 'ทดสอบการอนุมัติครบดี', 'อนุมัติ', '2023-11-04 16:32:20'),
-(62, 9, 1, 'อาจารย์', 's', 'อนุมัติ', '2023-11-04 17:08:36'),
-(63, 9, 77, 'ประธานหลักสูตร', '', 'อนุมัติ', '2023-11-04 17:08:50'),
-(64, 9, 78, 'คณบดี', 'sl', 'อนุมัติ', '2023-11-04 17:09:08'),
-(65, 10, 2, 'อาจารย์', '', 'อนุมัติ', '2023-11-05 14:02:23'),
-(66, 11, 1, 'อาจารย์', 'ทดสอบการไม่อนุมัติ', 'ไม่อนุมัติ', '2023-11-04 18:50:56'),
-(68, 10, 77, 'ประธานหลักสูตร', 'ssss', 'อนุมัติ', '2023-11-05 14:03:56'),
-(69, 10, 78, 'คณบดี', '-', 'อนุมัติ', '2023-11-05 14:04:48'),
-(70, 12, 1, 'อาจารย์', '', 'รอการอนุมัติ', NULL),
-(71, 13, 2, 'อาจารย์', '', 'รอการอนุมัติ', NULL),
-(72, 14, 1, 'อาจารย์', '', 'รอการอนุมัติ', NULL),
-(73, 15, 1, 'อาจารย์', '', 'รอการอนุมัติ', NULL);
 
 -- --------------------------------------------------------
 
@@ -3578,9 +3503,8 @@ CREATE TABLE `form` (
 --
 
 INSERT INTO `form` (`form_id`, `student_code`, `form_status_id`, `datetime`) VALUES
-(1, '116590421002-8', 2, '2023-12-03 18:03:29'),
-(2, '116590421002-8', 3, '2023-12-03 18:42:14'),
-(3, '116590421002-8', 3, '2023-12-04 22:50:09');
+(1, '116590421002-8', 3, '2023-12-05 22:03:32'),
+(2, '116590421002-8', 3, '2023-12-05 22:07:09');
 
 -- --------------------------------------------------------
 
@@ -3627,9 +3551,8 @@ CREATE TABLE `general_form` (
 --
 
 INSERT INTO `general_form` (`genaral_form_id`, `form_id`, `general_form_title`, `general_form_semester`, `general_form_year`, `general_form_opinion`, `general_form_education`, `general_form_sector`, `general_form_type_semester`, `general_form_major_code`, `general_form_tel`) VALUES
-(24, 1, 'ยืนขอคำร้อง', '1', '2024-12-03', 'ฟดห', 'ปริญญาโท', 'แผน ข', 'ภาคปกติ', '54', '081'),
-(25, 2, 'ทดสอบครั้งที่ 2', '1', '2024-12-03', 'ทดสอบครั้งที่ 2', 'ปริญญาเอก', 'แบบ 1.2', 'ภาคปกติ', '', '081'),
-(26, 3, 'dadasdasda', '1', '2023-12-04', 'adaDADAD', 'ปริญญาโท', 'แผน ก แบบ ก 1', 'ภาคปกติ', '', '01');
+(28, 1, 'ทดสอบการยื่นแบบคำร้อง', '1', '2023-12-05', 'ทดสอบการยื่นแบบคำร้อง', 'ปริญญาเอก', 'แบบ 1.1', 'ภาคปกติ', '', '01234567890'),
+(29, 2, 'ทดสอบยื่นแบบคำร้องครั้งที่ 2', '1', '2023-12-05', 'แก้ไขทดสอบยื่นแบบคำร้องครั้งที่ 2', 'ปริญญาโท', 'แผน ก แบบ ก 1', 'ภาคนอกเวลาราชการ', '', '1111111111');
 
 -- --------------------------------------------------------
 
@@ -3682,8 +3605,8 @@ CREATE TABLE `master_approve` (
 --
 
 INSERT INTO `master_approve` (`master_approve_id`, `master_user_id`, `master_comment`, `aprove_status_id`, `datetime`, `genaral_form_id`) VALUES
-(1, 77, '', 1, '2023-12-03 22:26:10', 25),
-(7, 77, '', 1, '2023-12-04 23:22:56', 26);
+(14, 77, '', 1, '2023-12-05 22:04:09', 28),
+(15, 77, '', 1, '2023-12-05 22:08:12', 29);
 
 -- --------------------------------------------------------
 
@@ -7026,10 +6949,10 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `user_code`, `user_password`, `user_name`, `MAJOR`, `user_email`, `user_img`, `user_isUse`, `USERLEVEL`, `POSITION`) VALUES
 (1, 'sommart_pr@rmutto.ac.th', '123456789', 'สมมาตร พรหมพุฒ', 20, 'sommart_pr@rmutto.ac.th', NULL, 'Y', 10, 30),
-(2, 'test1@gmail.com', '123456789', 'ระวิน  สืบค้า', 30, 'test1@gmail.com', NULL, 'Y', 20, 30),
-(77, 'direct@gmail.com', '123456789', 'ประธาน ประธาน', 30, 'test1@gmail.com', NULL, 'Y', 20, 25),
-(78, 'master@gmail.com', '123456789', 'คณบดี', 30, 'test1@gmail.com', NULL, 'Y', 20, 10),
-(79, 'office@gmail.com', '123456789', 'เจ้าหน้าที่', 30, 'test1@gmail.com', NULL, 'Y', 20, 41);
+(2, 'advisor@gmail.com', '123456789', 'ระวิน  สืบค้า', 30, 'test1@gmail.com', NULL, 'Y', 20, 30),
+(77, 'master@gmail.com', '123456789', 'ประธาน ประธาน', 30, 'test1@gmail.com', NULL, 'Y', 20, 25),
+(78, 'deen@gmail.com', '123456789', 'คณบดี', 30, 'test1@gmail.com', NULL, 'Y', 20, 10),
+(79, 'admin@gmail.com', '123456789', 'เจ้าหน้าที่', 30, 'test1@gmail.com', NULL, 'Y', 20, 41);
 
 -- --------------------------------------------------------
 
@@ -7335,21 +7258,6 @@ ALTER TABLE `document`
   ADD PRIMARY KEY (`document_id`);
 
 --
--- Indexes for table `document_form`
---
-ALTER TABLE `document_form`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_student` (`id_student`);
-
---
--- Indexes for table `document_form_approve`
---
-ALTER TABLE `document_form_approve`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_doc` (`document_form`),
-  ADD KEY `id_approve` (`id_approve`);
-
---
 -- Indexes for table `edulevel`
 --
 ALTER TABLE `edulevel`
@@ -7529,7 +7437,7 @@ ALTER TABLE `_mecha_courseregis`
 -- AUTO_INCREMENT for table `advisor_approve`
 --
 ALTER TABLE `advisor_approve`
-  MODIFY `advisor_approve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `advisor_approve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `approve_status`
@@ -7541,25 +7449,13 @@ ALTER TABLE `approve_status`
 -- AUTO_INCREMENT for table `deen_approve`
 --
 ALTER TABLE `deen_approve`
-  MODIFY `deen_approve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `deen_approve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `doc`
 --
 ALTER TABLE `doc`
   MODIFY `doc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
-
---
--- AUTO_INCREMENT for table `document_form`
---
-ALTER TABLE `document_form`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT for table `document_form_approve`
---
-ALTER TABLE `document_form_approve`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `event`
@@ -7589,13 +7485,13 @@ ALTER TABLE `form_status`
 -- AUTO_INCREMENT for table `general_form`
 --
 ALTER TABLE `general_form`
-  MODIFY `genaral_form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `genaral_form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `master_approve`
 --
 ALTER TABLE `master_approve`
-  MODIFY `master_approve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `master_approve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `news`
@@ -7688,19 +7584,6 @@ ALTER TABLE `deen_approve`
   ADD CONSTRAINT `aprove` FOREIGN KEY (`aprove_status_id`) REFERENCES `approve_status` (`approve_status_id`),
   ADD CONSTRAINT `deen_approve` FOREIGN KEY (`deen_user_id`) REFERENCES `user` (`user_id`),
   ADD CONSTRAINT `form_` FOREIGN KEY (`genaral_form_id`) REFERENCES `general_form` (`genaral_form_id`);
-
---
--- Constraints for table `document_form`
---
-ALTER TABLE `document_form`
-  ADD CONSTRAINT `id_student` FOREIGN KEY (`id_student`) REFERENCES `student` (`student_id`);
-
---
--- Constraints for table `document_form_approve`
---
-ALTER TABLE `document_form_approve`
-  ADD CONSTRAINT `id_approve` FOREIGN KEY (`id_approve`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `id_doc` FOREIGN KEY (`document_form`) REFERENCES `document_form` (`id`);
 
 --
 -- Constraints for table `event`
