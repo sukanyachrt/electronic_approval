@@ -596,6 +596,27 @@ include('./../manage/header.php');
         </div>
     </div>
     <input type="hidden" id="btnSign" name="btnSign" value="">
+    <!-- confrom ผลการแจ้งเตือน -->
+    <div class="modal fade" id="modal-Alertdata">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">แจ้งเตือน</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="resultAlert"></p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" id="btnConfirmAlert" class="btn btn-primary" data-dismiss="modal">ตกลง</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="./../asset/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="./../manage/changepage.js"></script>
@@ -632,7 +653,7 @@ include('./../manage/header.php');
                     var date_insert = convertDate(item.DATETIME);
                     $("#tb_approve_advisor").append('<tr>' +
                         '<td style="vertical-align: middle;"><button  onclick="modalDocAprAdvisor(' + item.idApr + ',' + item.form_id + ',' + item.genaral_form_id + ')" type="button" class="badge badge badge-primary">Preview</button></td>' +
-                        '<td style="vertical-align: middle;">' + item.form_id  + '</td>' +
+                        '<td style="vertical-align: middle;">' + item.form_id + '</td>' +
                         '<td style="vertical-align: middle;">' + item.general_form_title + '</td>' +
                         '<td style="vertical-align: middle;">' + item.fullname + '</td>' +
                         '<td style="vertical-align: middle;">' + date_insert[0] + '</td>' +
@@ -657,8 +678,10 @@ include('./../manage/header.php');
                         $('#btnSign').val("yes")
                         ShowModal(idApr, form_id, genaral_form_id)
                     } else {
-                        alert(Res.msg);
-                        window.location.replace('./../signature/');
+                        $("#btnConfirmAlert").val('./../signature/')
+                        $('#resultAlert').text(`${Res.msg}`)
+                        $('#modal-Alertdata').modal('show');
+                        // window.location.replace('./../signature/');
                     }
                 }
             });
@@ -674,10 +697,15 @@ include('./../manage/header.php');
 
     }
 
+    $("#btnConfirmAlert").click(function() {
+        var page_ = $("#btnConfirmAlert").val();
+        window.location.replace(page_);
+    })
+
 
     function ShowModal(idApr, form_id, genaral_form_id) {
         console.log("idApr : " + idApr + " form_id : " + form_id + " genaral_form_id : " + genaral_form_id);
-            
+
         $('#btnApprove_yes').val(idApr);
         $('#btnId_doc').val(form_id);
         $('#genaral_form_id').val(genaral_form_id);

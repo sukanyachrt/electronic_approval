@@ -596,6 +596,27 @@ include('./../manage/header.php');
         </div>
     </div>
     <input type="hidden" id="btnSignMas" name="btnSignMas" value="">
+     <!-- confrom ผลการแจ้งเตือน -->
+     <div class="modal fade" id="modal-Alertdata">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">แจ้งเตือน</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="resultAlert"></p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" id="btnConfirmAlert" class="btn btn-primary" data-dismiss="modal">ตกลง</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="./../asset/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="./../manage/changepage.js"></script>
@@ -656,8 +677,11 @@ include('./../manage/header.php');
                         $('#btnSignMas').val("yes");
                         ShowModalMaster(idApr, form_id, genaral_form_id);
                     } else {
-                        alert(Res.msg);
-                        window.location.replace('./../signature/');
+                        //alert(Res.msg);
+                        //window.location.replace('./../signature/');
+                        $("#btnConfirmAlert").val('./../signature/')
+                        $('#resultAlert').text(`${Res.msg}`)
+                        $('#modal-Alertdata').modal('show');
                     }
                 }
             });
@@ -671,6 +695,12 @@ include('./../manage/header.php');
 
     }
 
+    $("#btnConfirmAlert").click(function() {
+        var page_ = $("#btnConfirmAlert").val();
+        window.location.replace(page_);
+    })
+
+    
     function ShowModalMaster (idApr, form_id, genaral_form_id){
         console.log("idApr : " +idApr+" form_id : "+ form_id +" genaral_form_id : "+ genaral_form_id);
             $('#btnApprove_yes').val(idApr);

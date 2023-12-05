@@ -361,6 +361,27 @@ if ($_SESSION['_role'] != 'student') {
             </div>
         </div>
         <?php include("./../manage/footer.php") ?>
+        <!-- confrom ผลการแจ้งเตือน -->
+        <div class="modal fade" id="modal-Alertdata">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h4 class="modal-title">แจ้งเตือน</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="resultAlert"></p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" id="btnConfirmAlert" class="btn btn-primary" data-dismiss="modal">ตกลง</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <?php include("./../manage/scripts.php") ?>
 
@@ -369,7 +390,7 @@ if ($_SESSION['_role'] != 'student') {
 <script src="./../asset/dist/js/custom.js"></script>
 <script>
     $(document).ready(function() {
-        
+
 
 
 
@@ -391,8 +412,11 @@ if ($_SESSION['_role'] != 'student') {
                     $("#imageSign").attr("src", "data:image/jpeg;base64," + Res.image_sign);
                     dataTeacher()
                 } else {
-                    alert(Res.msg);
-                    window.location.replace('./../signature/');
+                    //alert(Res.msg);
+                    //window.location.replace('./../signature/');
+                    $("#btnConfirmAlert").val('./../signature/')
+                    $('#resultAlert').text(`${Res.msg}`)
+                    $('#modal-Alertdata').modal('show');
                 }
 
             },
@@ -401,24 +425,30 @@ if ($_SESSION['_role'] != 'student') {
             }
         });
 
-        
+        $("#btnConfirmAlert").click(function() {
+            var page_ = $("#btnConfirmAlert").val();
+            window.location.replace(page_);
+        })
 
 
 
         $("#btnEditform").click(function() {
             //check dataที่ กรอก
 
-            var id=$('#btnEditform').val();
+            var id = $('#btnEditform').val();
             var errors = ValidateInputData();
             if (errors.length > 0) {
-                alert(errors.join("\n"));
+                $("#btnConfirmAlert").val('#')
+                $('#resultAlert').text(`${errors.join("\n")}`)
+                $('#modal-Alertdata').modal('show');
+               // alert(errors.join("\n"));
             } else {
                 var form = $('#form_doc')[0];
                 var formdataA = new FormData(form);
                 console.log(formdataA)
                 $.ajax({
                     async: true,
-                    url: "./../api/doc/edit.php?v=editForm_1&id="+id,
+                    url: "./../api/doc/edit.php?v=editForm_1&id=" + id,
                     type: "POST",
                     cache: false,
                     data: formdataA,
@@ -427,10 +457,16 @@ if ($_SESSION['_role'] != 'student') {
                     success: function(Res) {
                         console.log(Res)
                         if (Res.status == 'ok') {
-                            alert(Res.msg);
-                            window.location.replace('./../student/');
+                            $("#btnConfirmAlert").val('./../student/')
+                            $('#resultAlert').text(`${Res.msg}`)
+                            $('#modal-Alertdata').modal('show');
+                            // alert(Res.msg);
+                            // window.location.replace('./../student/');
                         } else {
-                            alert(Res.msg)
+                            $("#btnConfirmAlert").val('#')
+                            $('#resultAlert').text(`${Res.msg}`)
+                            $('#modal-Alertdata').modal('show');
+                            // alert(Res.msg)
                         }
                     },
                     error: function(xhr, status, error) {
@@ -484,7 +520,7 @@ if ($_SESSION['_role'] != 'student') {
                     $('#general_form_opinion').val(datadoc.general_form_opinion);
                     $('#selectTeacher').val(datadoc.advisor_user_id)
                     $('#spanName_student').text(`${datadoc.student_name} ${datadoc.student_lastname}`);
-                   
+
                 }
             });
         }

@@ -9,7 +9,7 @@ include('./../manage/header.php');
 
 
         <?php
-            include("./../manage/navbar.php");
+        include("./../manage/navbar.php");
         ?>
 
         <?php
@@ -45,6 +45,27 @@ include('./../manage/header.php');
             </div>
         </div>
         <?php include("./../manage/footer.php") ?>
+        <!-- confrom ผลการแจ้งเตือน -->
+        <div class="modal fade" id="modal-Alertdata">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h4 class="modal-title">แจ้งเตือน</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="resultAlert"></p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">ตกลง</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <?php include("./../manage/scripts.php") ?>
 
@@ -124,7 +145,9 @@ include('./../manage/header.php');
                 data: anchor,
                 success: function(Res) {
                     if (Res.status) {
-                        alert(Res.msg)
+                        $('#resultAlert').text(`${Res.msg}`)
+                        $('#modal-Alertdata').modal('show');
+                       // alert(Res.msg)
                     }
 
                 }

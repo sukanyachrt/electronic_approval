@@ -360,6 +360,27 @@ if ($_SESSION['_role'] != 'student') {
             </div>
         </div>
         <?php include("./../manage/footer.php") ?>
+        <!-- confrom ผลการแจ้งเตือน -->
+        <div class="modal fade" id="modal-Alertdata">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h4 class="modal-title">แจ้งเตือน</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="resultAlert"></p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" id="btnConfirmAlert" class="btn btn-primary" data-dismiss="modal">ตกลง</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <?php include("./../manage/scripts.php") ?>
 
@@ -385,13 +406,16 @@ if ($_SESSION['_role'] != 'student') {
                     $('#divFirstname').text(Res.data.fname);
                     $('#divLastname').text(Res.data.lname)
                     $('#divDatecurrent').text(dateCurrent());
-                    $('#divEmail').text(Res.data.student_email);
+                    $('#divEmail').text(Res.data.student_email || '-');
                     $('#divMajor').text(Res.data.major_name);
                     $("#imageSign").attr("src", "data:image/jpeg;base64," + Res.image_sign);
                     dataTeacher()
                 } else {
-                    alert(Res.msg);
-                    window.location.replace('./../signature/');
+                    
+                    $("#btnConfirmAlert").val('./../signature/')
+                    $('#resultAlert').text(`${Res.msg}`)
+                    $('#modal-Alertdata').modal('show');
+                    
                 }
 
             },
@@ -399,7 +423,10 @@ if ($_SESSION['_role'] != 'student') {
                 console.log("Error: " + error);
             }
         });
-
+        $("#btnConfirmAlert").click(function() {
+            var page_ = $("#btnConfirmAlert").val();
+            window.location.replace(page_);
+        })
 
 
         $("#btnSaveform").click(function() {
@@ -408,7 +435,11 @@ if ($_SESSION['_role'] != 'student') {
 
             var errors = ValidateInputData();
             if (errors.length > 0) {
-                alert(errors.join("\n"));
+                $("#btnConfirmAlert").val('#')
+                $('#resultAlert').text(`${errors.join("\n")}`)
+                $('#modal-Alertdata').modal('show');
+
+               // alert(errors.join("\n"));
             } else {
                 var form = $('#form_doc')[0];
                 var formdataA = new FormData(form);
@@ -424,10 +455,16 @@ if ($_SESSION['_role'] != 'student') {
                     success: function(Res) {
                         console.log(Res)
                         if (Res.status == 'ok') {
-                            alert(Res.msg);
-                            window.location.replace('./../student/');
+                            $('#btnConfirmAlert').val('./../student/')
+                            $('#resultAlert').text(`${Res.msg}`)
+                            $('#modal-Alertdata').modal('show');
+
+                            // window.location.replace('./../student/');
                         } else {
-                            alert(Res.msg)
+                            
+                            $('#btnConfirmAlert').val('#')
+                            $('#resultAlert').text(`${Res.msg}`)
+                            $('#modal-Alertdata').modal('show');
                         }
                     },
                     error: function(xhr, status, error) {
