@@ -581,8 +581,8 @@ include('./../manage/header.php');
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">เหตุผลในการไม่อนุมัติเอกสาร :</label>
-                            <input type="text" autocomplete="yes" class="form-control" id="txtcomment" name="txtcomment" placeholder="เหตุผลในการไม่อนุมัติเอกสาร">
+                            <label for="exampleInputEmail1">ความเห็นคณบดี :</label>
+                            <input type="text" autocomplete="yes" class="form-control" id="txtcomment" name="txtcomment" placeholder="ความเห็นคณบดี">
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
@@ -697,10 +697,10 @@ include('./../manage/header.php');
         var page_ = $("#btnConfirmAlert").val();
         window.location.replace(page_);
     })
-    
+
     function ShowModalDeen(idApr, form_id, genaral_form_id) {
         console.log("idApr : " + idApr + " form_id : " + form_id + " genaral_form_id : " + genaral_form_id);
-            
+
         $('#btnApprove_yes').val(idApr);
         $('#btnId_doc').val(form_id);
         $('#genaral_form_id').val(genaral_form_id);
@@ -792,58 +792,27 @@ include('./../manage/header.php');
         return [formattedDate, parts[1]];
 
     }
+    var commentRules = {
+        required: false
+    };
+
+    var commentMessages = {
+        required: ""
+    };
 
     function fnApprove(status) {
+        commentRules.required = false;
+        commentMessages.required = "";
         $('#btnStatus').val(status);
-        if (status == "ไม่อนุมัติ") {
-            $('#modal-notApprove').modal('show');
-        } else if (status == "อนุมัติ") {
-            var idApr = $('#btnApprove_yes').val();
-            var form_id = $('#btnId_doc').val();
-            var genaral_form_id = $('#genaral_form_id').val();
+        $('#modal-notApprove').modal('show');
 
-            let data = {
-                "status": $('#btnStatus').val(),
-                "idApr": idApr,
-                "form_id": form_id,
-                "genaral_form_id": genaral_form_id,
-                "comment": $('#txtcomment').val()
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: `./../api/doc/approve.php?v=updateAprDeen`,
-                data: data,
-                success: function(response) {
-                    console.log(response)
-                    //$('#modal-notApprove').modal('hide');
-                    $('.modal.fade.bd-example-modal-xl').modal('hide');
-                    loadData();
-                    CountStatus()
-
-                },
-                error: function(error) {
-                    console.log(error)
-                }
-            });
-        }
     }
-
     $('#confirmApprove').validate({
         rules: {
-            txtcomment: {
-                required: true,
-            },
-
+            txtcomment: commentRules
         },
         messages: {
-            txtcomment: {
-                required: "โปรดกรอกเหตุผลในการไม่อนุมัติเอกสาร",
-
-            },
-
-
-
+            txtcomment: commentMessages
         },
         errorElement: 'span',
         errorPlacement: function(error, element) {
@@ -867,27 +836,102 @@ include('./../manage/header.php');
                 "form_id": form_id,
                 "genaral_form_id": genaral_form_id,
                 "comment": $('#txtcomment').val()
+            };
+
+            // Only enforce validation for txtcomment if btnStatus is "ไม่อนุมัติ"
+            if ($('#btnStatus').val() === 'ไม่อนุมัติ') {
+                commentRules.required = true;
+                commentMessages.required = "โปรดกรอกเหตุผลในการไม่อนุมัติเอกสาร";
+            } else {
+                commentRules.required = false;
+                commentMessages.required = "";
             }
 
-            $.ajax({
-                type: 'POST',
-                url: `./../api/doc/approve.php?v=updateAprDeen`,
-                data: data,
-                success: function(response) {
-                    console.log(response)
-                    $('#modal-notApprove').modal('hide');
-                    $('.modal.fade.bd-example-modal-xl').modal('hide');
-                    loadData();
-                    CountStatus()
-                    form.reset();
-                },
-                error: function(error) {
-                    console.log(error)
-                }
-            });
-        }
+            // Update validation rules and messages
+            $('#confirmApprove').validate().settings.rules.txtcomment = commentRules;
+            $('#confirmApprove').validate().settings.messages.txtcomment = commentMessages;
 
+            // Validate the form with updated rules and messages
+            if ($('#confirmApprove').valid()) {
+                console.log("yesy")
+                $.ajax({
+                    type: 'POST',
+                    url: `./../api/doc/approve.php?v=updateAprDeen`,
+                    data: data,
+                    success: function(response) {
+                        //console.log(response)
+                        $('#modal-notApprove').modal('hide');
+                        $('.modal.fade.bd-example-modal-xl').modal('hide');
+                        loadData();
+                        CountStatus();
+                        form.reset();
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
+        }
     });
+    // $('#confirmApprove').validate({
+    //     rules: {
+    //         txtcomment: {
+    //             required: true,
+    //         },
+
+    //     },
+    //     messages: {
+    //         txtcomment: {
+    //             required: "โปรดกรอกเหตุผลในการไม่อนุมัติเอกสาร",
+
+    //         },
+
+
+
+    //     },
+    //     errorElement: 'span',
+    //     errorPlacement: function(error, element) {
+    //         error.addClass('invalid-feedback');
+    //         element.closest('.form-group').append(error);
+    //     },
+    //     highlight: function(element, errorClass, validClass) {
+    //         $(element).addClass('is-invalid');
+    //     },
+    //     unhighlight: function(element, errorClass, validClass) {
+    //         $(element).removeClass('is-invalid');
+    //     },
+    //     submitHandler: function(form) {
+    //         var idApr = $('#btnApprove_yes').val();
+    //         var form_id = $('#btnId_doc').val();
+    //         var genaral_form_id = $('#genaral_form_id').val();
+
+    //         let data = {
+    //             "status": $('#btnStatus').val(),
+    //             "idApr": idApr,
+    //             "form_id": form_id,
+    //             "genaral_form_id": genaral_form_id,
+    //             "comment": $('#txtcomment').val()
+    //         }
+
+    //         $.ajax({
+    //             type: 'POST',
+    //             url: `./../api/doc/approve.php?v=updateAprDeen`,
+    //             data: data,
+    //             success: function(response) {
+    //                 console.log(response)
+    //                 $('#modal-notApprove').modal('hide');
+    //                 $('.modal.fade.bd-example-modal-xl').modal('hide');
+    //                 loadData();
+    //                 CountStatus()
+    //                 form.reset();
+    //             },
+    //             error: function(error) {
+    //                 console.log(error)
+    //             }
+    //         });
+    //     }
+
+    // });
 
     function CountStatus() {
         $.ajax({

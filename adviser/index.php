@@ -581,8 +581,8 @@ include('./../manage/header.php');
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">เหตุผลในการไม่อนุมัติเอกสาร :</label>
-                            <input type="text" autocomplete="yes" class="form-control" id="txtcomment" name="txtcomment" placeholder="เหตุผลในการไม่อนุมัติเอกสาร">
+                            <label for="exampleInputEmail1">ความเห็นอาจารย์ที่ปรึกษา :</label>
+                            <input type="text" autocomplete="yes" class="form-control" id="txtcomment" name="txtcomment" placeholder="ความเห็นอาจารย์ที่ปรึกษา">
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
@@ -805,57 +805,29 @@ include('./../manage/header.php');
         return [formattedDate, parts[1]];
 
     }
+    var commentRules = {
+        required: false
+    };
+
+    var commentMessages = {
+        required: ""
+    };
 
     function fnApprove(status) {
+        commentRules.required = false;
+        commentMessages.required = "";
         $('#btnStatus').val(status);
-        if (status == "ไม่อนุมัติ") {
-            $('#modal-notApprove').modal('show');
-        } else if (status == "อนุมัติ") {
-            var idApr = $('#btnApprove_yes').val();
-            var form_id = $('#btnId_doc').val();
-            var genaral_form_id = $('#genaral_form_id').val();
+        $('#modal-notApprove').modal('show');
 
-            let data = {
-                "status": $('#btnStatus').val(),
-                "idApr": idApr,
-                "form_id": form_id,
-                "genaral_form_id": genaral_form_id,
-                "comment": $('#txtcomment').val()
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: `./../api/doc/approve.php?v=updateAprAdvisor`,
-                data: data,
-                success: function(response) {
-                    console.log(response)
-                    //$('#modal-notApprove').modal('hide');
-                    $('.modal.fade.bd-example-modal-xl').modal('hide');
-                    loadData();
-                    CountStatus();
-                },
-                error: function(error) {
-                    console.log(error)
-                }
-            });
-        }
     }
+
 
     $('#confirmApprove').validate({
         rules: {
-            txtcomment: {
-                required: true,
-            },
-
+            txtcomment: commentRules
         },
         messages: {
-            txtcomment: {
-                required: "โปรดกรอกเหตุผลในการไม่อนุมัติเอกสาร",
-
-            },
-
-
-
+            txtcomment: commentMessages
         },
         errorElement: 'span',
         errorPlacement: function(error, element) {
@@ -879,27 +851,47 @@ include('./../manage/header.php');
                 "form_id": form_id,
                 "genaral_form_id": genaral_form_id,
                 "comment": $('#txtcomment').val()
+            };
+
+            // Only enforce validation for txtcomment if btnStatus is "ไม่อนุมัติ"
+            if ($('#btnStatus').val() === 'ไม่อนุมัติ') {
+                commentRules.required = true;
+                commentMessages.required = "โปรดกรอกเหตุผลในการไม่อนุมัติเอกสาร";
+            } else {
+                commentRules.required = false;
+                commentMessages.required = "";
             }
 
-            $.ajax({
-                type: 'POST',
-                url: `./../api/doc/approve.php?v=updateAprAdvisor`,
-                data: data,
-                success: function(response) {
-                    //console.log(response)
-                    $('#modal-notApprove').modal('hide');
-                    $('.modal.fade.bd-example-modal-xl').modal('hide');
-                    loadData();
-                    CountStatus();
-                    form.reset();
-                },
-                error: function(error) {
-                    console.log(error)
-                }
-            });
-        }
+            // Update validation rules and messages
+            $('#confirmApprove').validate().settings.rules.txtcomment = commentRules;
+            $('#confirmApprove').validate().settings.messages.txtcomment = commentMessages;
 
+            // Validate the form with updated rules and messages
+            if ($('#confirmApprove').valid()) {
+                console.log("yesy")
+                $.ajax({
+                    type: 'POST',
+                    url: `./../api/doc/approve.php?v=updateAprAdvisor`,
+                    data: data,
+                    success: function(response) {
+                        //console.log(response)
+                        $('#modal-notApprove').modal('hide');
+                        $('.modal.fade.bd-example-modal-xl').modal('hide');
+                        loadData();
+                        CountStatus();
+                        form.reset();
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
+        }
     });
+
+
+
+
 
     function CountStatus() {
         $.ajax({
@@ -918,228 +910,6 @@ include('./../manage/header.php');
             }
         });
     }
-
-    // function CountStatus() {
-    //     $.ajax({
-    //         url: "./../api/documents/status_doc.php?v=countStatusApr",
-    //         type: "GET",
-    //         success: function(Res) {
-    //             console.log(Res);
-    //             $.each(Res, function(index, item) {
-    //                 if (item.status_approve == "รอการอนุมัติ") {
-    //                     $('#apr_waitApr').text(item.numrow + " รายการ")
-
-    //                 } else {
-    //                     $('#apr_historyApr').text(item.numrow + " รายการ")
-    //                 }
-    //             });
-    //         }
-    //     });
-    // }
-
-    // function loadData() {
-    //     $.ajax({
-    //         url: "./../api/documents/approve_doc.php?v=checkapprove",
-    //         type: "GET",
-    //         dataType: "json",
-    //         success: function(Res) {
-    //             console.log(Res);
-    //             $('#tb_approve_teacher tbody').html('');
-    //             $.each(Res, function(index, item) {
-    //                 $("#tb_approve_teacher").append('<tr>' +
-    //                     '<td style="vertical-align: middle;"><button  onclick="modalDocShow(' + item.id + ',' + item.document_form + ')" type="button" class="badge badge badge-primary" data-toggle="modal" data-target=".bd-example-modal-xl">Preview</button></td>' +
-    //                     '<td style="vertical-align: middle;">' + item.form_title + '</td>' +
-    //                     '<td style="vertical-align: middle;">' + item.fullname + '</td>' +
-    //                     '<td style="vertical-align: middle;">' + item.date_insert + '</td>' +
-    //                     '<td style="vertical-align: middle;"><span class="badge badge-warning">' + item.status_approve + '</span></td>' +
-    //                     '</tr>');
-    //             });
-    //         },
-    //         error: function(xhr, status, error) {
-    //             console.log("Error: " + error);
-    //         }
-    //     });
-    // }
-
-
-
-
-    // function fnApprove(status) {
-    //     var textareaValues = $(".textarea.form-control").map(function() {
-    //         if ($(this).val() != "") {
-    //             console.log($(this).val())
-    //             return $(this).val();
-    //         }
-
-    //     }).get();
-
-    //     if (status == "ไม่อนุมัติ" && textareaValues.length == 0) {
-
-    //         alert("โปรดแสดงความเห็นถึงเหตุผลที่ไม่ทำการอนุมัติ")
-
-
-    //     } else {
-    //         var role_approve = $('#btnRole_approve').val();
-    //         var id = $('#btnApprove_yes').val();
-    //         var idDoc = $('#btnId_doc').val()
-
-    //         let data = {
-    //             "status": status,
-    //             "id": id,
-    //             "idDoc": idDoc,
-    //             "comment": textareaValues[0] || "",
-    //             "role_approve": role_approve
-    //         }
-    //         console.log(data)
-    //         $.ajax({
-    //             url: "./../api/documents/approve_doc.php?v=approvebyid",
-    //             type: "POST",
-    //             data: data,
-    //             success: function(Res) {
-    //                 CountStatus();
-    //                 if (Res.status == "ok") {
-
-    //                     loadData();
-    //                     $('.modal.fade.bd-example-modal-xl').modal('hide');
-    //                 } else {
-    //                     alert(Res.msg);
-    //                 }
-    //             }
-    //         });
-    //     }
-    // }
-
-    // function modalDocShow(idApr, idDoc) {
-    //     $('#btnApprove_yes').val(idApr);
-    //     $('#btnId_doc').val(idDoc)
-    //     $.ajax({
-    //         url: `./../api/documents/approve_doc.php?v=dataDoc&idDoc=${idDoc}`, // Replace with the URL of your data source
-    //         type: "GET",
-    //         dataType: "json",
-    //         success: function(Res) {
-    //             // console.log(Res)
-    //             //#region  Res[0] ข้อมูล doc
-    //             var datadoc = Res[0];
-    //             $('#divTitle').text(datadoc.form_title)
-    //             $('#divFirstname').text(`${datadoc.student_name}`);
-    //             $('#divLastname').text(`${datadoc.student_lastname}`);
-
-    //             $('#edulevel[value="' + datadoc.edulevel + '"]').prop('checked', true);
-    //             $('#sector_doc[value="' + datadoc.type_sector + '"]').prop('checked', true);
-    //             $('#sector_master[value="' + datadoc.type_sector + '"]').prop('checked', true);
-    //             $('#semester[value="' + datadoc.semester + '"]').prop('checked', true);
-
-    //             $('#divStudentcode').text(datadoc.doc_studentcode);
-    //             $('#divMajor').text(datadoc.name_major);
-    //             $('#divNoMajor').text(datadoc.major_name);
-    //             $('#divYear_semester').text(datadoc.year_semester);
-    //             $('#divYear_study').text(datadoc.year_study);
-    //             $('#divPhone').text(datadoc.telephone);
-    //             $('#divEmail').text(datadoc.email);
-    //             $('#divPurpose').text(datadoc.purpose);
-    //             $("#imageSign_student").attr("src", "data:image/jpeg;base64," + datadoc.image_sign);
-
-    //             $('#spanName_student').text(`${datadoc.student_name} ${datadoc.student_lastname}`);
-    //             $('#divDate_student').text(convertToThaiBuddhistDate(datadoc.date_insert));
-
-    //             //#region  Res[1] ข้อมูล ผู้อนุมัติต่างๆ
-
-    //             var dataApr = Res[1];
-
-    //             //#region ประธาน
-    //             $('.imageDirect_no').show();
-    //             $('.imageDirect').hide();
-
-    //             //#region  คณะบดี
-    //             $('.imageMaster').hide();
-    //             $('.imageMaster_no').show();
-
-    //             //#region  comment_approve
-    //             $('.comment_teacher_no').show();
-    //             $('.comment_direct_no').show();
-    //             $('.comment_master_no').show();
-
-    //             $('.comment_teacher').hide();
-    //             $('.comment_direct').hide();
-    //             $('.comment_master').hide();
-
-
-
-
-    //             $.each(dataApr, function(index, item) {
-    //                 if (item.role_approve == "อาจารย์") {
-    //                     $('.comment_teacher_no').show();
-    //                     $("#imageTeacher").attr("src", "data:image/jpeg;base64," + item.image_sign);
-    //                     $('#spanName_teacher').text(`${item.user_name}`);
-    //                     if (item.date_approve == null) {
-    //                         $('#spanDate_teacher').text(`-`);
-    //                     } else {
-    //                         $('#spanDate_teacher').text(`${item.date_approve}`);
-    //                     }
-
-    //                     $('#divComment_teacher').text(`${item.comment_approve}`)
-    //                 }
-
-    //                 if (item.role_approve == "ประธานหลักสูตร") {
-
-    //                     $('.comment_direct_no').show();
-    //                     //   $('#approve_comment_direct').text(item.comment_approve)
-
-    //                     $('.imageDirect_no').hide();
-    //                     $('.imageDirect').show();
-
-    //                     $("#imageDirect").attr("src", "data:image/jpeg;base64," + item.image_sign);
-    //                     $('#spanName_direct').text(`${item.user_name}`);
-    //                     if (item.date_approve == null) {
-    //                         $('#spanDate_direct').text(`-`);
-    //                     } else {
-    //                         $('#spanDate_direct').text(`${item.date_approve}`);
-    //                     }
-    //                     $('#divComment_direct').text(`${item.comment_approve}`)
-    //                 }
-
-    //                 if (item.role_approve == "คณบดี") {
-
-    //                     $('.comment_master_no').show();
-    //                     // $('#approve_comment_master').text(item.comment_approve)
-
-
-    //                     $('.imageMaster').show();
-    //                     $('.imageMaster_no').hide();
-    //                     $("#imageMaster").attr("src", "data:image/jpeg;base64," + item.image_sign);
-
-    //                     $('#spanName_master').text(`(----------------------${item.user_name}----------------------)`);
-    //                     $('#spanDate_master').text(`----------${item.date_approve}-----------`);
-
-    //                     if (item.date_approve == null) {
-    //                         $('#spanDate_master').text(`-`);
-    //                     } else {
-    //                         $('#spanDate_master').text(`${item.date_approve}`);
-    //                     }
-    //                 }
-
-
-    //                 if (index === (dataApr.length) - 1) {
-    //                     $('#btnRole_approve').val(item.role_approve)
-    //                     if (item.role_approve === "อาจารย์") {
-    //                         $('.comment_teacher_no').hide();
-    //                         $('.comment_teacher').show();
-    //                     } else if (item.role_approve === "ประธานหลักสูตร") {
-    //                         $('.comment_direct_no').hide();
-    //                         $('.comment_direct').show();
-    //                     } else if (item.role_approve === "คณบดี") {
-    //                         $('.comment_master_no').hide();
-    //                         $('.comment_master').show();
-    //                     }
-
-    //                 }
-
-
-    //             });
-    //         }
-    //     });
-
-    // }
 </script>
 
 </html>
