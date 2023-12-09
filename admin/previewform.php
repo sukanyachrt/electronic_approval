@@ -588,55 +588,7 @@ include('./../manage/header.php');
                     $("#imageDeen").attr("src", "data:image/jpeg;base64," + dataApr_deen.image_sign);
                 }
 
-                // $('#imageTeacher').hide()
-                // $('#imageDirect').hide()
-                // $('#imageMaster').hide();
-                // console.log(dataApr.length)
-                // if(dataApr.length<3){
-                //     $('#print').hide()
-                // }
-                // $.each(dataApr, function(index, item) {
-
-                //     if (item.role_approve == "อาจารย์") {
-                //         $('#imageTeacher').show();
-                //         $("#imageTeacher").attr("src", "data:image/jpeg;base64," + item.image_sign);
-                //         $('#spanName_teacher').text(`${item.user_name}`);
-                //         if (item.date_approve == null) {
-                //             $('#spanDate_teacher').text(`-`);
-                //         } else {
-
-                //             $('#spanDate_teacher').text(convertToThaiBuddhistDate(item.date_approve));
-                //         }
-
-                //         $('#divComment_teacher').text(`${item.comment_approve}`)
-
-                //     }
-                //     if (item.role_approve == "ประธานหลักสูตร") {
-                //         $('#imageDirect').show()
-                //         $("#imageDirect").attr("src", "data:image/jpeg;base64," + item.image_sign);
-                //         $('#spanName_direct').text(`${item.user_name}`);
-                //         if (item.date_approve == null) {
-                //             $('#spanDate_direct').text(`-`);
-                //         } else {
-                //             $('#spanDate_direct').text(convertToThaiBuddhistDate(item.date_approve));
-                //         }
-                //         $('#divComment_direct').text(`${item.comment_approve}`)
-
-                //     }
-                //     if (item.role_approve == "คณบดี") {
-                //         $('#imageMaster').show()
-                //         $('#spanName_master').text(`${item.user_name}`);
-
-                //         if (item.date_approve == null) {
-                //             $('#spanDate_master').text(`-`);
-                //         } else {
-                //             $('#spanDate_master').text(convertToThaiBuddhistDate(item.date_approve));
-                //         }
-                //         $('#divComment_master').text(`${item.comment_approve}`)
-                //     }
-                // })
-
-
+             
 
             }
         });

@@ -873,65 +873,7 @@ include('./../manage/header.php');
             }
         }
     });
-    // $('#confirmApprove').validate({
-    //     rules: {
-    //         txtcomment: {
-    //             required: true,
-    //         },
-
-    //     },
-    //     messages: {
-    //         txtcomment: {
-    //             required: "โปรดกรอกเหตุผลในการไม่อนุมัติเอกสาร",
-
-    //         },
-
-
-
-    //     },
-    //     errorElement: 'span',
-    //     errorPlacement: function(error, element) {
-    //         error.addClass('invalid-feedback');
-    //         element.closest('.form-group').append(error);
-    //     },
-    //     highlight: function(element, errorClass, validClass) {
-    //         $(element).addClass('is-invalid');
-    //     },
-    //     unhighlight: function(element, errorClass, validClass) {
-    //         $(element).removeClass('is-invalid');
-    //     },
-    //     submitHandler: function(form) {
-    //         var idApr = $('#btnApprove_yes').val();
-    //         var form_id = $('#btnId_doc').val();
-    //         var genaral_form_id = $('#genaral_form_id').val();
-
-    //         let data = {
-    //             "status": $('#btnStatus').val(),
-    //             "idApr": idApr,
-    //             "form_id": form_id,
-    //             "genaral_form_id": genaral_form_id,
-    //             "comment": $('#txtcomment').val()
-    //         }
-
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: `./../api/doc/approve.php?v=updateAprDeen`,
-    //             data: data,
-    //             success: function(response) {
-    //                 console.log(response)
-    //                 $('#modal-notApprove').modal('hide');
-    //                 $('.modal.fade.bd-example-modal-xl').modal('hide');
-    //                 loadData();
-    //                 CountStatus()
-    //                 form.reset();
-    //             },
-    //             error: function(error) {
-    //                 console.log(error)
-    //             }
-    //         });
-    //     }
-
-    // });
+   
 
     function CountStatus() {
         $.ajax({
