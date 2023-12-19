@@ -441,7 +441,7 @@ if ($_SESSION['_role'] != 'student') {
                 $("#btnConfirmAlert").val('#')
                 $('#resultAlert').text(`${errors.join("\n")}`)
                 $('#modal-Alertdata').modal('show');
-               // alert(errors.join("\n"));
+                // alert(errors.join("\n"));
             } else {
                 var form = $('#form_doc')[0];
                 var formdataA = new FormData(form);
@@ -504,6 +504,22 @@ if ($_SESSION['_role'] != 'student') {
                     $('#general_form_title').val(datadoc.general_form_title)
                     $('#divFirstname').text(`${datadoc.prefix_name}${datadoc.student_name}`);
                     $('#divLastname').text(`${datadoc.student_lastname}`);
+
+                    if (datadoc.general_form_education == "ปริญญาเอก") {
+                        $(".sector_master").not(this).prop("checked", false);
+                        $(".sector_master").css("background-color", "#f0f0f0");
+                        $(".sector_master").prop("disabled", true);
+
+                        $(".sector_doc").css("background-color", "#000");
+                        $(".sector_doc").prop("disabled", false);
+                    } else {
+                        $(".sector_doc").not(this).prop("checked", false);
+                        $(".sector_doc").css("background-color", "#f0f0f0");
+                        $(".sector_doc").prop("disabled", true);
+
+                        $(".sector_master").css("background-color", "#000");
+                        $(".sector_master").prop("disabled", false);
+                    }
 
                     $('#edulevel[value="' + datadoc.general_form_education + '"]').prop('checked', true);
                     $('#sector_doc[value="' + datadoc.general_form_sector + '"]').prop('checked', true);

@@ -10,6 +10,22 @@ include('./../manage/header.php');
     .newFont {
         font-size: 17px;
     }
+
+    input {
+        position: relative;
+        pointer-events: none;
+    }
+
+    input:before {
+        content: "";
+        position: absolute;
+        left: 0%;
+        top: 0%;
+        width: 100%;
+        height: 100%;
+        color: #000;
+        outline: 1px solid #eee;
+    }
 </style>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -513,9 +529,9 @@ include('./../manage/header.php');
                         <p>ต้องการแก้ไขข้อมูลใช่ไหม ?</p>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="button"  onclick="confirmYes()" class="btn btn-warning">ยืนยัน</button>
+                        <button type="button" onclick="confirmYes()" class="btn btn-warning">ยืนยัน</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                        <input type="hidden" id="btnStatus" name="btnStatus" value="<?php echo $_GET['status'] ?>">                     
+                        <input type="hidden" id="btnStatus" name="btnStatus" value="<?php echo $_GET['status'] ?>">
                     </div>
                 </div>
             </div>
@@ -529,11 +545,11 @@ include('./../manage/header.php');
 <script src="./../asset/dist/js/function.js"></script>
 <script>
     $(function() {
+       // $("input").attr("disabled", true);
         console.log($('#btnStatus').val())
-        if($('#btnStatus').val()=="เสร็จสิ้น"){
+        if ($('#btnStatus').val() == "เสร็จสิ้น") {
             $('#btnConfirmId').hide();
-        }
-        else{
+        } else {
             $('#btnConfirmId').show();
         }
         var idDoc = $('#btnId_doc').val();
@@ -663,12 +679,14 @@ include('./../manage/header.php');
     $('#goBackButton').click(function() {
         window.history.back();
     });
+
     function modalconfirmEdit() {
         $('#modal-confirmEdit').modal('show');
     }
-    function confirmYes(){
+
+    function confirmYes() {
         $('#modal-confirmEdit').modal('hide');
-        var form_id =$('#btnConfirmId').val()
+        var form_id = $('#btnConfirmId').val()
         var url = 'editd.php?id=' + form_id;
         window.location = url;
     }
