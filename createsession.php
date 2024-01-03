@@ -9,6 +9,8 @@ if (isset($_POST['status']) && $_POST['status'] === 'ok') {
     $_SESSION['_lastname'] = isset($data['_lastname']) ? $data['_lastname'] : '';
     $_SESSION['_code'] =$data['_code'];
     $_SESSION['_role'] =$_POST['role'];
+    $_SESSION['_major'] = $data['_major'];
+    
     // สร้างค่าอื่น ๆ จากข้อมูลที่ถูกส่งมา
    
     echo json_encode(["data"=>"ok",$_POST['role']]);

@@ -10,7 +10,7 @@ if ($data == "checklogin") {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    $connect->sql = "SELECT student_id as _id,student_name as _name,student_lastname as _lastname,student_code as _code,student_password FROM  student WHERE student_code ='" . $username . "'";
+    $connect->sql = "SELECT student_id as _id,student_name as _name,student_lastname as _lastname,student_code as _code,student_password,MAJOR as _major FROM  student WHERE student_code ='" . $username . "'";
     $connect->queryData();
     $row = $connect->num_rows();
     if ($row > 0) {
@@ -26,13 +26,12 @@ if ($data == "checklogin") {
             $result = [
                 'status' => "no",
                 'msg' => "รหัสผู้ใช้งานss หรือ  รหัสผ่านไม่ถูกต้อง",
-                "SELECT student_id as _id,student_name as _name,student_lastname as _lastname,student_code as _code,student_password FROM  student WHERE student_code ='" . $username . "'"
             ];
         }
     }
     else {
         #check ว่าเป็นบุคลใดที่ทำการ login
-        $connect->sql = "SELECT user_id as _id, user_code as _code, 	user_password, 	user_name as _name,position_role FROM `user` as f1 	INNER JOIN 	position as f2 	ON f1.POSITION = f2.position_id WHERE user_code ='" . $username . "'";
+        $connect->sql = "SELECT user_id as _id, user_code as _code, 	user_password, 	user_name as _name,position_role,MAJOR as _major FROM `user` as f1 	INNER JOIN 	position as f2 	ON f1.POSITION = f2.position_id WHERE user_code ='" . $username . "'";
         $connect->queryData();
         $row = $connect->num_rows();
         if ($row > 0) {

@@ -14,65 +14,26 @@ $data = isset($_GET['v']) ? $_GET['v'] : '';
 $result = array();
 $result1 = array();
 if ($data == "checkapproveAdvisor") { #advisor
-    $status_doc = $_POST['dataFind'];
-    foreach ($status_doc as $item) {
-        $connect->sql = "SELECT t2.form_status_name,        t1.general_form_title,
-        form.DATETIME,CONCAT( t4.prefix_name, '', t3.student_name, ' ', t3.student_lastname ) AS fullname,
-        t1.genaral_form_id,	t1.form_id  ,form.DATETIME ,advisor_approve_id as idApr
-        FROM
-	form
-	INNER JOIN general_form as t1 ON form.form_id = t1.form_id
-	INNER JOIN form_status as t2 ON form.form_status_id = t2.form_status_id
-	INNER JOIN student as t3 ON form.student_code = t3.student_code
-	INNER JOIN prefix as t4 ON t3.PREFIX = t4.prefix_id
-	INNER JOIN advisor_approve ON t1.genaral_form_id = advisor_approve.genaral_form_id
-	INNER JOIN approve_status ON advisor_approve.advisor_status_id = approve_status.approve_status_id
-        WHERE approve_status_name='" . $item . "' AND advisor_user_id='" . $_SESSION['_id'] . "'  ORDER BY  t1.form_id DESC";
-        $connect->queryData();
-        while ($rsconnect = $connect->fetch_AssocData()) {
+    $connect->sql = "SELECT
+	t1.general_form_title,
+	t3.approve_status_name,
+	CONCAT(prefix.prefix_name,'',student.student_name,' ',student.student_lastname) as fullname,
+	form.DATETIME as datetime,t2.advisor_approve_id as idApr,t1.genaral_form_id,t1.form_id 
+    FROM 	general_form AS t1
+	INNER JOIN advisor_approve AS t2 ON t1.genaral_form_id = t2.genaral_form_id
+	INNER JOIN approve_status AS t3 ON t2.advisor_status_id = t3.approve_status_id
+	INNER JOIN form ON t1.form_id = form.form_id
+	INNER JOIN student ON form.student_code = student.student_code
+	INNER JOIN prefix ON student.PREFIX = prefix.prefix_id
+    WHERE advisor_user_id='" . $_SESSION['_id'] . "' AND approve_status_name='รอการอนุมัติ'";
+    $connect->queryData();
+    while ($rsconnect = $connect->fetch_AssocData()) {
+        array_push($result, $rsconnect);
 
 
-            $advisor_approve = '';
-            $master_approve = '';
-            $deen_approve = '';
-            #ข้อมุลการอนุมัติของอาจารย์
-            $connect2->sql = "SELECT t1.DATETIME, t1.genaral_form_id,t2.approve_status_name, 
-            t1.advisor_approve_id,t1.advisor_comment
-            FROM advisor_approve as t1 
-            INNER JOIN approve_status as t2
-            ON t1.advisor_status_id = t2.approve_status_id 
-            WHERE genaral_form_id='" . $rsconnect['genaral_form_id'] . "' and advisor_user_id='" . $_SESSION['_id'] . "'";
-            $connect2->queryData();
-            $rsconnect2 = $connect2->fetch_AssocData();
-            $advisor_approve = $rsconnect2['approve_status_name'];
-            if ($advisor_approve == "อนุมัติ") {
-                #ข้อมูลการอนุมัติประธาน
-                $connect2->sql = "SELECT DATETIME,master_comment,approve_status_name 
-            FROM approve_status AS t2
-            INNER JOIN master_approve AS t1 ON t2.approve_status_id = t1.aprove_status_id 
-            WHERE genaral_form_id='" . $rsconnect['genaral_form_id'] . "'";
-                $connect2->queryData();
-                $rsconnect2 = $connect2->fetch_AssocData();
-                $master_approve = $rsconnect2['approve_status_name'];
-                if ($master_approve == "อนุมัติ") {
-                    #ข้อมูลการอนุมัติของคณบดี
-                    $connect2->sql = "SELECT DATETIME,deen_comment,approve_status_name 
-                FROM approve_status AS t2
-                INNER JOIN deen_approve AS t1 ON t2.approve_status_id = t1.aprove_status_id 
-                WHERE genaral_form_id='" . $rsconnect['genaral_form_id'] . "'";
-                    $connect2->queryData();
-                    $rsconnect2 = $connect2->fetch_AssocData();
-                    $deen_approve = $rsconnect2['approve_status_name'];
-                }
-            }
 
 
-            array_push($result, [
-                'form_id' => $rsconnect['form_id'], 'genaral_form_id' => $rsconnect['genaral_form_id'], 'idApr' => $rsconnect['idApr'], 'form_status_name' => $rsconnect['form_status_name'], 'fullname' => $rsconnect['fullname'],
-                'general_form_title' => $rsconnect['general_form_title'], 'datetime' => $rsconnect['DATETIME'],
-                'advisor_approve' => $advisor_approve, 'master_approve' => $master_approve, 'deen_approve' => $deen_approve
-            ]);
-        }
+
     }
     echo json_encode($result);
 } else if ($data == "updateAprAdvisor") { #advisor
@@ -200,12 +161,14 @@ if ($data == "checkapproveAdvisor") { #advisor
                 if ($rsconnect['genaral_form_id'] == $dataApr['genaral_form_id']) {
                     #update
                     $connect->sql = "UPDATE `deen_approve` SET 
-                   `deen_user_id`='" . $user_code . "',
+                   `deen_user_id`='".$user_code."',
                     `deen_comment`='',
-                    `aprove_status_id`='" . $approve_status_id . "',
+                    `aprove_status_id`='".$approve_status_id."',
                     `datetime`=NULL
-                    WHERE genaral_form_id='" . $dataApr['genaral_form_id'] . "'";
+                    WHERE genaral_form_id='".$dataApr['genaral_form_id']."'";
                     $connect->queryData();
+                    
+
                 } else {
                     $connect->sql = "INSERT INTO `deen_approve`
                             (`deen_user_id`,
@@ -367,38 +330,22 @@ if ($data == "checkapproveAdvisor") { #advisor
     echo json_encode($result_);
 }
 
-function filterAndSumStatus($array)
+function filterAndSumStatus($statusApr)
 {
+    $result = array_reduce($statusApr, function ($carry, $item) {
+        if ($item['status_approve'] == 'อนุมัติ' || $item['status_approve'] == 'ไม่อนุมัติ') {
+            // รวมค่า numrow ของสถานะ 'อนุมัติ' หรือ 'ไม่อนุมัติ'
+            $carry[0]['numrow'] += intval($item['numrow']);
+        }
 
-    $result = array_reduce($array, function ($carry, $item) {
-        $status = $item['status_approve'];
-        $carry[$status]['numrow'] += intval($item['numrow']);
-        $carry[$status]['status_approve'] = $status;
+        if ($item['status_approve'] == 'รอการอนุมัติ') {
+            // รวมค่า 'numrow' ของสถานะ 'รอการอนุมัติ'
+            $carry[1]['numrow'] += intval($item['numrow']);
+            $carry[1]['status_approve'] = 'รอการอนุมัติ';
+        }
+
         return $carry;
-    }, [
-        'อนุมัติ' => ['numrow' => 0, 'status_approve' => 'อนุมัติ'],
-        'ไม่อนุมัติ' => ['numrow' => 0, 'status_approve' => 'ไม่อนุมัติ'],
-        'รอการอนุมัติ' => ['numrow' => 0, 'status_approve' => 'รอการอนุมัติ']
-    ]);
+    }, [['numrow' => 0, 'status_approve' => 'ประวัติการอนุมัติ'], ['numrow' => 0, 'status_approve' => 'รอการอนุมัติ']]);
 
-    // Convert associative array to indexed array
-    return array_values($result);
-
-    // $result = array_reduce($statusApr, function ($carry, $item) {
-    //     if ($item['status_approve'] == 'อนุมัติ' || $item['status_approve'] == 'ไม่อนุมัติ') {
-    //         // รวมค่า numrow ของสถานะ 'อนุมัติ' หรือ 'ไม่อนุมัติ'
-    //         $carry[0]['numrow'] += intval($item['numrow']);
-    //     }
-
-    //     if ($item['status_approve'] == 'รอการอนุมัติ') {
-    //         // รวมค่า 'numrow' ของสถานะ 'รอการอนุมัติ'
-    //         $carry[1]['numrow'] += intval($item['numrow']);
-    //         $carry[1]['status_approve'] = 'รอการอนุมัติ';
-    //     }
-
-    //     return $carry;
-    // }, [['numrow' => 0, 'status_approve' => 'ประวัติการอนุมัติ'], ['numrow' => 0, 'status_approve' => 'รอการอนุมัติ']]);
-
-    // return $result;
-
+    return $result;
 }

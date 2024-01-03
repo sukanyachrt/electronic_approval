@@ -15,7 +15,7 @@ $jsonData = file_get_contents($jsonFile);
 $result = array();
 if ($data == "teacherAll") {
     #ข้อมูลอาจารย์ที่ปรึกษา
-    $connect->sql = "SELECT user_name,user_code,user_id FROM 	`user`  as t1	INNER JOIN 	position as t2 	ON 	`t1`.POSITION = t2.position_id WHERE position_role='adviser'";
+    $connect->sql = "SELECT user_name,user_code,user_id FROM 	`user`  as t1	INNER JOIN 	position as t2 	ON 	`t1`.POSITION = t2.position_id WHERE position_role='adviser' AND MAJOR ='".$_SESSION['_major']."'";
     $connect->queryData();
     while ($rsconnect = $connect->fetch_AssocData()) {
         array_push($result, $rsconnect);
