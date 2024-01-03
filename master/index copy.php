@@ -6,48 +6,10 @@ include('./../manage/header.php');
 <link rel="stylesheet" href="./../asset/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="./../asset/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="./../asset/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-
 <style>
     .selected-card {
         background-color: #C3EEFA;
 
-    }
-
-    .checkbox-wrapper-39 *,
-    .checkbox-wrapper-39 *::before,
-    .checkbox-wrapper-39 *::after {
-        box-sizing: border-box;
-    }
-
-    .checkbox-wrapper-39 label {
-        display: block;
-        width: 35px;
-        height: 35px;
-        cursor: pointer;
-    }
-
-    .checkbox-wrapper-39 input {
-        visibility: hidden;
-        display: none;
-    }
-
-    .checkbox-wrapper-39 input:checked~.checkbox {
-        transform: rotate(45deg);
-        width: 14px;
-        margin-left: 12px;
-        border-color: #78A3D4;
-        border-top-color: transparent;
-        border-left-color: transparent;
-        border-radius: 0;
-    }
-
-    .checkbox-wrapper-39 .checkbox {
-        display: block;
-        width: inherit;
-        height: inherit;
-        border: 3px solid #eee;
-        border-radius: 6px;
-        transition: all 0.375s;
     }
 </style>
 
@@ -75,126 +37,68 @@ include('./../manage/header.php');
             </div>
             <section class="content">
                 <div class="container-fluid">
-                    <!-- Small boxes (Stat box) -->
                     <div class="row justify-content-center">
 
-
-                        <div class="col-12 col-sm-6 col-md-3" style="cursor: pointer;">
+                        <a class="col-12 col-sm-6 col-md-3" style="cursor: pointer;" href="./../historydoc/">
                             <div class="info-box mb-3">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-solid fa-check"></i></span>
+                                <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-solid fa-check"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">อนุมัติ</span>
-                                    <span class="info-box-number" id="apr_apr">0</span>
+                                    <span class="info-box-text">ประวัติการอนุมัติที่ผ่านมา</span>
+                                    <span class="info-box-number" id="apr_historyApr">0</span>
                                 </div>
 
-                                <div class="checkbox-wrapper-39">
-                                    <label>
-                                        <input type="checkbox" class="checkbox1" value="อนุมัติ" />
-                                        <span class="checkbox"></span>
-                                    </label>
-                                </div>
+
                             </div>
-                        </div>
-
-
-
-
-
-
-                        <div class="col-12 col-sm-6 col-md-3 checkbox1" style="cursor: pointer;">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-regular fa-circle"></i></span>
+                        </a>
+                        <div class="col-12 col-sm-6 col-md-3" style="cursor: pointer;">
+                            <div class="info-box mb-3 selected-card">
+                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-solid fa-check"></i></span>
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">รอการอนุมัติ</span>
-                                    <span class="info-box-number" id="apr_wait">0</span>
+                                    <span class="info-box-number" id="apr_waitApr">0</span>
                                 </div>
 
-                                <div class="checkbox-wrapper-39">
-                                    <label>
-                                        <input type="checkbox" class="checkbox1" value="รอการอนุมัติ" />
-                                        <span class="checkbox"></span>
-                                    </label>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-12 col-sm-6 col-md-3" style="cursor: pointer;">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-window-close"></i></span>
-
-                                <div class="info-box-content">
-                                    <span class="info-box-text">ไม่อนุมัติ</span>
-                                    <span class="info-box-number" id="apr_noapr">0</span>
-                                </div>
-
-                                <div class="checkbox-wrapper-39">
-                                    <label>
-                                        <input type="checkbox" class="checkbox1" value="ไม่อนุมัติ" />
-                                        <span class="checkbox"></span>
-                                    </label>
-                                </div>
 
                             </div>
-
                         </div>
+
+
+
 
                     </div>
                     <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header border-transparent">
-                                    <h3 class="card-title">ข้อมูลเอกสาร</h3>
-                                    <div class="card-tools">
-                                        <div class="input-group input-group-sm" style="width: 300px;">
-                                            <input type="text" id="searchInput" class="form-control float-right" placeholder="ค้นหาข้อมูล">
-
-
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-
-                                        </div>
-                                    </div>
-
+                        <div class="col-12 mt-3">
+                            <div class="card card-warning">
+                                <div class="card-header">
+                                    <h3 class="card-title text-bold text-white">
+                                        รอการอนุมัติ
+                                    </h3>
                                 </div>
-
-                                <div class="card-body p-0">
-                                    <div class="table-responsive">
-                                        <table class="table m-0" id="tb_approve_advisor">
-                                            <thead>
-                                                <tr>
-                                                    <th style="vertical-align: middle;" class="text-left">ลำดับ</th>
-                                                    <th style="vertical-align: middle;" class="text-left">รหัสฟอร์ม</th>
-                                                    <th style="vertical-align: middle;" class="text-left">เรื่อง</th>
-                                                    <th style="vertical-align: middle;" class="text-left">ผู้ส่งคำขอ</th>
-                                                    <th style="vertical-align: middle;" class="text-center">วันที่ยื่นคำขอ</th>
-                                                    <th style="border-left: 2px solid #eeeeee;">อาจารย์</th>
-                                                    <th>ประธาน</th>
-                                                    <th>คณะบดี</th>
-                                                    <th style="vertical-align: middle; border-left: 2px solid #eeeeee;" class="text-center">สถานะ</th>
-                                                    <th style="vertical-align: middle;" class="text-center">Preview</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- /.table-responsive -->
+                                <div class="card-body">
+                                    <table id="tb_approve_master" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>ไฟล์คำขอ</th>
+                                                <th>รหัสฟอร์ม</th>
+                                                <th>เรื่อง</th>
+                                                <th>ผู้ส่งคำขอ</th>
+                                                <th>วันที่ยื่นคำขอ</th>
+                                                <th>สถานะการอนุมัติ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-
             </section>
 
         </div>
-
         <?php include("./../manage/footer.php") ?>
 
     </div>
@@ -653,7 +557,7 @@ include('./../manage/header.php');
                             <button type="button" id="btnApprove_yes" value="" onclick="fnApprove('ไม่อนุมัติ')" class="btn btn-danger float-right" style="margin-right: 5px;">
                                 <i class="fas fa-window-close"></i> ไม่อนุมัติเอกสาร
                             </button>
-                            <button type="button" value="" id="btnApprove_no" onclick="fnApprove('อนุมัติ')" class="btn btn-success float-right" style="margin-right: 5px;">
+                            <button type="button" value="" onclick="fnApprove('อนุมัติ')" class="btn btn-success float-right" style="margin-right: 5px;">
                                 <i class="fas fa-check"></i>อนุมัติเอกสาร
                             </button>
                         </div>
@@ -677,8 +581,8 @@ include('./../manage/header.php');
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">ความเห็นอาจารย์ที่ปรึกษา :</label>
-                            <input type="text" autocomplete="yes" class="form-control" id="txtcomment" name="txtcomment" placeholder="ความเห็นอาจารย์ที่ปรึกษา">
+                            <label for="exampleInputEmail1">ความเห็นประธานคณะกรรมการบริหารหลักสูตร :</label>
+                            <input type="text" autocomplete="yes" class="form-control" id="txtcomment" name="txtcomment" placeholder="ความเห็นประธานคณะกรรมการบริหารหลักสูตร">
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
@@ -691,7 +595,7 @@ include('./../manage/header.php');
             </div>
         </div>
     </div>
-    <input type="hidden" id="btnSign" name="btnSign" value="">
+    <input type="hidden" id="btnSignMas" name="btnSignMas" value="">
     <!-- confrom ผลการแจ้งเตือน -->
     <div class="modal fade" id="modal-Alertdata">
         <div class="modal-dialog modal-sm">
@@ -732,154 +636,37 @@ include('./../manage/header.php');
 <script src="./../asset/dist/js/function.js"></script>
 <script src="./../asset/plugins/jquery-validation/jquery.validate.min.js"></script>
 
-<script src="./../manage/changepage.js?v=1"></script>
 <script>
     $(function() {
-        countStatusAdvisor();
-        const checkbox = $('.checkbox1[value="รอการอนุมัติ"]');
-        checkbox.prop('checked', true);
-
-        if (checkbox.is(':checked')) {
-            checkbox.closest('.info-box').addClass('selected-card');
-        } else {
-            checkbox.closest('.info-box').removeClass('selected-card');
-        }
-
-
-
-        const checkbox_1 = $('.checkbox1[value="อนุมัติ"]');
-        if (checkbox_1.is(':checked')) {
-            var dataFind = ["อนุมัติ"];
-            checkbox_1.closest('.info-box').addClass('selected-card');
-        } else {
-            checkbox_1.closest('.info-box').removeClass('selected-card');
-        }
-
-        const checkbox_2 = $('.checkbox1[value="ไม่อนุมัติ"]');
-        if (checkbox_2.is(':checked')) {
-            var dataFind = ["ไม่อนุมัติ"];
-            checkbox_2.closest('.info-box').addClass('selected-card');
-        } else {
-            checkbox_2.closest('.info-box').removeClass('selected-card');
-        }
-
-        const checkedCheckboxes = $('.checkbox1:checked'); // เลือก checkboxes ที่ถูกติ๊กเช็ค
-        const uncheckedCheckboxes = $('.checkbox1:not(:checked)'); // เลือก checkboxes ที่ไม่ถูกติ๊กเช็ค
-        const checkedValues = checkedCheckboxes.map(function() {
-            return this.value;
-        }).get();
-
-        ShowDataDoc(checkedValues);
-
-
+        loadData();
+        CountStatus()
     });
 
-    function countStatusAdvisor() {
+    function loadData() {
         $.ajax({
-            url: "./../api/doc/approve.php?v=countStatusApr",
+            url: "./../api/doc/approve.php?v=checkapproveMaster",
             type: "GET",
             success: function(Res) {
-                // console.log(Res)
-                $.each(Res, function(index, item) {
-                    if (item.status_approve == "อนุมัติ") {
-                        $('#apr_apr').text(item.numrow + " รายการ")
-
-                    } else if (item.status_approve == "รอการอนุมัติ") {
-                        $('#apr_wait').text(item.numrow + " รายการ")
-                    } else {
-                        $('#apr_noapr').text(item.numrow + " รายการ")
-                    }
-                });
-            }
-        });
-    }
-
-    function ShowDataDoc(dataFind) {
-        $.ajax({
-            url: "./../api/doc/approve.php?v=checkapproveAdvisor",
-            type: "POST",
-            cache: false,
-            data: {
-                dataFind: dataFind
-            },
-            success: function(Res) {
                 console.log(Res)
-                $('#tb_approve_advisor tbody').html('')
+                $('#tb_approve_master tbody').html('');
                 $.each(Res, function(index, item) {
-                    var date_insert = convertDate(item.datetime);
-                    $('#tb_approve_advisor tbody').append(`
-                    <tr>
-                        <td class="text-center">${index+1}</td>
-                        <td class="text-center">${item.form_id}</td>
-                        <td class="text-left">${item.general_form_title}</td>
-                        <td class="text-left">${item.fullname}</td>
-                        <td class="text-center">${date_insert[0]}</td>
-                        <td class="text-center">
-                        ${item.advisor_approve === "รอการอนุมัติ" 
-                            ? '<span class="badge bg-warning">'+item.advisor_approve+'</span>' 
-                            : item.advisor_approve === "อนุมัติ" 
-                            ? '<span class="badge bg-success">'+item.advisor_approve+'</span>'
-                            : '<span class="badge bg-danger">'+item.advisor_approve+'</span>'}
-                        </td>
-                        <td class="text-center">
-                            ${item.master_approve === "รอการอนุมัติ" 
-                            ? '<span class="badge bg-warning">'+item.master_approve+'</span>' 
-                            : item.master_approve === "อนุมัติ" 
-                            ? '<span class="badge bg-success">'+item.master_approve+'</span>'
-                            : '<span class="badge bg-danger">'+item.master_approve+'</span>'}
-                        </td>
-                        <td class="text-center">
-                            ${item.deen_approve === "รอการอนุมัติ" 
-                            ? '<span class="badge bg-warning">'+item.deen_approve+'</span>' 
-                            : item.deen_approve === "อนุมัติ" 
-                            ? '<span class="badge bg-success">'+item.deen_approve+'</span>'
-                            : '<span class="badge bg-danger">'+item.deen_approve+'</span>'}
-                        </td>
-                        <td class="text-center">
-                           
-                            ${item.form_status_name === "กำลังดำเนินการ" 
-                            ? '<span class="badge bg-info">'+item.form_status_name+'</span>' 
-                            : item.form_status_name === "แก้ไข" 
-                            ? '<span class="badge bg-warning">'+item.form_status_name+'</span>'
-                            : '<span class="badge bg-success">'+item.form_status_name+'</span>'}
-                        </td>
-                        <td style="vertical-align: middle;"><button  onclick="modalDocAprAdvisor(${item.idApr}, ${item.form_id} , ${item.genaral_form_id} )" type="button" class="badge badge badge-primary">Preview</button></td>
-                     </tr>
-                    `);
-
+                    var date_insert = convertDate(item.DATETIME);
+                    $("#tb_approve_master").append('<tr>' +
+                        '<td style="vertical-align: middle;"><button  onclick="modalDocAprMaster(' + item.idApr + ',' + item.form_id + ',' + item.genaral_form_id + ')" type="button" class="badge badge badge-primary">Preview</button></td>' +
+                        '<td style="vertical-align: middle;">' + item.form_id + '</td>' +
+                        '<td style="vertical-align: middle;">' + item.general_form_title + '</td>' +
+                        '<td style="vertical-align: middle;">' + item.fullname + '</td>' +
+                        '<td style="vertical-align: middle;">' + date_insert[0] + '</td>' +
+                        '<td style="vertical-align: middle;"><span class="badge badge-warning">' + item.approve_status_name + '</span></td>' +
+                        '</tr>');
                 });
-
             }
         });
     }
 
-    function convertDate(date) {
-        var parts = date.split(" ");
-
-        var datePart = parts[0];
-        var parts2 = datePart.split("-");
-
-        var formattedDate = parts2[2] + "/" + parts2[1] + "/" + parts2[0];
-
-        return [formattedDate, parts[1]];
-
-    }
-    $('#searchInput').on('keyup', function() {
-        const searchText = $(this).val().toLowerCase();
-        $('#tb_approve_advisor tbody tr').each(function() {
-            const rowText = $(this).text().toLowerCase();
-            if (rowText.includes(searchText)) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
-    });
-
-    function modalDocAprAdvisor(idApr, form_id, genaral_form_id) {
-
+    function modalDocAprMaster(idApr, form_id, genaral_form_id) {
         //check ลายเซนต์
-        if ($('#btnSign').val() == "") {
+        if ($('#btnSignMas').val() == "") {
             $.ajax({
                 url: `./../api/sign/data.php?v=checksignApr`, // Replace with the URL of your data source
                 type: "GET",
@@ -887,32 +674,35 @@ include('./../manage/header.php');
                 success: function(Res) {
                     console.log(Res)
                     if (Res.status == "ok") {
-                        $('#btnSign').val("yes")
-                        ShowModal(idApr, form_id, genaral_form_id)
+                        $('#btnSignMas').val("yes");
+                        ShowModalMaster(idApr, form_id, genaral_form_id);
                     } else {
-
+                        //alert(Res.msg);
+                        //window.location.replace('./../signature/');
                         $("#btnConfirmAlert").val('./../signature/')
                         $('#resultAlert').text(`${Res.msg}`)
                         $('#modal-Alertdata').modal('show');
-                        // window.location.replace('./../signature/');
                     }
                 }
             });
 
         } else {
-            ShowModal(idApr, form_id, genaral_form_id)
+            ShowModalMaster(idApr, form_id, genaral_form_id);
 
         }
 
 
 
-
-
     }
 
-    function ShowModal(idApr, form_id, genaral_form_id) {
-        console.log("idApr : " + idApr + " form_id : " + form_id + " genaral_form_id : " + genaral_form_id);
+    $("#btnConfirmAlert").click(function() {
+        var page_ = $("#btnConfirmAlert").val();
+        window.location.replace(page_);
+    })
 
+
+    function ShowModalMaster(idApr, form_id, genaral_form_id) {
+        console.log("idApr : " + idApr + " form_id : " + form_id + " genaral_form_id : " + genaral_form_id);
         $('#btnApprove_yes').val(idApr);
         $('#btnId_doc').val(form_id);
         $('#genaral_form_id').val(genaral_form_id);
@@ -922,10 +712,8 @@ include('./../manage/header.php');
             type: "GET",
             dataType: "json",
             success: function(Res) {
+
                 console.log(Res)
-                $("#imageTeacher").attr("src", "./../api/images/nosign.png");
-                $("#imageMaster").attr("src", "./../api/images/nosign.png");
-                $("#imageDeen").attr("src", "./../api/images/nosign.png");
                 //ข้อมูลเอกสาร
                 var datadoc = Res[0];
                 $('#divTitle').text(datadoc.general_form_title)
@@ -957,26 +745,13 @@ include('./../manage/header.php');
                 var dataApr_advisor = Res[1];
                 $('#divComment_teacher').text(dataApr_advisor.advisor_comment)
                 $('#spanName_teacher').text(`${dataApr_advisor.user_name}`);
-                if(dataApr_advisor.approve_status_name=="รอการอนุมัติ" || dataApr_advisor.approve_status_name== null){
-                    $('#btnApprove_yes').show();
-                    $('#btnApprove_no').show();
-                }
-                else{
-                    $('#btnApprove_yes').hide();
-                    $('#btnApprove_no').hide();
-                    
-                }
-
                 if (dataApr_advisor.DATETIME) {
 
                     $('#spanDate_teacher').text(convertToThaiBuddhistDate(dataApr_advisor.DATETIME));
                     $("#imageTeacher").attr("src", "data:image/jpeg;base64," + dataApr_advisor.image_sign);
                 } else {
-
                     $('#spanDate_teacher').text("-");
                 }
-
-
 
 
                 //ข้อมูลการอนุมัติของประธาน
@@ -992,8 +767,6 @@ include('./../manage/header.php');
                     $("#imageMaster").attr("src", "data:image/jpeg;base64," + dataApr_master.image_sign);
                 }
 
-
-
                 //ข้อมูลการอนุมัติของคณบดี
                 var dataApr_deen = Res[3];
                 if (dataApr_deen.DATETIME == null || dataApr_deen.DATETIME == undefined) {
@@ -1006,19 +779,12 @@ include('./../manage/header.php');
                     $('#spanDate_deen').text(convertToThaiBuddhistDate(dataApr_deen.DATETIME));
                     $("#imageDeen").attr("src", "data:image/jpeg;base64," + dataApr_deen.image_sign);
                 }
-
             }
         });
     }
-    // function modalDocShow(idDoc) {
-    //     console.log(idDoc)
-    //     var url = 'previewform.php?id=' + idDoc;
-    //     window.location = url;
 
-    // }
-
-    function convertDate(dateApr) {
-        var parts = dateApr.split(" ");
+    function convertDate(date) {
+        var parts = date.split(" ");
 
         var datePart = parts[0];
         var parts2 = datePart.split("-");
@@ -1028,9 +794,8 @@ include('./../manage/header.php');
         return [formattedDate, parts[1]];
 
     }
-
     var commentRules = {
-        required: true
+        required: false
     };
 
     var commentMessages = {
@@ -1038,12 +803,15 @@ include('./../manage/header.php');
     };
 
     function fnApprove(status) {
-        commentRules.required = true;
+        commentRules.required = false;
         commentMessages.required = "";
         $('#btnStatus').val(status);
         $('#modal-notApprove').modal('show');
 
+
     }
+
+
     $('#confirmApprove').validate({
         rules: {
             txtcomment: commentRules
@@ -1093,15 +861,14 @@ include('./../manage/header.php');
                 console.log("yesy")
                 $.ajax({
                     type: 'POST',
-                    url: `./../api/doc/approve.php?v=updateAprAdvisor`,
+                    url: `./../api/doc/approve.php?v=updateAprMaster`,
                     data: data,
                     success: function(response) {
                         //console.log(response)
                         $('#modal-notApprove').modal('hide');
                         $('.modal.fade.bd-example-modal-xl').modal('hide');
-                        countStatusAdvisor();
-                        
-                        ShowDataDoc("รอการอนุมัติ");
+                        loadData();
+                        CountStatus();
                         form.reset();
                     },
                     error: function(error) {
@@ -1111,25 +878,82 @@ include('./../manage/header.php');
             }
         }
     });
+    // $('#confirmApprove').validate({
+    //     rules: {
+    //         txtcomment: {
+    //             required: true,
+    //         },
+
+    //     },
+    //     messages: {
+    //         txtcomment: {
+    //             required: "โปรดกรอกเหตุผลในการไม่อนุมัติเอกสาร",
+
+    //         },
 
 
-    $('.info-box').on('click', function() {
-        const checkbox = $(this).find('.checkbox1');
-        checkbox.prop('checked', !checkbox.prop('checked'));
 
-        if (checkbox.is(':checked')) {
-            $(this).addClass('selected-card');
-        } else {
-            $(this).removeClass('selected-card');
-        }
-        const checkedCheckboxes = $('.checkbox1:checked'); // เลือก checkboxes ที่ถูกติ๊กเช็ค
-        const uncheckedCheckboxes = $('.checkbox1:not(:checked)'); // เลือก checkboxes ที่ไม่ถูกติ๊กเช็ค
-        const checkedValues = checkedCheckboxes.map(function() {
-            return this.value;
-        }).get();
+    //     },
+    //     errorElement: 'span',
+    //     errorPlacement: function(error, element) {
+    //         error.addClass('invalid-feedback');
+    //         element.closest('.form-group').append(error);
+    //     },
+    //     highlight: function(element, errorClass, validClass) {
+    //         $(element).addClass('is-invalid');
+    //     },
+    //     unhighlight: function(element, errorClass, validClass) {
+    //         $(element).removeClass('is-invalid');
+    //     },
+    //     submitHandler: function(form) {
+    //         var idApr = $('#btnApprove_yes').val();
+    //         var form_id = $('#btnId_doc').val();
+    //         var genaral_form_id = $('#genaral_form_id').val();
 
-        ShowDataDoc(checkedValues);
-    });
+    //         let data = {
+    //             "status": $('#btnStatus').val(),
+    //             "idApr": idApr,
+    //             "form_id": form_id,
+    //             "genaral_form_id": genaral_form_id,
+    //             "comment": $('#txtcomment').val()
+    //         }
+
+    //         $.ajax({
+    //             type: 'POST',
+    //             url: `./../api/doc/approve.php?v=updateAprMaster`,
+    //             data: data,
+    //             success: function(response) {
+    //                 console.log(response)
+    //                 $('#modal-notApprove').modal('hide');
+    //                 $('.modal.fade.bd-example-modal-xl').modal('hide');
+    //                 loadData();
+    //                 CountStatus();
+    //                 form.reset();
+    //             },
+    //             error: function(error) {
+    //                 console.log(error)
+    //             }
+    //         });
+    //     }
+
+    // });
+
+    function CountStatus() {
+        $.ajax({
+            url: "./../api/doc/approve.php?v=countStatusApr",
+            type: "GET",
+            success: function(Res) {
+                $.each(Res, function(index, item) {
+                    if (item.status_approve == "รอการอนุมัติ") {
+                        $('#apr_waitApr').text(item.numrow + " รายการ")
+
+                    } else {
+                        $('#apr_historyApr').text(item.numrow + " รายการ")
+                    }
+                });
+            }
+        });
+    }
 </script>
 
 </html>
